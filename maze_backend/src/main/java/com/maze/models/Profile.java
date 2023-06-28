@@ -1,5 +1,5 @@
 package com.maze.models;
 
-public class User {
+public class Profile {
 
 }
