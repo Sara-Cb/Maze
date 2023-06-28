@@ -1,4 +1,4 @@
-package com.example.maze;
+package com.maze;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

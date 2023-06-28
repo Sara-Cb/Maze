@@ -1,4 +1,4 @@
-package com.example.maze;
+package com.maze;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
