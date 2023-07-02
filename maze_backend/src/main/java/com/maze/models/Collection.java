@@ -18,6 +18,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -38,12 +40,15 @@ public class Collection {
 	@ManyToOne
 	@JoinColumn(name = "creative_id", referencedColumnName = "username", nullable = false)
 	private Creative author;
-	
+
 	@Column(nullable = false)
 	private LocalDateTime publication;
 
 	@ManyToOne
 	private Portfolio portfolio;
+
+	@ManyToOne
+	private Project project;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -63,6 +68,7 @@ public class Collection {
 	@ElementCollection
 	private Set<String> keywords = new HashSet<String>();
 
-	//private List<Creative> collaborators = new ArrayList<Creative>();
-
+	@ManyToMany
+	@JoinTable(name = "collection_collaborators", joinColumns = @JoinColumn(name = "collection_id"), inverseJoinColumns = @JoinColumn(name = "collaborator", referencedColumnName = "username"))
+	private List<Creative> collaborators = new ArrayList<Creative>();
 }

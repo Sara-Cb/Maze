@@ -24,7 +24,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Table(name = "elaborates")
 @Data
@@ -34,40 +33,39 @@ public class Elaborate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "author", referencedColumnName = "username", nullable = false)
     private Creative author;
-    
+
     @ManyToOne
     private Portfolio portfolio;
-    
+
+    @ManyToOne
+    private Project project;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
-    
+
     @Column(nullable = false)
     private String file;
 
     @Column(nullable = false)
     private String title;
-    
+
     @Column(nullable = false)
     private LocalDateTime publicationDateTime;
 
     private String description;
-    
+
     private Set<String> keywords;
 
     @ManyToMany
-    @JoinTable(
-            name = "elaborate_collaborators",
-            joinColumns = @JoinColumn(name = "elaborate_id"),
-            inverseJoinColumns = @JoinColumn(name = "collaborator", referencedColumnName = "username")
-    )
-    private List<Creative> collaborators  = new ArrayList<Creative>();
-    
+    @JoinTable(name = "elaborate_collaborators", joinColumns = @JoinColumn(name = "elaborate_id"), inverseJoinColumns = @JoinColumn(name = "collaborator", referencedColumnName = "username"))
+    private List<Creative> collaborators = new ArrayList<Creative>();
+
     @ManyToOne(fetch = FetchType.EAGER)
-    private Collection collection;
+    private Collection collection = null;
 
 }
