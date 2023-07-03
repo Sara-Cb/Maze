@@ -1,5 +1,6 @@
 package com.maze.models;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -24,6 +25,9 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,29 +44,37 @@ public class Creative {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank
     private String username;
 
     @Column(nullable = false, unique = true)
+    @NotBlank
+    @Email
     private String email;
 
     @Column(nullable = false)
+    @NotBlank
     private String password;
+
+    @Column(nullable = false)
+    @NotBlank
+    private LocalDate registrationDate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "creatives_roles", joinColumns = @JoinColumn(name = "creative_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role"))
     private Set<Role> roles = new HashSet<>();
 
-    @Column(name = "stage_name")
-    private String stageName;
-
     @Column
+    @NotBlank
     private String firstname;
 
     @Column
+    @NotBlank
     private String lastname;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Portfolio portfolio;
+    @Column(name = "stage_name")
+    @NotBlank
+    private String stageName;
 
     @Column
     private String bio;
@@ -76,12 +88,16 @@ public class Creative {
     @Column
     private String image;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Portfolio portfolio;
+
     @ElementCollection
     @Enumerated(EnumType.STRING)
     private Set<Skill> skills = new HashSet<>();
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
+    @NotEmpty
     private Set<Profession> professions = new HashSet<>();
 
     @OneToMany(mappedBy = "follower", fetch = FetchType.EAGER)

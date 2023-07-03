@@ -22,4 +22,7 @@ public interface CreativeRepository extends JpaRepository<Creative, Long> {
     Boolean existsByUsernameOrEmail(String username, String email);
 
     Set<Creative> findByRolesIn(Set<Role> roles);
+
+    Set<Creative> findByUsernameContainingOrFirstnameContainingOrLastnameContaining(String username, String firstname,
+            String lastname);
 }

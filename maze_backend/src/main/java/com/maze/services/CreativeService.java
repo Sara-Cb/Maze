@@ -29,12 +29,12 @@ public class CreativeService {
     }
 
     public void saveCreative(Creative creative) {
-    	repository.save(creative);
+        repository.save(creative);
     }
 
     public void updateCreative(Creative creative) {
         if (repository.existsById(creative.getId())) {
-        	repository.save(creative);
+            repository.save(creative);
         } else {
             throw new NoSuchElementException(
                     "Creative not found with ID: " + creative.getId());
@@ -43,7 +43,7 @@ public class CreativeService {
 
     public void deleteCreativeById(Long id) {
         if (repository.existsById(id)) {
-        	repository.deleteById(id);
+            repository.deleteById(id);
         } else {
             throw new NoSuchElementException(
                     "Creative not found with ID: " + id);
@@ -69,6 +69,10 @@ public class CreativeService {
     public Creative findCreativeByUsernameOrEmail(
             String username, String email) {
         return repository.findByUsernameOrEmail(username, email).get();
+    }
+
+    public Set<Creative> searchCreative(String search) {
+        return repository.findByUsernameContainingOrFirstnameContainingOrLastnameContaining(search, search, search);
     }
 
     public boolean existsByUsername(String username) {
