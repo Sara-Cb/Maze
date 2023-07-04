@@ -31,10 +31,7 @@ public class Portfolio {
 	@JoinColumn(name = "creative", referencedColumnName = "username", nullable = false)
 	private Creative creative;
 
-	@OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Collection> collections = new ArrayList<Collection>();
-
-	@OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private List<Elaborate> elaborates = new ArrayList<Elaborate>();
+	@OneToMany(mappedBy = "portfolio", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<PortfolioItem> items = new ArrayList<>();
 
 }

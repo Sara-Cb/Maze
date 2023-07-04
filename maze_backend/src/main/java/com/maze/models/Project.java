@@ -44,9 +44,9 @@ public class Project {
     private List<Creative> collaborators = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Collection> collections = new ArrayList<Collection>();
+    private List<Collection> collections = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Elaborate> elaborates = new ArrayList<Elaborate>();
+    private List<Elaborate> elaborates = new ArrayList<>();
 
 }

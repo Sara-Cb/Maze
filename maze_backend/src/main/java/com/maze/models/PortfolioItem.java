@@ -1,13 +1,14 @@
 package com.maze.models;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-import com.maze.enumerations.FeedItemType;
+import com.maze.enumerations.PortfolioItemType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,25 +20,35 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "feed_items")
+@Table(name = "portfolio_items")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FeedItem {
-
+public class PortfolioItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private LocalDateTime publicationDateTime;
-
-    @ManyToOne
-    private Creative author;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Portfolio portfolio;
 
     @OneToOne
-    private PortfolioItem item;
+    private Collection collection;
 
+    @OneToOne
+    private Project project;
+
+    @OneToOne
+    private Elaborate elaborate;
+
+    private boolean show = true;
+
+    @Column
     @Enumerated(EnumType.STRING)
-    private FeedItemType type;
+    private PortfolioItemType type;
+
+    private LocalDate createdAt;
+
+    private LocalDate updatedAt;
+
 }

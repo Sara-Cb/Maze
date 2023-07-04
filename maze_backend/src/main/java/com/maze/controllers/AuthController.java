@@ -16,6 +16,8 @@ import com.maze.dtos.RegisterDto;
 import com.maze.payloads.JWTAuthResponse;
 import com.maze.services.AuthService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/auth")
@@ -25,7 +27,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping(value = { "/login", "/signin" })
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginDto) {
         try {
             String token = authService.login(loginDto);
 
@@ -44,7 +46,7 @@ public class AuthController {
     }
 
     @PostMapping(value = { "/register", "/signup" })
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<String> register(@Valid @RequestBody RegisterDto registerDto) {
         String response = authService.register(registerDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }

@@ -41,9 +41,6 @@ public class AuthService implements AuthServiceInterface {
     @Autowired
     private CreativeService creativeService;
 
-    @Autowired
-    private PortfolioService portfolioService;
-
     @Override
     public String login(LoginDto loginDto) {
 
@@ -73,7 +70,6 @@ public class AuthService implements AuthServiceInterface {
         }
 
         Creative creative = new Creative();
-        Portfolio portfolio = new Portfolio();
         Set<Role> roles = new HashSet<>();
         Role userRole = roleService.findRoleByType(RoleType.ROLE_USER);
         roles.add(userRole);
@@ -87,11 +83,16 @@ public class AuthService implements AuthServiceInterface {
         creative.setRegistrationDate(LocalDate.now());
         creative.setProfessions(registerDto.getProfessions());
         creative.setRoles(roles);
+        creative.setBio(registerDto.getBio());
+        creative.setCity(registerDto.getCity());
+        creative.setState(registerDto.getState());
+        creative.setImage(registerDto.getImage());
+        creative.setSkills(registerDto.getSkills());
 
-        portfolio.setCreative(creative);
+        creative.setPortfolio(new Portfolio());
+        creative.setFollows(null);
 
         creativeService.saveCreative(creative);
-        portfolioService.savePortfolio(portfolio);
 
         return "Creative registered successfully!";
     }

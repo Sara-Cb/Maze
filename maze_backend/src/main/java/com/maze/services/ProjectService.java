@@ -29,9 +29,9 @@ public class ProjectService {
         repository.save(project);
     }
 
-    public void updateProject(Project project) {
+    public Project updateProject(Project project) {
         if (repository.existsById(project.getId())) {
-            repository.save(project);
+            return repository.save(project);
         } else {
             throw new NoSuchElementException("Project not found with ID: " + project.getId());
         }
