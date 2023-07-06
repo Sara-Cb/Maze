@@ -1,5 +1,6 @@
 package com.maze.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -7,6 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.maze.enumerations.PortfolioItemType;
+import com.maze.models.PortfolioItem;
 import com.maze.models.Project;
 import com.maze.repositories.ProjectRepository;
 
@@ -15,6 +18,9 @@ public class ProjectService {
 
     @Autowired
     private ProjectRepository repository;
+
+    @Autowired
+    private PortfolioItemService PortfolioItemService;
 
     public Project findProjectById(Long id) {
         Optional<Project> project = repository.findById(id);
@@ -26,7 +32,26 @@ public class ProjectService {
     }
 
     public void saveProject(Project project) {
-        repository.save(project);
+        if (project.getId() != null) {
+            if (PortfolioItemService.existsByProjectId(project.getId())) {
+                repository.save(project);
+                PortfolioItem portfolioItem = PortfolioItemService.findPortfolioItemByProjectId(project.getId());
+                portfolioItem.setUpdatedAt(LocalDate.now());
+                PortfolioItemService.updatePortfolioItem(portfolioItem);
+            } else {
+                PortfolioItem portfolioItem = new PortfolioItem();
+                portfolioItem.setCreatedAt(LocalDate.now());
+                portfolioItem.setProject(project);
+                portfolioItem.setType(PortfolioItemType.PROJECT);
+                PortfolioItemService.savePortfolioItem(portfolioItem);
+            }
+        } else {
+            PortfolioItem portfolioItem = new PortfolioItem();
+            portfolioItem.setCreatedAt(LocalDate.now());
+            portfolioItem.setProject(project);
+            portfolioItem.setType(PortfolioItemType.PROJECT);
+            PortfolioItemService.savePortfolioItem(portfolioItem);
+        }
     }
 
     public Project updateProject(Project project) {

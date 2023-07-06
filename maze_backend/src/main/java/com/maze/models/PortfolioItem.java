@@ -4,11 +4,11 @@ import java.time.LocalDate;
 
 import com.maze.enumerations.PortfolioItemType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,16 +29,16 @@ public class PortfolioItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Portfolio portfolio;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Collection collection;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Project project;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Elaborate elaborate;
 
     private boolean show = true;

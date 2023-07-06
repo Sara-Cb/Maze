@@ -100,7 +100,7 @@ public class Creative {
     @NotEmpty
     private Set<Profession> professions = new HashSet<>();
 
-    @OneToMany(mappedBy = "follower", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "follower", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Follow> follows = new ArrayList<>();
 
     @OneToMany(mappedBy = "author")

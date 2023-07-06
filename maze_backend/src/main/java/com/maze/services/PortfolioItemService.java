@@ -1,5 +1,6 @@
 package com.maze.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -7,6 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.maze.enumerations.FeedItemType;
+import com.maze.models.FeedItem;
 import com.maze.models.PortfolioItem;
 import com.maze.repositories.PortfolioItemRepository;
 
@@ -15,6 +18,9 @@ public class PortfolioItemService {
 
     @Autowired
     private PortfolioItemRepository repository;
+
+    @Autowired
+    private FeedItemService feedItemService;
 
     public PortfolioItem findPortfolioItemById(Long id) {
         Optional<PortfolioItem> portfolioItem = repository.findById(id);
@@ -27,6 +33,16 @@ public class PortfolioItemService {
 
     public void savePortfolioItem(PortfolioItem portfolioItem) {
         repository.save(portfolioItem);
+        FeedItem feedItem = new FeedItem();
+        feedItem.setAuthor(portfolioItem.getPortfolio().getCreative());
+        feedItem.setPublicationDateTime(LocalDateTime.now());
+        feedItem.setItem(portfolioItem);
+        if (portfolioItem.getId() != null) {
+            feedItem.setType(FeedItemType.UPDATE);
+        } else {
+            feedItem.setType(FeedItemType.NEW);
+        }
+        feedItemService.saveFeedItem(feedItem);
     }
 
     public void updatePortfolioItem(PortfolioItem portfolioItem) {
