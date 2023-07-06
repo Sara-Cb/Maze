@@ -72,7 +72,8 @@ public class CreativeService {
     }
 
     public Set<Creative> searchCreative(String search) {
-        return repository.findByUsernameContainingOrFirstnameContainingOrLastnameContaining(search, search, search);
+        return repository.findByUsernameContainingOrFirstnameContainingOrLastnameContainingOrStageNameContaining(search,
+                search, search, search);
     }
 
     public boolean existsByUsername(String username) {

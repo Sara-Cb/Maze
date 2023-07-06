@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.maze.enumerations.Profession;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -37,9 +36,6 @@ public class ProjectPosition {
 
     @Enumerated(EnumType.STRING)
     private Profession profession;
-
-    @Column(nullable = false)
-    private int requiredCount;
 
     @OneToMany(mappedBy = "projectPosition")
     private List<ProjectApplication> applications = new ArrayList<>();

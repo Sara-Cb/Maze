@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.maze.enumerations.Profession;
 import com.maze.enumerations.Skill;
 
@@ -88,6 +89,7 @@ public class Creative {
     @Column
     private String image;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     private Portfolio portfolio;
 
@@ -105,4 +107,5 @@ public class Creative {
 
     @OneToMany(mappedBy = "author")
     private List<FeedItem> feedItems = new ArrayList<>();
+
 }
