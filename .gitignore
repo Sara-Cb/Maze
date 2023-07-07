@@ -30,3 +30,5 @@ replay_pid*
 .*drawio.*
 
 logs/
+
+.env

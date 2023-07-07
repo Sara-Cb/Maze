@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.maze.models.Role;
@@ -18,6 +19,9 @@ public class CreativeService {
     @Autowired
     private CreativeRepository repository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public Creative findCreativeById(Long id) {
         Optional<Creative> creative = repository.findById(id);
         if (creative.isPresent()) {
@@ -29,6 +33,7 @@ public class CreativeService {
     }
 
     public void saveCreative(Creative creative) {
+        creative.setPassword(passwordEncoder.encode(creative.getPassword()));
         repository.save(creative);
     }
 

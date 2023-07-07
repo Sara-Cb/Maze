@@ -1,9 +1,9 @@
 package com.maze.controllers;
 
 import com.maze.models.Creative;
-import com.maze.models.Portfolio;
 import com.maze.services.CreativeService;
-import com.maze.services.PortfolioService;
+
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,46 +16,30 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/creatives")
+@RequestMapping("/creatives")
 public class CreativeController {
 
     @Autowired
     private CreativeService creativeService;
 
-    @Autowired
-    private PortfolioService portfolioService;
-
     @GetMapping
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<Creative>> getAllCreatives() {
         List<Creative> creatives = creativeService.getAllCreatives();
         return ResponseEntity.ok(creatives);
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{username}")
     public ResponseEntity<Creative> getCreativeById(
-            @PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
-        System.out.println(userDetails);
-        if (userDetails == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        // Check if the authenticated user has the admin role or if the ID matches the
-        // authenticated user
-        if (userDetails.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN")) ||
-                userDetails.getUsername().equals(
-                        creativeService.findCreativeById(id).getUsername())) {
-            Creative creative = creativeService.findCreativeById(id);
-            return ResponseEntity.ok(creative);
-        }
-        // Return an error or unauthorized response
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            @PathVariable String username) {
+        Creative creative = creativeService.findCreativeByUsername(username);
+        return ResponseEntity.ok(creative);
     }
 
-    @PutMapping("/{id}")
+    @Transactional
+    @PutMapping("/{username}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Creative> updateCreative(
-            @PathVariable Long id, @RequestBody Creative updatedCreative,
+            @PathVariable String username, @RequestBody Creative updatedCreative,
             @AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -65,25 +49,19 @@ public class CreativeController {
         if (userDetails.getAuthorities().contains(
                 new SimpleGrantedAuthority("ROLE_ADMIN")) ||
                 userDetails.getUsername().equals(
-                        creativeService.findCreativeById(id).getUsername())) {
-            Creative creative = creativeService.findCreativeById(id);
-            if (updatedCreative.getUsername() != null) {
-                creative.setUsername(updatedCreative.getUsername());
-            }
-            if (updatedCreative.getEmail() != null) {
-                creative.setEmail(updatedCreative.getEmail());
-            }
-            creativeService.updateCreative(creative);
+                        username)) {
+            creativeService.updateCreative(updatedCreative);
+            Creative creative = creativeService.findCreativeByUsername(username);
             return ResponseEntity.ok(creative);
         }
         // Return an error or unauthorized response
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{username}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> deleteCreative(
-            @PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+            @PathVariable String username, @AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -92,10 +70,9 @@ public class CreativeController {
         if (userDetails.getAuthorities().contains(
                 new SimpleGrantedAuthority("ROLE_ADMIN")) ||
                 userDetails.getUsername().equals(
-                        creativeService.findCreativeById(id).getUsername())) {
-            Portfolio portfolio = creativeService.findCreativeById(id).getPortfolio();
-            portfolioService.deletePortfolioById(portfolio.getId());
-            creativeService.deleteCreativeById(id);
+                        username)) {
+            Creative creative = creativeService.findCreativeByUsername(username);
+            creativeService.deleteCreativeById(creative.getId());
             return ResponseEntity.noContent().build();
         }
         // Return an error or unauthorized response

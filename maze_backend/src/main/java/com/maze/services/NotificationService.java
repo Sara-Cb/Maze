@@ -49,4 +49,8 @@ public class NotificationService {
         return repository.findAll();
     }
 
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
+    }
+
 }

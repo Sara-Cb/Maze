@@ -86,7 +86,6 @@ public class AuthService implements AuthServiceInterface {
         creative.setBio(registerDto.getBio());
         creative.setCity(registerDto.getCity());
         creative.setState(registerDto.getState());
-        creative.setImage(registerDto.getImage());
         creative.setSkills(registerDto.getSkills());
 
         creative.setPortfolio(new Portfolio());

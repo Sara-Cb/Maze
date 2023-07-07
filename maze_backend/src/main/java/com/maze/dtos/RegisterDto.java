@@ -55,7 +55,6 @@ public class RegisterDto {
     private String bio;
     private String city;
     private String state;
-    private String image;
     private Set<Skill> skills;
 }
 

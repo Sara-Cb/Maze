@@ -46,11 +46,9 @@ public class Creative {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    @NotBlank
     private String username;
 
     @Column(nullable = false, unique = true)
-    @NotBlank
     @Email
     private String email;
 
@@ -66,11 +64,11 @@ public class Creative {
     @JoinTable(name = "creatives_roles", joinColumns = @JoinColumn(name = "creative_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role"))
     private Set<Role> roles = new HashSet<>();
 
-    @Column
+    @Column(nullable = false)
     @NotBlank
     private String firstname;
 
-    @Column
+    @Column(nullable = false)
     @NotBlank
     private String lastname;
 
