@@ -25,7 +25,7 @@ import com.maze.services.ProjectService;
 import jakarta.transaction.Transactional;
 
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/api/projects")
 public class ProjectController {
 
     @Autowired

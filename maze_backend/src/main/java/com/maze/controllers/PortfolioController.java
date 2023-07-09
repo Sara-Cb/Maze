@@ -22,7 +22,7 @@ import com.maze.services.PortfolioService;
 import jakarta.transaction.Transactional;
 
 @RestController
-@RequestMapping("/portfolios")
+@RequestMapping("/api/portfolios")
 public class PortfolioController {
 
     @Autowired

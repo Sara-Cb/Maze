@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.maze.enumerations.Profession;
@@ -29,6 +30,9 @@ public class AuthRunner implements ApplicationRunner {
 
 	@Autowired
 	AuthService authService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	private Set<Role> adminRole;
 
@@ -89,7 +93,7 @@ public class AuthRunner implements ApplicationRunner {
 
 			admin.setUsername("sara.cb");
 			admin.setEmail("sara.cb@maze.com");
-			admin.setPassword("amazing");
+			admin.setPassword(passwordEncoder.encode("amazing"));
 			admin.setRoles(adminRole);
 			admin.setRegistrationDate(LocalDate.now());
 			admin.setStageName("Sara.cb");
@@ -116,7 +120,7 @@ public class AuthRunner implements ApplicationRunner {
 
 			moderator.setUsername("vale.pg");
 			moderator.setEmail("vale.pg@maze.com");
-			moderator.setPassword("amazing");
+			moderator.setPassword(passwordEncoder.encode("amazing"));
 			moderator.setRoles(moderatorRole);
 			moderator.setRegistrationDate(LocalDate.now());
 			moderator.setStageName("Vale.pg");
@@ -141,7 +145,7 @@ public class AuthRunner implements ApplicationRunner {
 
 			user.setUsername("mario.rossi");
 			user.setEmail("mario.rossi@example.com");
-			user.setPassword("user");
+			user.setPassword(passwordEncoder.encode("user"));
 			user.setRoles(userRole);
 			user.setRegistrationDate(LocalDate.now());
 			user.setStageName("MarioReds");

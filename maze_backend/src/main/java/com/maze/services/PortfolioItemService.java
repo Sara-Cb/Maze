@@ -1,5 +1,6 @@
 package com.maze.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -31,7 +32,7 @@ public class PortfolioItemService {
         }
     }
 
-    public void savePortfolioItem(PortfolioItem portfolioItem) {
+    public PortfolioItem savePortfolioItem(PortfolioItem portfolioItem) {
         repository.save(portfolioItem);
         FeedItem feedItem = new FeedItem();
         feedItem.setAuthor(portfolioItem.getPortfolio().getCreative());
@@ -39,10 +40,13 @@ public class PortfolioItemService {
         feedItem.setItem(portfolioItem);
         if (portfolioItem.getId() != null) {
             feedItem.setType(FeedItemType.UPDATE);
+            portfolioItem.setUpdatedAt(LocalDate.now());
         } else {
             feedItem.setType(FeedItemType.NEW);
+            portfolioItem.setCreatedAt(LocalDate.now());
         }
         feedItemService.saveFeedItem(feedItem);
+        return portfolioItem;
     }
 
     public void updatePortfolioItem(PortfolioItem portfolioItem) {

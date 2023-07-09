@@ -4,11 +4,11 @@ import java.time.LocalDate;
 
 import com.maze.enumerations.PortfolioItemType;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,13 +32,13 @@ public class PortfolioItem {
     @ManyToOne
     private Portfolio portfolio;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(optional = true, fetch = FetchType.LAZY)
     private Collection collection;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(optional = true)
     private Project project;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(optional = true)
     private Elaborate elaborate;
 
     private boolean show = true;
@@ -50,5 +50,30 @@ public class PortfolioItem {
     private LocalDate createdAt;
 
     private LocalDate updatedAt;
+
+    public PortfolioItem(Elaborate elaborate, Portfolio portfolio) {
+        this.elaborate = elaborate;
+        this.collection = null;
+        this.project = null;
+        this.portfolio = portfolio;
+        this.createdAt = LocalDate.now();
+        this.type = PortfolioItemType.ELABORATE;
+    }
+
+    public PortfolioItem(Collection collection, Portfolio portfolio) {
+        this.elaborate = null;
+        this.collection = collection;
+        this.project = null;
+        this.portfolio = portfolio;
+        this.type = PortfolioItemType.COLLECTION;
+    }
+
+    public PortfolioItem(Project project, Portfolio portfolio) {
+        this.elaborate = null;
+        this.collection = null;
+        this.project = project;
+        this.portfolio = portfolio;
+        this.type = PortfolioItemType.PROJECT;
+    }
 
 }

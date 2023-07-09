@@ -26,7 +26,7 @@ import com.maze.services.PortfolioItemService;
 import jakarta.transaction.Transactional;
 
 @RestController
-@RequestMapping("/portfolioItems")
+@RequestMapping("/api/portfolioItems")
 public class PortfolioItemController {
 
     @Autowired

@@ -33,7 +33,7 @@ public class CreativeService {
     }
 
     public void saveCreative(Creative creative) {
-        creative.setPassword(passwordEncoder.encode(creative.getPassword()));
+        creative.setPassword(creative.getPassword());
         repository.save(creative);
     }
 

@@ -1,6 +1,8 @@
 package com.maze.controllers;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,17 +28,21 @@ import com.maze.models.Collection;
 import com.maze.models.Elaborate;
 import com.maze.models.Project;
 import com.maze.security.CloudinaryService;
+import com.maze.services.CollectionService;
 import com.maze.services.CreativeService;
 import com.maze.services.ElaborateService;
 
 import jakarta.transaction.Transactional;
 
 @RestController
-@RequestMapping("/elaborates")
+@RequestMapping("/api/elaborates")
 public class ElaborateController {
 
     @Autowired
     private ElaborateService elaborateService;
+
+    @Autowired
+    private CollectionService collectionService;
 
     @Autowired
     private CreativeService creativeService;
@@ -58,7 +64,7 @@ public class ElaborateController {
             @RequestParam("image") MultipartFile file,
             @RequestParam String title,
             String description,
-            Set<String> keywords,
+            String keywords,
             Collection collection,
             Project project) {
         Elaborate elaborate = new Elaborate();
@@ -68,9 +74,23 @@ public class ElaborateController {
         elaborate.setTitle(title);
         elaborate.setPublicationDateTime(LocalDateTime.now());
         elaborate.setDescription(description);
-        elaborate.setKeywords(keywords);
-        elaborate.setCollection(collection);
-        elaborate.setProject(project);
+        if (keywords != null) {
+            elaborate.setKeywords(new HashSet<>(Arrays.asList(keywords.split(","))));
+        }
+        if (collection != null) {
+            if (collection.getId() != null) {
+                Collection c = collectionService.findCollectionById(collection.getId());
+                elaborate.setCollection(c);
+            } else {
+                Collection c = collectionService.saveCollection(collection);
+                elaborate.setCollection(c);
+            }
+        } else {
+            elaborate.setCollection(null);
+        }
+        if (project != null) {
+            elaborate.setProject(project);
+        }
         elaborateService.saveElaborate(elaborate);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

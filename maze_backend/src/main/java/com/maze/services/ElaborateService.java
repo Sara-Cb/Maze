@@ -62,10 +62,7 @@ public class ElaborateService {
             }
         } else {
             if (elaborate.getCollection() == null && elaborate.getProject() == null) {
-                PortfolioItem portfolioItem = new PortfolioItem();
-                portfolioItem.setCreatedAt(LocalDate.now());
-                portfolioItem.setElaborate(elaborate);
-                portfolioItem.setType(PortfolioItemType.ELABORATE);
+                PortfolioItem portfolioItem = new PortfolioItem(elaborate, elaborate.getAuthor().getPortfolio());
                 PIService.savePortfolioItem(portfolioItem);
             } else {
                 repository.save(elaborate);

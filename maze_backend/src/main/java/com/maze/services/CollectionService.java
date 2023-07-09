@@ -31,11 +31,10 @@ public class CollectionService {
         }
     }
 
-    public void saveCollection(Collection collection) {
+    public Collection saveCollection(Collection collection) {
         if (collection.getId() != null) {
             if (collection.getProject() == null) {
                 if (PIService.existsByCollectionId(collection.getId())) {
-                    repository.save(collection);
                     PortfolioItem portfolioItem = PIService.findPortfolioItemByCollectionId(collection.getId());
                     portfolioItem.setUpdatedAt(LocalDate.now());
                     PIService.updatePortfolioItem(portfolioItem);
@@ -51,7 +50,6 @@ public class CollectionService {
                         .findPortfolioItemByProjectId(collection.getProject().getId());
                 portfolioItem.setUpdatedAt(LocalDate.now());
                 PIService.updatePortfolioItem(portfolioItem);
-                repository.save(collection);
             }
         } else {
             if (collection.getProject() == null) {
@@ -60,10 +58,9 @@ public class CollectionService {
                 portfolioItem.setCollection(collection);
                 portfolioItem.setType(PortfolioItemType.COLLECTION);
                 PIService.savePortfolioItem(portfolioItem);
-            } else {
-                repository.save(collection);
             }
         }
+        return repository.save(collection);
     }
 
     public void updateCollection(Collection collection) {

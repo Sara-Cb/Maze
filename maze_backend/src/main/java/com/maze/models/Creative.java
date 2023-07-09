@@ -46,9 +46,11 @@ public class Creative {
     private Long id;
 
     @Column(nullable = false, unique = true)
+    @NotBlank
     private String username;
 
     @Column(nullable = false, unique = true)
+    @NotBlank
     @Email
     private String email;
 

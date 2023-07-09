@@ -25,7 +25,7 @@ import com.maze.services.CreativeService;
 import jakarta.transaction.Transactional;
 
 @RestController
-@RequestMapping("/collections")
+@RequestMapping("/api/collections")
 public class CollectionController {
 
     @Autowired

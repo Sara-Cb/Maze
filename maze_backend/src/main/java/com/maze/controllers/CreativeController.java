@@ -16,7 +16,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/creatives")
+@RequestMapping("/api/creatives")
 public class CreativeController {
 
     @Autowired
@@ -28,18 +28,18 @@ public class CreativeController {
         return ResponseEntity.ok(creatives);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/{id}")
     public ResponseEntity<Creative> getCreativeById(
-            @PathVariable String username) {
-        Creative creative = creativeService.findCreativeByUsername(username);
+            @PathVariable Long id) {
+        Creative creative = creativeService.findCreativeById(id);
         return ResponseEntity.ok(creative);
     }
 
     @Transactional
-    @PutMapping("/{username}")
+    @PutMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Creative> updateCreative(
-            @PathVariable String username, @RequestBody Creative updatedCreative,
+            @PathVariable Long id, @RequestBody Creative updatedCreative,
             @AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -49,19 +49,19 @@ public class CreativeController {
         if (userDetails.getAuthorities().contains(
                 new SimpleGrantedAuthority("ROLE_ADMIN")) ||
                 userDetails.getUsername().equals(
-                        username)) {
+                        creativeService.findCreativeById(id).getUsername())) {
             creativeService.updateCreative(updatedCreative);
-            Creative creative = creativeService.findCreativeByUsername(username);
+            Creative creative = creativeService.findCreativeById(id);
             return ResponseEntity.ok(creative);
         }
         // Return an error or unauthorized response
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @DeleteMapping("/{username}")
+    @DeleteMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> deleteCreative(
-            @PathVariable String username, @AuthenticationPrincipal UserDetails userDetails) {
+            @PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -70,9 +70,8 @@ public class CreativeController {
         if (userDetails.getAuthorities().contains(
                 new SimpleGrantedAuthority("ROLE_ADMIN")) ||
                 userDetails.getUsername().equals(
-                        username)) {
-            Creative creative = creativeService.findCreativeByUsername(username);
-            creativeService.deleteCreativeById(creative.getId());
+                        creativeService.findCreativeById(id).getUsername())) {
+            creativeService.deleteCreativeById(id);
             return ResponseEntity.noContent().build();
         }
         // Return an error or unauthorized response
