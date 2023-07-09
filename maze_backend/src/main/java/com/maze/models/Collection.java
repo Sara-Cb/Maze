@@ -1,11 +1,16 @@
 package com.maze.models;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.maze.enumerations.Category;
 
 import jakarta.persistence.Column;
@@ -37,12 +42,22 @@ public class Collection {
 
 	@ManyToOne
 	@JoinColumn(name = "creative_id", referencedColumnName = "username", nullable = false)
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
+	@JsonIdentityReference(alwaysAsId = true)
+	@JsonProperty("author")
 	private Creative author;
 
-	@Column(nullable = false)
-	private LocalDateTime publication;
+	@ManyToOne
+	@JoinColumn(name = "portfolio", nullable = false)
+	@JsonIgnore
+	private Portfolio portfolio;
 
 	@Column(nullable = false)
+	private Timestamp createdAt;
+
+	@Column
+	private Timestamp updatedAt;
+
 	@Enumerated(EnumType.STRING)
 	private Category category;
 
@@ -61,6 +76,11 @@ public class Collection {
 	private Set<String> keywords = new HashSet<String>();
 
 	@ManyToOne
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
+	@JsonIdentityReference(alwaysAsId = true)
+	@JsonProperty("project")
 	private Project project = null;
 
+	@Column(name = "single_element", nullable = false)
+	boolean singleElement;
 }

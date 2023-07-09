@@ -62,6 +62,7 @@ public class Creative {
     @NotNull
     private LocalDate registrationDate;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "creatives_roles", joinColumns = @JoinColumn(name = "creative_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role"))
     private Set<Role> roles = new HashSet<>();
@@ -102,9 +103,11 @@ public class Creative {
     @NotEmpty
     private Set<Profession> professions = new HashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "follower", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Follow> follows = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<FeedItem> feedItems = new ArrayList<>();
 

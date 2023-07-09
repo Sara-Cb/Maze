@@ -1,10 +1,6 @@
 package com.maze.controllers;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,10 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.maze.enumerations.Category;
 import com.maze.models.Collection;
+import com.maze.models.Creative;
 import com.maze.models.Elaborate;
-import com.maze.models.Project;
 import com.maze.security.CloudinaryService;
 import com.maze.services.CollectionService;
 import com.maze.services.CreativeService;
@@ -50,47 +45,41 @@ public class ElaborateController {
     @Autowired
     private CloudinaryService cloudinaryService;
 
+    @GetMapping
+    public ResponseEntity<List<Elaborate>> getAllElaborates() {
+        List<Elaborate> elaborates = elaborateService.getAllElaborates();
+        return ResponseEntity.ok(elaborates);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Elaborate> getElaborateById(@PathVariable Long id) {
         Elaborate elaborate = elaborateService.findElaborateById(id);
         return ResponseEntity.ok(elaborate);
     }
 
-    @PreAuthorize("isAuthenticated()")
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> createElaborate(
             @AuthenticationPrincipal UserDetails userDetails,
-            @RequestParam Category category,
-            @RequestParam("image") MultipartFile file,
+            @RequestParam MultipartFile file,
             @RequestParam String title,
-            String description,
-            String keywords,
-            Collection collection,
-            Project project) {
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) Long collectionId) {
         Elaborate elaborate = new Elaborate();
-        elaborate.setAuthor(creativeService.findCreativeByUsername(userDetails.getUsername()));
-        elaborate.setCategory(category);
+        Creative author = creativeService.findCreativeByUsername(userDetails.getUsername());
+        if (collectionId != null) {
+            elaborate.setCollection(collectionService.findCollectionById(collectionId));
+        } else {
+            Collection newCollection = new Collection();
+            newCollection.setAuthor(author);
+            newCollection.setPortfolio(author.getPortfolio());
+            newCollection.setTitle(title);
+            elaborate.setCollection(collectionService.saveCollection(newCollection));
+        }
+        elaborate.setAuthor(author);
         elaborate.setFile(cloudinaryService.uploadFile(file));
         elaborate.setTitle(title);
-        elaborate.setPublicationDateTime(LocalDateTime.now());
         elaborate.setDescription(description);
-        if (keywords != null) {
-            elaborate.setKeywords(new HashSet<>(Arrays.asList(keywords.split(","))));
-        }
-        if (collection != null) {
-            if (collection.getId() != null) {
-                Collection c = collectionService.findCollectionById(collection.getId());
-                elaborate.setCollection(c);
-            } else {
-                Collection c = collectionService.saveCollection(collection);
-                elaborate.setCollection(c);
-            }
-        } else {
-            elaborate.setCollection(null);
-        }
-        if (project != null) {
-            elaborate.setProject(project);
-        }
         elaborateService.saveElaborate(elaborate);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -101,13 +90,10 @@ public class ElaborateController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> updateElaborate(
             @AuthenticationPrincipal UserDetails userDetails,
-            @RequestParam Category category,
-            @RequestParam("image") MultipartFile file,
-            @RequestParam String title,
-            String description,
-            Set<String> keywords,
-            Collection collection,
-            Project project,
+            @RequestParam(required = false) MultipartFile file,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String description,
+            @RequestParam(required = false) Long collectionId,
             @PathVariable Long id) {
         if (elaborateService.existsById(id)) {
             // Check if the authenticated user has the admin role or if the ID matches the
@@ -117,15 +103,18 @@ public class ElaborateController {
                     userDetails.getUsername().equals(
                             elaborateService.findElaborateById(id).getAuthor().getUsername())) {
                 Elaborate elaborate = elaborateService.findElaborateById(id);
-                elaborate.setAuthor(creativeService.findCreativeByUsername(userDetails.getUsername()));
-                elaborate.setCategory(category);
-                elaborate.setFile(cloudinaryService.uploadFile(file));
-                elaborate.setTitle(title);
-                elaborate.setPublicationDateTime(LocalDateTime.now());
-                elaborate.setDescription(description);
-                elaborate.setKeywords(keywords);
-                elaborate.setCollection(collection);
-                elaborate.setProject(project);
+                if (file != null) {
+                    elaborate.setFile(cloudinaryService.uploadFile(file));
+                }
+                if (title != null) {
+                    elaborate.setTitle(title);
+                }
+                if (collectionId != null) {
+                    elaborate.setCollection(collectionService.findCollectionById(collectionId));
+                }
+                if (description != null) {
+                    elaborate.setDescription(description);
+                }
                 elaborateService.updateElaborate(elaborate);
                 return ResponseEntity.ok().build();
             } else {
@@ -158,12 +147,6 @@ public class ElaborateController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Elaborate>> getAllElaborates() {
-        List<Elaborate> elaborates = elaborateService.getAllElaborates();
-        return ResponseEntity.ok(elaborates);
     }
 
 }

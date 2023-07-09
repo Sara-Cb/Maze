@@ -1,5 +1,6 @@
 package com.maze.models;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +36,14 @@ public class Project {
     @JoinColumn(name = "author", referencedColumnName = "username", nullable = false)
     private Creative author;
 
+    @ManyToOne
+    private Portfolio portfolio;
+
     @Column(nullable = false)
-    private String name;
+    private Timestamp publication;
+
+    @Column(nullable = false)
+    private String title;
 
     @Column(nullable = false)
     private String description;
@@ -50,8 +57,5 @@ public class Project {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Collection> collections = new ArrayList<>();
-
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Elaborate> elaborates = new ArrayList<>();
 
 }

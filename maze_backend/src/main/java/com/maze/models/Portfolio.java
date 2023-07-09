@@ -32,6 +32,9 @@ public class Portfolio {
 	private Creative creative;
 
 	@OneToMany(mappedBy = "portfolio", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<PortfolioItem> items = new ArrayList<>();
+	private List<Collection> collection = new ArrayList<>();
+
+	@OneToMany(mappedBy = "portfolio", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private List<Project> project = new ArrayList<>();
 
 }

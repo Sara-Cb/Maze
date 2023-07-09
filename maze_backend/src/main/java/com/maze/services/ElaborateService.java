@@ -1,6 +1,6 @@
 package com.maze.services;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -8,9 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.maze.enumerations.PortfolioItemType;
 import com.maze.models.Elaborate;
-import com.maze.models.PortfolioItem;
 import com.maze.repositories.ElaborateRepository;
 
 @Service
@@ -19,8 +17,7 @@ public class ElaborateService {
     @Autowired
     private ElaborateRepository repository;
 
-    @Autowired
-    private PortfolioItemService PIService;
+    Timestamp now = new Timestamp(System.currentTimeMillis());
 
     public Elaborate findElaborateById(Long id) {
         Optional<Elaborate> elaborate = repository.findById(id);
@@ -31,43 +28,13 @@ public class ElaborateService {
         }
     }
 
-    public void saveElaborate(Elaborate elaborate) {
-        if (elaborate.getId() != null) {
-            if (elaborate.getCollection() == null && elaborate.getProject() == null) {
-                if (PIService.existsByElaborateId(elaborate.getId())) {
-                    repository.save(elaborate);
-                    PortfolioItem portfolioItem = PIService.findPortfolioItemByElaborateId(elaborate.getId());
-                    portfolioItem.setUpdatedAt(LocalDate.now());
-                    PIService.updatePortfolioItem(portfolioItem);
-                } else {
-                    PortfolioItem portfolioItem = new PortfolioItem();
-                    portfolioItem.setCreatedAt(LocalDate.now());
-                    portfolioItem.setElaborate(elaborate);
-                    portfolioItem.setType(PortfolioItemType.ELABORATE);
-                    PIService.savePortfolioItem(portfolioItem);
-                }
-            } else {
-                if (elaborate.getProject() != null) {
-                    PortfolioItem portfolioItem = PIService
-                            .findPortfolioItemByProjectId(elaborate.getProject().getId());
-                    portfolioItem.setUpdatedAt(LocalDate.now());
-                    PIService.updatePortfolioItem(portfolioItem);
-                } else {
-                    PortfolioItem portfolioItem = PIService
-                            .findPortfolioItemByCollectionId(elaborate.getCollection().getId());
-                    portfolioItem.setUpdatedAt(LocalDate.now());
-                    PIService.updatePortfolioItem(portfolioItem);
-                }
-                repository.save(elaborate);
-            }
+    public Elaborate saveElaborate(Elaborate elaborate) {
+        if (elaborate.getId() == null) {
+            elaborate.setCreatedAt(now);
         } else {
-            if (elaborate.getCollection() == null && elaborate.getProject() == null) {
-                PortfolioItem portfolioItem = new PortfolioItem(elaborate, elaborate.getAuthor().getPortfolio());
-                PIService.savePortfolioItem(portfolioItem);
-            } else {
-                repository.save(elaborate);
-            }
+            elaborate.setUpdatedAt(now);
         }
+        return repository.save(elaborate);
     }
 
     public void updateElaborate(Elaborate elaborate) {

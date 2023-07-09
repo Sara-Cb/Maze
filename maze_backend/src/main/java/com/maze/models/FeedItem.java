@@ -35,9 +35,16 @@ public class FeedItem {
     @ManyToOne
     private Creative author;
 
-    @OneToOne
-    private PortfolioItem item;
+    @OneToOne(optional = true)
+    private Collection collection;
+
+    @OneToOne(optional = true)
+    private Project project;
+
+    @OneToOne(optional = true)
+    private Elaborate elaborate;
 
     @Enumerated(EnumType.STRING)
     private FeedItemType type;
+
 }

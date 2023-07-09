@@ -1,15 +1,14 @@
 package com.maze.models;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Timestamp;
 
-import com.maze.enumerations.Category;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -33,11 +32,10 @@ public class Elaborate {
 
     @ManyToOne
     @JoinColumn(name = "author", referencedColumnName = "username", nullable = false)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("author")
     private Creative author;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Category category;
 
     @Column(nullable = false)
     private String file;
@@ -46,17 +44,16 @@ public class Elaborate {
     private String title;
 
     @Column(nullable = false)
-    private LocalDateTime publicationDateTime;
+    private Timestamp createdAt;
+
+    @Column
+    private Timestamp updatedAt;
 
     private String description;
 
-    private Set<String> keywords = new HashSet<String>();
-
     @ManyToOne
-    @JoinColumn(nullable = true)
-    private Collection collection = null;
-
-    @ManyToOne
-    @JoinColumn(nullable = true)
-    private Project project = null;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("collection")
+    private Collection collection;
 }
