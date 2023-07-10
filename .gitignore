@@ -30,4 +30,5 @@ replay_pid*
 .*drawio.*
 
 logs/
-maze_backend/.env
+
+.env
