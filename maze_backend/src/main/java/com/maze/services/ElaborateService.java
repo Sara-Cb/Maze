@@ -31,14 +31,16 @@ public class ElaborateService {
     public Elaborate saveElaborate(Elaborate elaborate) {
         if (elaborate.getId() == null) {
             elaborate.setCreatedAt(now);
-        } else {
-            elaborate.setUpdatedAt(now);
+        }
+        if (elaborate.getCollection() != null) {
+            elaborate.getCollection().setUpdatedAt(now);
         }
         return repository.save(elaborate);
     }
 
     public void updateElaborate(Elaborate elaborate) {
         if (repository.existsById(elaborate.getId())) {
+            elaborate.setUpdatedAt(now);
             repository.save(elaborate);
         } else {
             throw new NoSuchElementException("Elaborate not found with ID: " + elaborate.getId());

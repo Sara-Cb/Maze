@@ -89,7 +89,6 @@ public class AuthService implements AuthServiceInterface {
         creative.setSkills(registerDto.getSkills());
 
         creative.setPortfolio(new Portfolio());
-        creative.setFollows(null);
 
         creativeService.saveCreative(creative);
 

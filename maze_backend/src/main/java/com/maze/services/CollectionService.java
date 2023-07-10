@@ -39,6 +39,7 @@ public class CollectionService {
 
     public Collection updateCollection(Collection collection) {
         if (repository.existsById(collection.getId())) {
+            collection.setUpdatedAt(now);
             return repository.save(collection);
         } else {
             throw new NoSuchElementException("Collection not found with ID: " + collection.getId());

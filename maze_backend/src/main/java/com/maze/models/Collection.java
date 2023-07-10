@@ -58,13 +58,13 @@ public class Collection {
 	@Column
 	private Timestamp updatedAt;
 
-	@Enumerated(EnumType.STRING)
-	private Category category;
-
 	@Column(nullable = false)
 	private String title;
 
 	private String description;
+
+	@Enumerated(EnumType.STRING)
+	private Category category;
 
 	@Column(name = "cover")
 	private String coverImage;

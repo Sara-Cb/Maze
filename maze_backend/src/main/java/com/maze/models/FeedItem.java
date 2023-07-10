@@ -1,6 +1,6 @@
 package com.maze.models;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import com.maze.enumerations.FeedItemType;
 
@@ -30,7 +30,7 @@ public class FeedItem {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime publicationDateTime;
+    private Timestamp publicationDateTime;
 
     @ManyToOne
     private Creative author;
@@ -41,10 +41,9 @@ public class FeedItem {
     @OneToOne(optional = true)
     private Project project;
 
-    @OneToOne(optional = true)
-    private Elaborate elaborate;
-
     @Enumerated(EnumType.STRING)
     private FeedItemType type;
+
+    private String caption;
 
 }

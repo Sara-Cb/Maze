@@ -22,6 +22,26 @@ public class CreativeService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    public boolean existsById(Long id) {
+        return repository.existsById(id);
+    }
+
+    public boolean existsByUsername(String username) {
+        return repository.existsByUsername(username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return repository.existsByEmail(email);
+    }
+
+    public boolean existsByUsernameOrEmail(String username, String email) {
+        return repository.existsByUsernameOrEmail(username, email);
+    }
+
+    public List<Creative> getAllCreatives() {
+        return repository.findAll();
+    }
+
     public Creative findCreativeById(Long id) {
         Optional<Creative> creative = repository.findById(id);
         if (creative.isPresent()) {
@@ -33,7 +53,7 @@ public class CreativeService {
     }
 
     public void saveCreative(Creative creative) {
-        creative.setPassword(creative.getPassword());
+        creative.setPassword(passwordEncoder.encode(creative.getPassword()));
         repository.save(creative);
     }
 
@@ -55,14 +75,6 @@ public class CreativeService {
         }
     }
 
-    public List<Creative> getAllCreatives() {
-        return repository.findAll();
-    }
-
-    public boolean existsById(Long id) {
-        return repository.existsById(id);
-    }
-
     public Creative findCreativeByEmail(String email) {
         return repository.findByEmail(email).get();
     }
@@ -79,18 +91,6 @@ public class CreativeService {
     public Set<Creative> searchCreative(String search) {
         return repository.findByUsernameContainingOrFirstnameContainingOrLastnameContainingOrStageNameContaining(search,
                 search, search, search);
-    }
-
-    public boolean existsByUsername(String username) {
-        return repository.existsByUsername(username);
-    }
-
-    public boolean existsByEmail(String email) {
-        return repository.existsByEmail(email);
-    }
-
-    public boolean existsByUsernameOrEmail(String username, String email) {
-        return repository.existsByUsernameOrEmail(username, email);
     }
 
     public Set<Creative> findCreativesByRolesIn(Set<Role> roles) {

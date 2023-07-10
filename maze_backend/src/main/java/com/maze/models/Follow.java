@@ -30,4 +30,9 @@ public class Follow {
     @JoinColumn(name = "followed_id", referencedColumnName = "id")
     private Creative followed;
 
+    public Follow(Creative follower, Creative followed) {
+        this.follower = follower;
+        this.followed = followed;
+    }
+
 }
