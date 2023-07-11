@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,6 +32,9 @@ public class CreativeController {
 
     @Autowired
     private CloudinaryService cloudinaryService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ResponseEntity<List<Creative>> getAllCreatives() {
@@ -79,7 +83,7 @@ public class CreativeController {
                         creativeService.findCreativeById(id).getUsername())) {
             Creative creative = creativeService.findCreativeById(id);
             if (password != null) {
-                creative.setPassword(password);
+                creative.setPassword(passwordEncoder.encode(password));
             }
             if (firstname != null) {
                 creative.setFirstname(firstname);

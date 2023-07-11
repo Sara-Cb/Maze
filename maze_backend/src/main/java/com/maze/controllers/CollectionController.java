@@ -25,11 +25,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.maze.enumerations.Category;
 import com.maze.models.Collection;
 import com.maze.models.Creative;
-import com.maze.models.Project;
+//import com.maze.models.Project;
 import com.maze.security.CloudinaryService;
 import com.maze.services.CollectionService;
 import com.maze.services.CreativeService;
-import com.maze.services.ProjectService;
+//import com.maze.services.ProjectService;
 
 import jakarta.transaction.Transactional;
 
@@ -43,8 +43,8 @@ public class CollectionController {
     @Autowired
     private CreativeService creativeService;
 
-    @Autowired
-    private ProjectService projectService;
+    // @Autowired
+    // private ProjectService projectService;
 
     @Autowired
     private CloudinaryService cloudinaryService;
@@ -65,7 +65,7 @@ public class CollectionController {
             @RequestParam(required = false) Category category,
             @RequestParam(required = false) MultipartFile coverImage,
             @RequestParam(required = false) String keywords,
-            @RequestParam(required = false) Long projectId,
+            // @RequestParam(required = false) Long projectId,
             @AuthenticationPrincipal UserDetails userDetails) {
         Collection collection = new Collection();
         Creative author = creativeService.findCreativeByUsername(userDetails.getUsername());
@@ -85,14 +85,16 @@ public class CollectionController {
         if (keywords != null) {
             collection.setKeywords(new HashSet<>(Arrays.asList(keywords.split(","))));
         }
-        if (projectId != null) {
-            Project project = projectService.findProjectById(projectId);
-            collection.setProject(project);
-            collection.setSingleElement(false);
-        } else {
-            collection.setProject(null);
-            collection.setSingleElement(true);
-        }
+        /*
+         * if (projectId != null) {
+         * Project project = projectService.findProjectById(projectId);
+         * collection.setProject(project);
+         * collection.setSingleElement(false);
+         * } else {
+         * collection.setProject(null);
+         * collection.setSingleElement(true);
+         * }
+         */
         collectionService.saveCollection(collection);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -106,7 +108,7 @@ public class CollectionController {
             @RequestParam(required = false) Category category,
             @RequestParam(required = false) MultipartFile coverImage,
             @RequestParam(required = false) String keywords,
-            @RequestParam(required = false) Long projectId,
+            // @RequestParam(required = false) Long projectId,
             @AuthenticationPrincipal UserDetails userDetails) {
         if (collectionService.existsById(id)) {
             // Check if the authenticated user has the admin role or if the ID matches the
@@ -132,14 +134,16 @@ public class CollectionController {
                 if (keywords != null) {
                     collection.setKeywords(new HashSet<>(Arrays.asList(keywords.split(", "))));
                 }
-                if (projectId != null) {
-                    Project project = projectService.findProjectById(projectId);
-                    collection.setProject(project);
-                    collection.setSingleElement(false);
-                } else {
-                    collection.setProject(null);
-                    collection.setSingleElement(true);
-                }
+                /*
+                 * if (projectId != null) {
+                 * Project project = projectService.findProjectById(projectId);
+                 * collection.setProject(project);
+                 * collection.setSingleElement(false);
+                 * } else {
+                 * collection.setProject(null);
+                 * collection.setSingleElement(true);
+                 * }
+                 */
                 collectionService.updateCollection(collection);
                 return ResponseEntity.ok().build();
             } else {

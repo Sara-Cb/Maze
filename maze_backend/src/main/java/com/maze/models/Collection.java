@@ -75,12 +75,17 @@ public class Collection {
 	@ElementCollection
 	private Set<String> keywords = new HashSet<String>();
 
-	@ManyToOne
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
-	@JsonIdentityReference(alwaysAsId = true)
-	@JsonProperty("project")
-	private Project project = null;
-
 	@Column(name = "single_element", nullable = false)
 	boolean singleElement;
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+	 * property = "username")
+	 * 
+	 * @JsonIdentityReference(alwaysAsId = true)
+	 * 
+	 * @JsonProperty("project")
+	 * private Project project = null;
+	 */
 }

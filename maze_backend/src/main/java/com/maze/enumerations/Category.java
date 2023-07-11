@@ -12,6 +12,8 @@ public enum Category {
     MUSIC("Music"),
     LITERATURE("Literature"),
     CRAFTS("Crafts"),
+    ART("Art"),
+    DESIGN("Design"),
     OTHER("Other");
 
     private final String displayName;
@@ -24,4 +26,3 @@ public enum Category {
         return displayName;
     }
 }
-

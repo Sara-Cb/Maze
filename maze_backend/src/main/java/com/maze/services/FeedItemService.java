@@ -1,5 +1,6 @@
 package com.maze.services;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -24,6 +25,8 @@ public class FeedItemService {
     @Autowired
     private FollowService followService;
 
+    Timestamp now = new Timestamp(System.currentTimeMillis());
+
     public List<FeedItem> getAllFeedItems() {
         return repository.findAll();
     }
@@ -46,21 +49,26 @@ public class FeedItemService {
     }
 
     public List<FeedItem> getAllMyFeedItems(String username) {
+        List<FeedItem> allItems = new ArrayList<>();
         List<Creative> follows = followService.findFollowedCreatives(username);
-        List<FeedItem> followsItems = new ArrayList<>();
+        List<FeedItem> myItems = findFeedItemsByAuthor(username);
+
+        for (FeedItem myItem : myItems) {
+            allItems.add(myItem);
+        }
 
         for (Creative follow : follows) {
             List<FeedItem> items = findFeedItemsByAuthor(follow.getUsername());
             for (FeedItem item : items) {
-                followsItems.add(item);
+                allItems.add(item);
             }
         }
 
-        return followsItems;
-
+        return allItems;
     }
 
     public FeedItem saveFeedItem(FeedItem feedItem) {
+        feedItem.setPublicationDateTime(now);
         return repository.save(feedItem);
     }
 

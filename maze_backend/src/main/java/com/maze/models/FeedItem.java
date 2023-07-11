@@ -37,10 +37,10 @@ public class FeedItem {
 
     @OneToOne(optional = true)
     private Collection collection;
-
-    @OneToOne(optional = true)
-    private Project project;
-
+    /*
+     * @OneToOne(optional = true)
+     * private Project project;
+     */
     @Enumerated(EnumType.STRING)
     private FeedItemType type;
 
