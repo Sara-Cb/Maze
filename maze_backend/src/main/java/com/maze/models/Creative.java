@@ -1,10 +1,13 @@
 package com.maze.models;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.maze.enumerations.Profession;
 import com.maze.enumerations.Skill;
 
@@ -57,9 +60,8 @@ public class Creative {
 
     @Column(nullable = false)
     @NotNull
-    private LocalDate registrationDate;
+    private Timestamp registrationDate;
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "creatives_roles", joinColumns = @JoinColumn(name = "creative_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role"))
     private Set<Role> roles = new HashSet<>();
@@ -87,7 +89,9 @@ public class Creative {
     @Column
     private String image;
 
-    @JsonIgnore
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("portfolioId")
     @OneToOne(cascade = CascadeType.ALL)
     private Portfolio portfolio;
 

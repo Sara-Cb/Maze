@@ -30,7 +30,7 @@ public enum Skill {
     VOCAL_COACHING("Vocal Coaching"),
     // Writing
     ARTICLE_WRITING("Article Writing"),
-    BLOGGING("Blogging"),
+    BLOGGING("Portfolioging"),
     BOOK_WRITING("Book Writing"),
     CONTENT_WRITING("Content Writing"),
     COPYWRITING("Copywriting"),

@@ -68,7 +68,7 @@ public class FeedItemService {
     }
 
     public FeedItem saveFeedItem(FeedItem feedItem) {
-        feedItem.setPublicationDateTime(now);
+        feedItem.setCreatedAt(now);
         return repository.save(feedItem);
     }
 

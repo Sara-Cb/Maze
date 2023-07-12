@@ -1,20 +1,24 @@
 import { combineReducers } from "redux";
-//import loginReducer from "../reducers/loginReducer";
-//import registerReducer from "../reducers/registerReducer";
-//import creativeReducer from "../reducers/creativeReducer";
-//import portfolioReducer from "../reducers/portfolioReducer";
-//import feedReducer from "../reducers/feedReducer";
+import loginReducer from "../reducers/loginReducer";
+import registerReducer from "../reducers/registerReducer";
+import creativeReducer from "../reducers/creativeReducer";
+import portfolioReducer from "../reducers/portfolioReducer";
+import feedItemReducer from "../reducers/feedItemReducer";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { configureStore } from "@reduxjs/toolkit";
+import elaborateReducer from "../reducers/elaborateReducer";
+import collectionReducer from "../reducers/collectionReducer";
 
 const rootReducer = combineReducers({
-  //login: loginReducer,
-  //register: registerReducer,
-  //me: creativeReducer,
-  //creative: creativeReducer,
-  //portfolio: portfolioReducer,
-  //feed: feedReducer,
+  login: loginReducer,
+  register: registerReducer,
+  me: creativeReducer,
+  creative: creativeReducer,
+  portfolio: portfolioReducer,
+  feedItem: feedItemReducer,
+  elaborate: elaborateReducer,
+  collection: collectionReducer,
 });
 
 const RESET_STORE = "RESET_STORE";

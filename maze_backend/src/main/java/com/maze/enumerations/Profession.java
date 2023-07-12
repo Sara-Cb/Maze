@@ -60,7 +60,7 @@ public enum Profession {
     TATTOO_ARTIST("Tattoo Artist"),
     VOICE_ACTOR("Voice Actor"),
     INFLUENCER("Influencer"),
-	OTHER("Other");
+    OTHER("Other");
 
     private final String displayName;
 

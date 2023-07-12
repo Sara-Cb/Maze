@@ -1,5 +1,4 @@
 import Role from "./roleType";
-import { Portfolio } from "./portfolioType";
 
 export enum CreativeActionType {
   GET_CREATIVE_REQUEST = "GET_CREATIVE_REQUEST",
@@ -24,9 +23,9 @@ export interface Creative {
   city: string;
   state: string;
   image: string;
-  portfolio: Portfolio;
   skills: string[];
   professions: string[];
+  portfolio: number;
 }
 
 export interface CreativeAction {

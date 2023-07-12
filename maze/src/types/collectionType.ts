@@ -1,6 +1,4 @@
-import { Creative } from "./creativeType";
 import { Elaborate } from "./elaborateType";
-import { Portfolio } from "./portfolioType";
 //import { Project } from "./projectType";
 
 export enum CollectionActionType {
@@ -20,18 +18,17 @@ export enum CollectionActionType {
 
 export interface Collection {
   id: number;
-  author: Creative;
-  portfolio: Portfolio;
   createdAt: string;
   updatedAt: string;
   title: string;
   description: string;
   category: string;
   coverImage: string;
-  keywords: string[];
   elaborates: Elaborate[];
-  //project: Project;
+  keywords: string[];
   singleElement: boolean;
+  author: string;
+  //project: Project;
 }
 
 export interface CollectionAction {

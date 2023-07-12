@@ -1,7 +1,3 @@
-import { Creative } from "./creativeType";
-import { Collection } from "./collectionType";
-import { Portfolio } from "./portfolioType";
-
 export enum ElaborateActionType {
   GET_ELABORATE_REQUEST = "GET_ELABORATE_REQUEST",
   GET_ELABORATE_SUCCESS = "GET_ELABORATE_SUCCESS",
@@ -19,14 +15,13 @@ export enum ElaborateActionType {
 
 export interface Elaborate {
   id: number;
-  author: Creative;
-  portfolio: Portfolio;
+  file: string;
+  title: string;
   createdAt: string;
   updatedAt: string;
-  title: string;
-  file: string;
   description: string;
-  collection: Collection;
+  author: string;
+  collection: number;
 }
 
 export interface ElaborateAction {
