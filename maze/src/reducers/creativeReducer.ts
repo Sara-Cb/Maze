@@ -33,12 +33,14 @@ const creativeReducer = (
 ): CreativeState => {
   switch (action.type) {
     case CreativeActionType.GET_CREATIVE_REQUEST:
+    case CreativeActionType.UPDATE_CREATIVE_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
       };
     case CreativeActionType.GET_CREATIVE_SUCCESS:
+    case CreativeActionType.UPDATE_CREATIVE_SUCCESS:
       return {
         ...state,
         creative: action.payload,
@@ -46,6 +48,7 @@ const creativeReducer = (
         error: null,
       };
     case CreativeActionType.GET_CREATIVE_FAILURE:
+    case CreativeActionType.UPDATE_CREATIVE_FAILURE:
       return {
         ...state,
         loading: false,

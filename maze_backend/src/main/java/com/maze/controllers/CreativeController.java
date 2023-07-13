@@ -42,26 +42,28 @@ public class CreativeController {
         return ResponseEntity.ok(creatives);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Creative> getCreativeById(
-            @PathVariable Long id) {
-        Creative creative = creativeService.findCreativeById(id);
+    @GetMapping("/{username}")
+    public ResponseEntity<Creative> getCreativeByUsername(
+            @PathVariable String username) {
+        Creative creative = creativeService.findCreativeByUsername(username);
+        System.out.println("**************" + creative);
         return ResponseEntity.ok(creative);
     }
 
-    @GetMapping("/{id}/portfolio")
+    @GetMapping("/{username}/portfolio")
     public ResponseEntity<Portfolio> getCreativePortfolioById(
-            @PathVariable Long id) {
-        Portfolio creativePortfolio = creativeService.findCreativeById(id).getPortfolio();
+            @PathVariable String username) {
+        Portfolio creativePortfolio = creativeService.findCreativeByUsername(username).getPortfolio();
         return ResponseEntity.ok(creativePortfolio);
     }
 
     @Transactional
-    @PutMapping("/{id}")
+    @PutMapping("/{username}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Creative> updateCreative(
             @PathVariable Long id,
-            @RequestParam String password,
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String password,
             @RequestParam(required = false) String firstname,
             @RequestParam(required = false) String lastname,
             @RequestParam(required = false) String stageName,
@@ -80,8 +82,11 @@ public class CreativeController {
         if (userDetails.getAuthorities().contains(
                 new SimpleGrantedAuthority("ROLE_ADMIN")) ||
                 userDetails.getUsername().equals(
-                        creativeService.findCreativeById(id).getUsername())) {
-            Creative creative = creativeService.findCreativeById(id);
+                        username)) {
+            Creative creative = creativeService.findCreativeByUsername(username);
+            if (username != null) {
+                creative.setUsername(username);
+            }
             if (password != null) {
                 creative.setPassword(passwordEncoder.encode(password));
             }
@@ -112,17 +117,17 @@ public class CreativeController {
             if (professions != null) {
                 creative.setProfessions(professions);
             }
-            creativeService.updateCreative(creative);
-            return ResponseEntity.ok(creative);
+            Creative updatedCreative = creativeService.updateCreative(creative);
+            return ResponseEntity.ok(updatedCreative);
         }
         // Return an error or unauthorized response
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{username}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> deleteCreative(
-            @PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+            @PathVariable String username, @AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -131,7 +136,8 @@ public class CreativeController {
         if (userDetails.getAuthorities().contains(
                 new SimpleGrantedAuthority("ROLE_ADMIN")) ||
                 userDetails.getUsername().equals(
-                        creativeService.findCreativeById(id).getUsername())) {
+                        username)) {
+            Long id = creativeService.findCreativeByUsername(username).getId();
             creativeService.deleteCreativeById(id);
             return ResponseEntity.noContent().build();
         }

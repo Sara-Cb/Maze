@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   login: loginReducer,
   register: registerReducer,
   me: creativeReducer,
-  creative: creativeReducer,
+  selectedCreative: creativeReducer,
   portfolio: portfolioReducer,
   feedItem: feedItemReducer,
   elaborate: elaborateReducer,
@@ -41,6 +41,10 @@ const persistedReducer = persistReducer(persistConfig, resettableReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export const persistor = persistStore(store);

@@ -59,7 +59,7 @@ public class CollectionController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping
-    public ResponseEntity<Void> createCollection(
+    public ResponseEntity<Collection> createCollection(
             @RequestParam String title,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) Category category,
@@ -95,14 +95,14 @@ public class CollectionController {
          * collection.setSingleElement(true);
          * }
          */
-        collectionService.saveCollection(collection);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        Collection newCollection = collectionService.saveCollection(collection);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newCollection);
     }
 
     @Transactional
     @PutMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Void> updateCollection(@PathVariable Long id,
+    public ResponseEntity<Collection> updateCollection(@PathVariable Long id,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) Category category,
@@ -132,7 +132,7 @@ public class CollectionController {
                     collection.setCoverImage(cloudinaryService.uploadFile(coverImage));
                 }
                 if (keywords != null) {
-                    collection.setKeywords(new HashSet<>(Arrays.asList(keywords.split(", "))));
+                    collection.setKeywords(new HashSet<>(Arrays.asList(keywords.split(","))));
                 }
                 /*
                  * if (projectId != null) {
@@ -144,8 +144,8 @@ public class CollectionController {
                  * collection.setSingleElement(true);
                  * }
                  */
-                collectionService.updateCollection(collection);
-                return ResponseEntity.ok().build();
+                Collection updatedCollection = collectionService.updateCollection(collection);
+                return ResponseEntity.ok(updatedCollection);
             } else {
                 // Return an error or unauthorized response
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

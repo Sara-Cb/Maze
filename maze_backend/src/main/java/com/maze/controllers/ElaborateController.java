@@ -59,7 +59,7 @@ public class ElaborateController {
 
     @PostMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Void> createElaborate(
+    public ResponseEntity<Elaborate> createElaborate(
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestParam MultipartFile file,
             @RequestParam String title,
@@ -80,15 +80,15 @@ public class ElaborateController {
         elaborate.setFile(cloudinaryService.uploadFile(file));
         elaborate.setTitle(title);
         elaborate.setDescription(description);
-        elaborateService.saveElaborate(elaborate);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        Elaborate newElaborate = elaborateService.saveElaborate(elaborate);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newElaborate);
     }
 
     // metodo crud non utilizzato
     @Transactional
     @PutMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Void> updateElaborate(
+    public ResponseEntity<Elaborate> updateElaborate(
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestParam(required = false) MultipartFile file,
             @RequestParam(required = false) String title,
@@ -115,8 +115,8 @@ public class ElaborateController {
                 if (description != null) {
                     elaborate.setDescription(description);
                 }
-                elaborateService.updateElaborate(elaborate);
-                return ResponseEntity.ok().build();
+                Elaborate updatedElaborate = elaborateService.updateElaborate(elaborate);
+                return ResponseEntity.ok().body(updatedElaborate);
             } else {
                 // Return an error or unauthorized response
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

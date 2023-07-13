@@ -57,9 +57,9 @@ public class CreativeService {
         repository.save(creative);
     }
 
-    public void updateCreative(Creative creative) {
+    public Creative updateCreative(Creative creative) {
         if (repository.existsById(creative.getId())) {
-            repository.save(creative);
+            return repository.save(creative);
         } else {
             throw new NoSuchElementException(
                     "Creative not found with ID: " + creative.getId());
