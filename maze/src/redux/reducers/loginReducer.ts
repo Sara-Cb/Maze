@@ -1,4 +1,8 @@
-import { LoginActionType, LoginAction, LoginState } from "../types/loginType";
+import {
+  LoginActionType,
+  LoginAction,
+  LoginState,
+} from "../../types/loginType";
 
 const initialState: LoginState = {
   session: {

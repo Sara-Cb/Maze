@@ -1,4 +1,4 @@
-import { LogoutAction, LogoutActionType } from "../types/logoutType";
+import { LogoutAction, LogoutActionType } from "../../types/logoutType";
 
 const initialState = {
   loading: false,

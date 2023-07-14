@@ -3,7 +3,7 @@ import {
   PortfolioActionType,
   PortfolioAction,
   Portfolio,
-} from "../types/portfolioType";
+} from "../../types/portfolioType";
 import { AnyAction } from "@reduxjs/toolkit";
 
 const getPortfolioRequest = (): PortfolioAction => ({

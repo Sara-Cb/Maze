@@ -2,7 +2,7 @@ import {
   ElaborateActionType,
   ElaborateAction,
   Elaborate,
-} from "./../types/elaborateType";
+} from "../../types/elaborateType";
 import { Dispatch } from "redux";
 import { AnyAction } from "@reduxjs/toolkit";
 

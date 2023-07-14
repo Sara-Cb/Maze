@@ -1,4 +1,4 @@
-import { LoginActionType, LoginAction, Session } from "../types/loginType";
+import { LoginActionType, LoginAction, Session } from "../../types/loginType";
 import { Dispatch } from "redux";
 import { RootState } from "../store/store";
 

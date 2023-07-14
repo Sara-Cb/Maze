@@ -2,7 +2,7 @@ import {
   PortfolioActionType,
   PortfolioAction,
   PortfolioState,
-} from "./../types/portfolioType";
+} from "../../types/portfolioType";
 
 const initialState: PortfolioState = {
   portfolio: {

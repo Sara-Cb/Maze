@@ -2,7 +2,7 @@ import {
   FeedItemActionType,
   FeedItemAction,
   FeedItem,
-} from "./../types/feedItemType";
+} from "../../types/feedItemType";
 import { Dispatch } from "redux";
 import { AnyAction } from "@reduxjs/toolkit";
 

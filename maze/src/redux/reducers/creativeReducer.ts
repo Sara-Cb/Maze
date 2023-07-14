@@ -2,7 +2,7 @@ import {
   CreativeActionType,
   CreativeAction,
   CreativeState,
-} from "../types/creativeType";
+} from "../../types/creativeType";
 
 const initialState: CreativeState = {
   creative: {

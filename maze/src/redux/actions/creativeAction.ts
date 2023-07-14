@@ -3,7 +3,7 @@ import {
   CreativeActionType,
   CreativeAction,
   Creative,
-} from "../types/creativeType";
+} from "../../types/creativeType";
 import { AnyAction } from "@reduxjs/toolkit";
 
 const getCreativeRequest = (): CreativeAction => ({

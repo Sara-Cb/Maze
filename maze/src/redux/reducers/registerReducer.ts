@@ -2,7 +2,7 @@ import {
   RegisterActionType,
   RegisterAction,
   RegisterState,
-} from "../types/registerType";
+} from "../../types/registerType";
 
 const initialState: RegisterState = {
   registered: false,

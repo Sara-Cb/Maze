@@ -2,7 +2,7 @@ import {
   CollectionActionType,
   CollectionAction,
   CollectionState,
-} from "../types/collectionType";
+} from "../../types/collectionType";
 
 const initialState: CollectionState = {
   collection: {

@@ -2,7 +2,7 @@ import {
   FeedItemActionType,
   FeedItemAction,
   FeedItemState,
-} from "../types/feedItemType";
+} from "../../types/feedItemType";
 
 const initialState: FeedItemState = {
   feedItem: {

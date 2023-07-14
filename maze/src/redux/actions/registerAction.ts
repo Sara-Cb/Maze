@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { RegisterAction, RegisterActionType } from "../types/registerType";
+import { RegisterAction, RegisterActionType } from "../../types/registerType";
 import { AnyAction } from "redux";
 
 const registerRequest = (): RegisterAction => ({

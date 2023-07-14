@@ -1,54 +1,42 @@
-import React, { useState } from "react";
-import { Form, Button, Container } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import loginFetch from "../../actions/loginAction";
+import { FormEvent, useRef, useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import { RootState, store } from "../../redux/store/store";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getCreative } from "../../redux/actions/creativeAction";
+import LoginForm from "../sections/LoginForm";
 
-const LoginPage: React.FC = () => {
-  const dispatch = useDispatch();
-  const { loading, error } = useSelector((state: RootState) => state.login);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const LoginPage = () => {
+  const dispatch = store.dispatch;
 
-  const handleLogin = () => {
-    dispatch(loginFetch(username, password));
-  };
+  const login = useSelector((state: RootState) => state.login);
+
+  useEffect(() => {
+    const loadCreative = async () => {
+      await dispatch(getCreative(login.session.username));
+    };
+    if (login.loggedIn) {
+      loadCreative();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [login]);
 
   return (
-    <Container>
-      <h1>Login</h1>
-      <Form>
-        <Form.Group controlId="formUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-
-        {error && <div className="text-danger">{error}</div>}
-
-        <Button
-          variant="primary"
-          type="button"
-          onClick={handleLogin}
-          disabled={loading}
-        >
-          {loading ? "Loading..." : "Login"}
-        </Button>
-      </Form>
+    <Container fluid>
+      <Row>
+        <Col className="col-6">
+          <h1 className="text-primary mb-2">Welcome</h1>
+          <h2 className="text-secondary small mb-3">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem ut
+            dicta sequi omnis sint
+          </h2>
+        </Col>
+        {
+          <Col>
+            <LoginForm />
+          </Col>
+        }
+      </Row>
     </Container>
   );
 };

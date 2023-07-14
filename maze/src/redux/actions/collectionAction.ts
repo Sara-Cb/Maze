@@ -2,7 +2,7 @@ import {
   CollectionActionType,
   CollectionAction,
   Collection,
-} from "../types/collectionType";
+} from "../../types/collectionType";
 import { Dispatch } from "redux";
 import { AnyAction } from "@reduxjs/toolkit";
 

@@ -1,4 +1,4 @@
-import { LogoutActionType, LogoutAction } from "../types/logoutType";
+import { LogoutActionType, LogoutAction } from "../../types/logoutType";
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 
 const getLogoutRequest = (): LogoutAction => ({

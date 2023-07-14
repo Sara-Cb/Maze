@@ -2,7 +2,7 @@ import {
   ElaborateActionType,
   ElaborateAction,
   ElaborateState,
-} from "../types/elaborateType";
+} from "../../types/elaborateType";
 
 const initialState: ElaborateState = {
   elaborate: {
