@@ -9,6 +9,7 @@ import storage from "redux-persist/lib/storage";
 import { configureStore } from "@reduxjs/toolkit";
 import elaborateReducer from "../reducers/elaborateReducer";
 import collectionReducer from "../reducers/collectionReducer";
+import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
   login: loginReducer,
@@ -44,7 +45,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(thunk),
 });
 
 export const persistor = persistStore(store);

@@ -46,7 +46,6 @@ public class CreativeController {
     public ResponseEntity<Creative> getCreativeByUsername(
             @PathVariable String username) {
         Creative creative = creativeService.findCreativeByUsername(username);
-        System.out.println("**************" + creative);
         return ResponseEntity.ok(creative);
     }
 

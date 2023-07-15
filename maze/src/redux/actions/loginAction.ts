@@ -40,6 +40,7 @@ const loginFetch = (username: string, password: string): any => {
       })
       .then((data) => {
         dispatch(getLoginSuccess(data));
+        //console.log(data);
       })
       .catch((error) => {
         dispatch(getLoginFailure(error.message));
