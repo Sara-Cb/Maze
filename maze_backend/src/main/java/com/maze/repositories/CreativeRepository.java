@@ -23,7 +23,4 @@ public interface CreativeRepository extends JpaRepository<Creative, Long> {
 
     Set<Creative> findByRolesIn(Set<Role> roles);
 
-    Set<Creative> findByUsernameContainingOrFirstnameContainingOrLastnameContainingOrStageNameContaining(
-            String username, String firstname,
-            String lastname, String stagename);
 }
