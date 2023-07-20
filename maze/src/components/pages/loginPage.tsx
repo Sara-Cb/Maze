@@ -3,10 +3,9 @@ import { Container, Row, Col } from "react-bootstrap";
 import { RootState, store } from "../../redux/store/store";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getCreative } from "../../redux/actions/creativeAction";
+import { getMe } from "../../redux/actions/meAction";
 import LoginForm from "../sections/LoginForm";
 import RegisterForm from "../sections/RegisterForm";
-import MazeNavbar from "../elements/MazeNavbar";
 
 const LoginPage = () => {
   const dispatch = store.dispatch;
@@ -24,7 +23,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     const loadCreative = async () => {
-      await dispatch(getCreative(login.session.username));
+      await dispatch(getMe(login.session.username));
     };
     if (login.loggedIn) {
       loadCreative();
@@ -33,10 +32,9 @@ const LoginPage = () => {
   }, [login]);
 
   return (
-    <Container className="pageContainer">
+    <Container fluid className="pageContainer">
       <Row>
         <Col>
-          <MazeNavbar />
           <Col className="col-6">
             <h1>Welcome to maze</h1>
             <h2>
@@ -53,7 +51,7 @@ const LoginPage = () => {
                   Login
                 </span>
                 /
-                <span onClick={handleClick} id="register">
+                <span onClick={handleClick} id="register" className="mazelink">
                   Register
                 </span>
               </h4>

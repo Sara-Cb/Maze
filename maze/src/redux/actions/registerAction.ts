@@ -1,6 +1,7 @@
 import { Dispatch } from "react";
 import { RegisterAction, RegisterActionType } from "../../types/registerType";
 import { AnyAction } from "redux";
+import { getMe } from "./meAction";
 
 const registerRequest = (): RegisterAction => ({
   type: RegisterActionType.REGISTER_REQUEST,
@@ -51,6 +52,7 @@ const registerFecth = (creative: {
       });
       if (response.status === 201) {
         dispatch(registerSuccess());
+        getMe(creative.username);
       } else {
         const errorText = await response.text();
         throw new Error(errorText);

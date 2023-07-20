@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import loginReducer from "../reducers/loginReducer";
 import registerReducer from "../reducers/registerReducer";
-import creativeReducer from "../reducers/creativeReducer";
+import creativeReducer from "../reducers/meReducer";
 import portfolioReducer from "../reducers/portfolioReducer";
 import feedItemReducer from "../reducers/feedItemReducer";
 import { persistStore, persistReducer } from "redux-persist";
@@ -10,11 +10,12 @@ import { configureStore } from "@reduxjs/toolkit";
 import elaborateReducer from "../reducers/elaborateReducer";
 import collectionReducer from "../reducers/collectionReducer";
 import thunk from "redux-thunk";
+import meReducer from "../reducers/meReducer";
 
 const rootReducer = combineReducers({
   login: loginReducer,
   register: registerReducer,
-  me: creativeReducer,
+  me: meReducer,
   selectedCreative: creativeReducer,
   portfolio: portfolioReducer,
   feedItem: feedItemReducer,

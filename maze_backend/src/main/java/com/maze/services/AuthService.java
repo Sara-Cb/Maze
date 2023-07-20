@@ -106,4 +106,8 @@ public class AuthService implements AuthServiceInterface {
             return RoleType.ROLE_USER;
     }
 
+    public void logout() {
+        SecurityContextHolder.clearContext();
+    }
+
 }

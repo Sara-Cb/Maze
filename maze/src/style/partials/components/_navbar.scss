@@ -1,7 +1,60 @@
+.mazeNavbar {
+  width: 100%;
+  height: 4rem;
+  padding: 0;
+  padding-top: 1rem;
+  z-index: 1000;
+  background-color: $maze-dark;
+  color: $maze-mintgreen;
+  .container-fluid {
+    @include fullDimensions;
+    .row {
+      @include fullDimensions;
+      margin: 0;
+      .col:last-child {
+        padding-top: 8px;
+        margin-left: auto;
+      }
+    }
+  }
+  #maze-nav {
+    background-color: $maze-dark;
+    width: min-content !important;
+    display: flex;
+    justify-content: end;
+    .navbar-nav {
+      text-align: end;
+      width: fit-content;
+      margin: 10px 30px !important;
+    }
+  }
+  .bi-list {
+    color: $maze-mintgreen;
+  }
+}
+
+.navToggle.navbar-toggler {
+  .navbar-toggler-icon {
+    color: $maze-mintgreen;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.navUnderline {
+  width: 50%;
+  height: 3px;
+  color: $maze-mintgreen;
+}
+
 .nav-link {
   color: $maze-mintgreen !important;
 }
 
 .nav-link:hover {
   color: $maze-darkgreen !important;
+}
+
+.navbarLogo {
+  height: 3rem;
 }

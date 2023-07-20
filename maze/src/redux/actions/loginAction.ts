@@ -1,6 +1,7 @@
 import { LoginActionType, LoginAction, Session } from "../../types/loginType";
 import { Dispatch } from "redux";
 import { RootState } from "../store/store";
+import { getMe } from "./meAction";
 
 const getLoginRequest = (): LoginAction => ({
   type: LoginActionType.LOGIN_REQUEST,
@@ -40,6 +41,7 @@ const loginFetch = (username: string, password: string): any => {
       })
       .then((data) => {
         dispatch(getLoginSuccess(data));
+        getMe(data.username);
         //console.log(data);
       })
       .catch((error) => {

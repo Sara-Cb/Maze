@@ -1,5 +1,5 @@
 import { useRef, useState, FormEvent, useEffect } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import loginFetch from "../../redux/actions/loginAction";
 import { store, RootState, resetStoreAction } from "../../redux/store/store";
@@ -7,7 +7,6 @@ import { store, RootState, resetStoreAction } from "../../redux/store/store";
 const LoginForm = () => {
   const dispatch = store.dispatch;
   const login = useSelector((state: RootState) => state.login);
-  const me = useSelector((state: RootState) => state.me);
   const formRef = useRef<HTMLFormElement>(null);
   const [formValues, setFormValues] = useState({
     username: "",
@@ -36,33 +35,38 @@ const LoginForm = () => {
   }, []);
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group controlId="formBasicEmail">
-        <Form.Control
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formValues.username}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Form.Group controlId="formBasicPassword">
-        <Form.Control
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formValues.password}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      {login.error && <p className="text-danger text-center">{login.error}</p>}
-      <div className="d-grid gap-2">
-        <Button variant="primary" size="lg" type="submit">
-          Login
-        </Button>
-      </div>
-      <p>{me.creative && <span>{me.creative.firstname}</span>}</p>
-    </Form>
+    <Row>
+      <Col>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Control
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={formValues.username}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formValues.password}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          {login.error && (
+            <p className="text-danger text-center">{login.error}</p>
+          )}
+          <div className="d-grid gap-2">
+            <Button variant="primary" size="lg" type="submit">
+              Login
+            </Button>
+          </div>
+        </Form>
+      </Col>
+    </Row>
   );
 };
 

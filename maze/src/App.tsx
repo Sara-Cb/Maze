@@ -9,6 +9,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <MazeNavbar />
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />

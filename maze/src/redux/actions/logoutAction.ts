@@ -1,5 +1,6 @@
 import { LogoutActionType, LogoutAction } from "../../types/logoutType";
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
+import { resetStoreAction } from "../store/store";
 
 const getLogoutRequest = (): LogoutAction => ({
   type: LogoutActionType.LOGOUT_REQUEST,
@@ -19,7 +20,7 @@ const getLogoutFailure = (error: string): LogoutAction => ({
   error: error,
 });
 
-const logoutFetch = (username: string, password: string) => {
+const logoutFetch = () => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(getLogoutRequest());
     try {
@@ -28,10 +29,10 @@ const logoutFetch = (username: string, password: string) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
       });
       if (response.ok) {
         dispatch(getLogoutSuccess());
+        dispatch(resetStoreAction);
       } else {
         throw new Error("Failed to logout");
       }
