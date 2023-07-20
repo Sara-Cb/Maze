@@ -1,15 +1,7 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 const HomePage = () => {
-  return (
-    <Container fluid>
-      <Row>
-        <Col>
-          <h1>Home</h1>
-        </Col>
-      </Row>
-    </Container>
-  );
+  return <Container fluid></Container>;
 };
 
 export default HomePage;

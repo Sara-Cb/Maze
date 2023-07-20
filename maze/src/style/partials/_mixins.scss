@@ -1,0 +1,32 @@
+@mixin myLink {
+  text-decoration: none;
+  color: $maze-darkgreen;
+  padding: 0;
+}
+
+@mixin myBtn {
+  border: 2px solid;
+  padding: 3px 10px;
+  margin: 5px;
+  font-weight: 600;
+}
+
+@mixin centeringFlex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin fullDimensions {
+  height: 100%;
+  width: 100%;
+}
+
+@mixin transition($transition) {
+  -moz-transition: $transition ease-in-out;
+  -o-transition: $transition ease-in-out;
+  -webkit-transition: $transition ease-in-out;
+  -ms-transition: $transition ease-in-out;
+  transition: $transition ease-in-out;
+}

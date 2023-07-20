@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { getCreative } from "../../redux/actions/creativeAction";
 import LoginForm from "../sections/LoginForm";
 import RegisterForm from "../sections/RegisterForm";
+import MazeNavbar from "../elements/MazeNavbar";
 
 const LoginPage = () => {
   const dispatch = store.dispatch;
@@ -32,26 +33,33 @@ const LoginPage = () => {
   }, [login]);
 
   return (
-    <Container fluid>
+    <Container className="pageContainer">
       <Row>
-        <Col className="col-6">
-          <h1>Welcome</h1>
-          <h2>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem ut
-            dicta sequi omnis sint
-          </h2>
+        <Col>
+          <MazeNavbar />
+          <Col className="col-6">
+            <h1>Welcome to maze</h1>
+            <h2>
+              Show your creative work, find other talents and start
+              collaborating!
+            </h2>
+          </Col>
         </Col>
         <Col>
-          <h4>
-            <span onClick={handleClick} id="login">
-              Login
-            </span>
-            /
-            <span onClick={handleClick} id="register">
-              Register
-            </span>
-          </h4>
-          {signForm === "login" ? <LoginForm /> : <RegisterForm />}
+          <Row>
+            <Col>
+              <h4>
+                <span onClick={handleClick} id="login" className="mazelink">
+                  Login
+                </span>
+                /
+                <span onClick={handleClick} id="register">
+                  Register
+                </span>
+              </h4>
+              {signForm === "login" ? <LoginForm /> : <RegisterForm />}
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Container>
