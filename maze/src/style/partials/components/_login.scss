@@ -1,0 +1,45 @@
+.authColumn {
+  height: 100%;
+  color: $maze-dark;
+}
+
+.authForm {
+  width: 90%;
+  margin: auto;
+  input,
+  select,
+  textarea {
+    border: 1px solid $maze-darkgreen !important;
+    color: $maze-dark !important;
+    border-radius: 0 !important;
+  }
+  input::placeholder,
+  select {
+    color: $maze-darkgreen !important;
+  }
+  input:focus {
+    background-color: $maze-darkgreen !important;
+    border: none;
+  }
+}
+
+//this is called: "having a mental breakdown"
+.authColumn,
+.emptyCol,
+#loginBackground {
+  background-color: $maze-mintgreen;
+}
+
+.authColumn {
+  z-index: 1001;
+}
+
+#loginBackground {
+  position: absolute;
+  padding: 0;
+  width: 50%;
+  height: 100vh;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}

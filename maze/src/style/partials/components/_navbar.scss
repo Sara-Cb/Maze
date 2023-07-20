@@ -12,24 +12,30 @@
       @include fullDimensions;
       margin: 0;
       .col:last-child {
-        padding-top: 8px;
         margin-left: auto;
       }
     }
   }
   #maze-nav {
-    background-color: $maze-dark;
+    background-color: $maze-dark !important;
     width: min-content !important;
+    position: absolute;
+    right: 0;
+    top: 4rem;
     display: flex;
-    justify-content: end;
-    .navbar-nav {
-      text-align: end;
-      width: fit-content;
-      margin: 10px 30px !important;
+    flex-direction: column;
+    align-items: end;
+    text-align: end;
+    width: fit-content;
+    margin: 10px 15px !important;
+    a {
+      margin-right: 5px;
     }
   }
   .bi-list {
     color: $maze-mintgreen;
+    font-size: 30px !important;
+    margin-left: 10px;
   }
 }
 
@@ -42,9 +48,12 @@
 }
 
 .navUnderline {
-  width: 50%;
-  height: 3px;
-  color: $maze-mintgreen;
+  width: 80%;
+  height: 0.7px;
+  position: absolute;
+  top: 4.2rem;
+  right: 0;
+  background-color: $maze-mintgreen;
 }
 
 .nav-link {
@@ -61,12 +70,13 @@
 }
 
 .navbarLogo {
-  height: 3rem;
+  height: 4rem;
 }
 
 .searchForm {
   display: flex;
   align-items: center;
+  color: $maze-mintgreen !important;
   input {
     background-color: $maze-darkgreen-bg;
     border: 1px solid $maze-mintgreen;
@@ -82,6 +92,7 @@
   }
   .bi {
     font-size: 20px;
+    margin-left: 10px;
     margin-right: 10px;
   }
 }

@@ -14,6 +14,7 @@ const MazeNavbar = () => {
   const [isMdScreen, setIsMdScreen] = useState(window.innerWidth >= 768);
   const [isLgScreen, setIsLgScreen] = useState(window.innerWidth >= 1200);
   const [activeLink, setActiveLink] = useState("");
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -35,12 +36,16 @@ const MazeNavbar = () => {
     }
   }, [location]);
 
+  const handleToggle = () => {
+    setIsNavOpen(!isNavOpen);
+  };
+
   return (
-    <Navbar className="mazeNavbar">
+    <Navbar className="mazeNavbar" expand="md">
       <Container fluid>
         <Row>
           <Col className="col-4">
-            <Navbar.Brand as={Link} to="/home">
+            <Navbar.Brand as={Link} to={isNotLogged ? "/" : "/home"}>
               <img
                 className="navbarLogo"
                 src={process.env.PUBLIC_URL + "/visual/png/Logo_on_dark.png"}
@@ -50,17 +55,20 @@ const MazeNavbar = () => {
           </Col>
 
           {isNotLogged ? (
-            <Col className="col-4">
-              <ResearchBar />
-            </Col>
+            <>
+              <Col className="col-2 d-flex align-items-center justify-content-end">
+                <ResearchBar />
+              </Col>
+              <Col className="col-6"></Col>
+            </>
           ) : isLgScreen ? (
             <Col className="col-8">
-              <Row>
+              <Row className="align-items-center">
                 <Col>
                   <ResearchBar />
                 </Col>
                 <Col>
-                  <Nav className="m-auto">
+                  <Nav className="m-auto justify-content-end">
                     <Nav.Item>
                       <Nav.Link
                         as={Link}
@@ -85,78 +93,65 @@ const MazeNavbar = () => {
               </Row>
             </Col>
           ) : isMdScreen ? (
-            <>
-              <ResearchBar />
-              <Navbar.Toggle
-                aria-controls="maze-nav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="bi bi-list" />
-              </Navbar.Toggle>
-              <Navbar.Collapse id="maze-nav">
-                <Nav className="m-auto">
-                  <Nav.Item>
-                    <Nav.Link
-                      as={Link}
-                      to="/portfolio/me"
-                      className={activeLink === "p" ? "active" : ""}
-                    >
-                      Portfolio
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link
-                      as={Link}
-                      to="/feed"
-                      className={activeLink === "f" ? "active" : ""}
-                    >
-                      Feed
-                    </Nav.Link>
-                  </Nav.Item>
-                  <LogoutButton />
-                </Nav>
-              </Navbar.Collapse>
-            </>
+            <Col className="col-8">
+              <Nav className="d-flex justify-content-end mt-2">
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to="/portfolio/me"
+                    className={activeLink === "p" ? "active" : ""}
+                  >
+                    Portfolio
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to="/feed"
+                    className={activeLink === "f" ? "active" : ""}
+                  >
+                    Feed
+                  </Nav.Link>
+                </Nav.Item>
+                <ResearchBar />
+                <LogoutButton />
+              </Nav>
+            </Col>
           ) : (
             <>
-              <ResearchBar />
-              <Navbar.Toggle
-                aria-controls="maze-nav"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span className="bi bi-list" />
-              </Navbar.Toggle>
-              <Navbar.Collapse id="maze-nav">
-                <Nav className="m-auto">
-                  <Nav.Item>
-                    <Nav.Link
-                      as={Link}
-                      to="/portfolio/me"
-                      className={activeLink === "p" ? "active" : ""}
-                    >
-                      Portfolio
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link
-                      as={Link}
-                      to="/feed"
-                      className={activeLink === "f" ? "active" : ""}
-                    >
-                      Feed
-                    </Nav.Link>
-                  </Nav.Item>
-                  <Nav.Item>
-                    <LogoutButton />
-                  </Nav.Item>
-                </Nav>
-              </Navbar.Collapse>
+              <Col className="d-flex flex-row justify-content-end align-items-center">
+                <ResearchBar />
+                <span
+                  className="bi bi-list d-block fs-5"
+                  onClick={handleToggle}
+                />
+              </Col>
+              <div id="maze-nav" className={isNavOpen ? "" : "d-none"}>
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to="/portfolio/me"
+                    className={activeLink === "p" ? "active" : ""}
+                  >
+                    Portfolio
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to="/feed"
+                    className={activeLink === "f" ? "active" : ""}
+                  >
+                    Feed
+                  </Nav.Link>
+                </Nav.Item>
+                <LogoutButton />
+              </div>
             </>
           )}
         </Row>
       </Container>
+      <div className="navUnderline" />
     </Navbar>
   );
 };
