@@ -121,6 +121,7 @@ body,
   padding: 3px 10px;
   margin: 5px;
   font-weight: 600;
+  cursor: pointer;
   background-color: #faf0f0;
   border-color: #04b597;
   color: #04b597;
@@ -131,6 +132,7 @@ body,
   padding: 3px 10px;
   margin: 5px;
   font-weight: 600;
+  cursor: pointer;
   background-color: #1c2627;
   border-color: #8cf5c9;
   color: #8cf5c9;
@@ -141,18 +143,20 @@ body,
   padding: 3px 10px;
   margin: 5px;
   font-weight: 600;
+  cursor: pointer;
   background-color: #04b597;
-  border-color: #faf0f0;
+  border: none;
   color: #faf0f0;
 }
 
-.btnGreenDark {
+.btnGreenDark:hover {
   border: 2px solid;
   padding: 3px 10px;
   margin: 5px;
   font-weight: 600;
+  cursor: pointer;
   background-color: #8cf5c9;
-  border-color: #1c2627;
+  border: none;
   color: #1c2627;
 }
 
@@ -161,16 +165,18 @@ body,
   padding: 3px 10px;
   margin: 5px;
   font-weight: 600;
+  cursor: pointer;
   background-color: #8cf5c9;
   border-color: #1c2627;
   color: #1c2627;
 }
 
-.btnGreenLight {
+.btnGreenLight:hover {
   border: 2px solid;
   padding: 3px 10px;
   margin: 5px;
   font-weight: 600;
+  cursor: pointer;
   background-color: #04b597;
   border-color: #faf0f0;
   color: #faf0f0;
@@ -181,16 +187,18 @@ body,
   padding: 3px 10px;
   margin: 5px;
   font-weight: 600;
+  cursor: pointer;
   background-color: #1c2627;
   border-color: #8cf5c9;
   color: #8cf5c9;
 }
 
-.btnDark {
+.btnDark:hover {
   border: 2px solid;
   padding: 3px 10px;
   margin: 5px;
   font-weight: 600;
+  cursor: pointer;
   background-color: #faf0f0;
   border-color: #8cf5c9;
   color: #8cf5c9;
@@ -200,4 +208,29 @@ body,
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+}
+.searchForm input {
+  background-color: #025144;
+  border: 1px solid #8cf5c9;
+  color: #8cf5c9;
+}
+.searchForm input::-moz-placeholder {
+  color: #8cf5c9;
+}
+.searchForm input::placeholder {
+  color: #8cf5c9;
+}
+.searchForm input:focus {
+  background-color: #8cf5c9;
+  color: #1c2627;
+  border: none;
+}
+.searchForm .bi {
+  font-size: 20px;
+  margin-right: 10px;
 }/*# sourceMappingURL=style.css.map */

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Navbar, Nav, Container, Row, Col } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import ResearchBar from "./ResearchBar";
+import LogoutButton from "./LogoutButton";
 
 const MazeNavbar = () => {
   const location = useLocation();
@@ -66,6 +67,7 @@ const MazeNavbar = () => {
                         Feed
                       </Nav.Link>
                     </Nav.Item>
+                    <LogoutButton />
                   </Nav>
                 </Col>
               </Row>
@@ -92,9 +94,7 @@ const MazeNavbar = () => {
                       Feed
                     </Nav.Link>
                   </Nav.Item>
-                  <Nav.Item>
-                    <Nav.Link>Logout</Nav.Link>
-                  </Nav.Item>
+                  <LogoutButton />
                 </Nav>
               </Navbar.Collapse>
             </>
@@ -121,7 +121,7 @@ const MazeNavbar = () => {
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link>Logout</Nav.Link>
+                    <LogoutButton />
                   </Nav.Item>
                 </Nav>
               </Navbar.Collapse>

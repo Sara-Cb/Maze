@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { store } from "../../redux/store/store";
+import { resetStoreAction, store } from "../../redux/store/store";
 import logoutFetch from "../../redux/actions/logoutAction";
 
 const LogoutButton = () => {
@@ -9,8 +9,9 @@ const LogoutButton = () => {
 
   const handleLogout = () => {
     dispatch(logoutFetch());
-    window.location.href = "/";
+    dispatch(resetStoreAction);
     console.log("Logout completed!");
+    window.location.href = "/";
     setShowModal(false); // Chiude il modale dopo aver effettuato il logout
   };
 
@@ -27,12 +28,12 @@ const LogoutButton = () => {
       <p className="btnGreenDark" onClick={handleShowModal}>
         Logout
       </p>
-      ;
+
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>Confirm Logout</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure to logout?</Modal.Body>
+        <Modal.Body>Are you sure you want to logout?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseModal}>
             No

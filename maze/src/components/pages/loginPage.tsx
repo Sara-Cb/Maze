@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { RootState, store } from "../../redux/store/store";
+import { RootState } from "../../redux/store/store";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getMe } from "../../redux/actions/meAction";
 import LoginForm from "../sections/LoginForm";
 import RegisterForm from "../sections/RegisterForm";
 
 const LoginPage = () => {
-  const dispatch = store.dispatch;
-
   const login = useSelector((state: RootState) => state.login);
   const [signForm, setSignForm] = useState("login");
 
@@ -22,11 +19,8 @@ const LoginPage = () => {
   };
 
   useEffect(() => {
-    const loadCreative = async () => {
-      await dispatch(getMe(login.session.username));
-    };
     if (login.loggedIn) {
-      loadCreative();
+      window.location.href = "/home";
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login]);

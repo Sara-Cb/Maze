@@ -72,13 +72,13 @@ body,
 .btnGreenDark {
   @include myBtn;
   background-color: $maze-darkgreen;
-  border-color: $maze-light;
+  border: none;
   color: $maze-light;
 }
-.btnGreenDark {
+.btnGreenDark:hover {
   @include myBtn;
   background-color: $maze-mintgreen;
-  border-color: $maze-dark;
+  border: none;
   color: $maze-dark;
 }
 
@@ -88,7 +88,7 @@ body,
   border-color: $maze-dark;
   color: $maze-dark;
 }
-.btnGreenLight {
+.btnGreenLight:hover {
   @include myBtn;
   background-color: $maze-darkgreen;
   border-color: $maze-light;
@@ -101,7 +101,7 @@ body,
   border-color: $maze-mintgreen;
   color: $maze-mintgreen;
 }
-.btnDark {
+.btnDark:hover {
   @include myBtn;
   background-color: $maze-light;
   border-color: $maze-mintgreen;
@@ -112,4 +112,26 @@ body,
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  input {
+    background-color: darken($maze-darkgreen, $amount: 20);
+    border: 1px solid $maze-mintgreen;
+    color: $maze-mintgreen;
+  }
+  input::placeholder {
+    color: $maze-mintgreen;
+  }
+  input:focus {
+    background-color: $maze-mintgreen;
+    color: $maze-dark;
+    border: none;
+  }
+  .bi {
+    font-size: 20px;
+    margin-right: 10px;
+  }
 }
