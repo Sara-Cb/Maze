@@ -3,13 +3,17 @@ import { Navbar, Nav, Container, Row, Col } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import ResearchBar from "./ResearchBar";
 import LogoutButton from "./LogoutButton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store/store";
 
 const MazeNavbar = () => {
   const location = useLocation();
-  const isLoginPage = location.pathname === "/";
+  const login = useSelector((state: RootState) => state.login);
+  const isNotLogged = !login.loggedIn;
 
   const [isMdScreen, setIsMdScreen] = useState(window.innerWidth >= 768);
   const [isLgScreen, setIsLgScreen] = useState(window.innerWidth >= 1200);
+  const [activeLink, setActiveLink] = useState("");
 
   useEffect(() => {
     const handleResize = () => {
@@ -25,9 +29,9 @@ const MazeNavbar = () => {
 
   useEffect(() => {
     if (location.pathname === "/portfolio/me") {
-      //sottolinea portfolio
+      setActiveLink("p");
     } else if (location.pathname === "/feed") {
-      //sottolinea feed
+      setActiveLink("f");
     }
   }, [location]);
 
@@ -45,7 +49,7 @@ const MazeNavbar = () => {
             </Navbar.Brand>
           </Col>
 
-          {isLoginPage ? (
+          {isNotLogged ? (
             <Col className="col-4">
               <ResearchBar />
             </Col>
@@ -58,12 +62,20 @@ const MazeNavbar = () => {
                 <Col>
                   <Nav className="m-auto">
                     <Nav.Item>
-                      <Nav.Link as={Link} to="/portfolio">
+                      <Nav.Link
+                        as={Link}
+                        to="/portfolio/me"
+                        className={activeLink === "p" ? "active" : ""}
+                      >
                         Portfolio
                       </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link as={Link} to="/feed">
+                      <Nav.Link
+                        as={Link}
+                        to="/feed"
+                        className={activeLink === "f" ? "active" : ""}
+                      >
                         Feed
                       </Nav.Link>
                     </Nav.Item>
@@ -85,12 +97,20 @@ const MazeNavbar = () => {
               <Navbar.Collapse id="maze-nav">
                 <Nav className="m-auto">
                   <Nav.Item>
-                    <Nav.Link as={Link} to="/portfolio">
+                    <Nav.Link
+                      as={Link}
+                      to="/portfolio/me"
+                      className={activeLink === "p" ? "active" : ""}
+                    >
                       Portfolio
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link as={Link} to="/feed">
+                    <Nav.Link
+                      as={Link}
+                      to="/feed"
+                      className={activeLink === "f" ? "active" : ""}
+                    >
                       Feed
                     </Nav.Link>
                   </Nav.Item>
@@ -111,12 +131,20 @@ const MazeNavbar = () => {
               <Navbar.Collapse id="maze-nav">
                 <Nav className="m-auto">
                   <Nav.Item>
-                    <Nav.Link as={Link} to="/portfolio">
+                    <Nav.Link
+                      as={Link}
+                      to="/portfolio/me"
+                      className={activeLink === "p" ? "active" : ""}
+                    >
                       Portfolio
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link as={Link} to="/feed">
+                    <Nav.Link
+                      as={Link}
+                      to="/feed"
+                      className={activeLink === "f" ? "active" : ""}
+                    >
                       Feed
                     </Nav.Link>
                   </Nav.Item>

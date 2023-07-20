@@ -51,10 +51,37 @@
   color: $maze-mintgreen !important;
 }
 
+.nav-link.active {
+  font-weight: normal;
+  color: $maze-darkgreen !important;
+}
+
 .nav-link:hover {
   color: $maze-darkgreen !important;
 }
 
 .navbarLogo {
   height: 3rem;
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  input {
+    background-color: $maze-darkgreen-bg;
+    border: 1px solid $maze-mintgreen;
+    color: $maze-mintgreen;
+  }
+  input::placeholder {
+    color: $maze-mintgreen;
+  }
+  input:focus {
+    background-color: $maze-mintgreen;
+    color: $maze-dark;
+    border: none;
+  }
+  .bi {
+    font-size: 20px;
+    margin-right: 10px;
+  }
 }

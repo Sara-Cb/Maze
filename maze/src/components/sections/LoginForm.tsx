@@ -1,7 +1,7 @@
 import { useRef, useState, FormEvent, useEffect } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import loginFetch from "../../redux/actions/loginAction";
+import { loginFetch } from "../../redux/actions/loginAction";
 import { store, RootState, resetStoreAction } from "../../redux/store/store";
 
 const LoginForm = () => {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { resetStoreAction, store } from "../../redux/store/store";
-import logoutFetch from "../../redux/actions/logoutAction";
+import { store } from "../../redux/store/store";
+import { logoutFetch } from "../../redux/actions/loginAction";
 
 const LogoutButton = () => {
   const [showModal, setShowModal] = useState(false);
@@ -9,7 +9,6 @@ const LogoutButton = () => {
 
   const handleLogout = () => {
     dispatch(logoutFetch());
-    dispatch(resetStoreAction);
     console.log("Logout completed!");
     window.location.href = "/";
     setShowModal(false); // Chiude il modale dopo aver effettuato il logout

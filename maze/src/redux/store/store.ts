@@ -27,7 +27,7 @@ const RESET_STORE = "RESET_STORE";
 
 export const resetStoreAction = { type: RESET_STORE };
 
-const resettableReducer = (state: any, action: any) => {
+export const resettableReducer = (state: any, action: any) => {
   if (action.type === RESET_STORE) {
     state = undefined;
   }

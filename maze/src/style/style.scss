@@ -7,6 +7,7 @@
 
 @import "./partials/variables";
 @import "./partials/mixins";
+@import "./partials/colors";
 @import "./partials/components/navbar";
 
 html,
@@ -20,13 +21,14 @@ body,
   margin: 0;
   font-size: 16px;
   line-height: 1.8;
-  font-weight: normal;
+  font-weight: lighter;
   background-color: $maze-dark;
   color: $maze-light;
 }
 
 .pageContainer {
   @include fullDimensions;
+  margin-top: 4.5rem;
   padding: 0;
 }
 
@@ -34,6 +36,19 @@ body,
   width: 100%;
   justify-content: center;
   margin: 0;
+}
+
+h1 {
+  color: $maze-mintgreen !important;
+  font-weight: bold !important;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $maze-darkgreen !important;
 }
 
 .sectionContainer {
@@ -112,26 +127,4 @@ body,
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
-
-.searchForm {
-  display: flex;
-  align-items: center;
-  input {
-    background-color: darken($maze-darkgreen, $amount: 20);
-    border: 1px solid $maze-mintgreen;
-    color: $maze-mintgreen;
-  }
-  input::placeholder {
-    color: $maze-mintgreen;
-  }
-  input:focus {
-    background-color: $maze-mintgreen;
-    color: $maze-dark;
-    border: none;
-  }
-  .bi {
-    font-size: 20px;
-    margin-right: 10px;
-  }
 }

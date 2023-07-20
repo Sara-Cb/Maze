@@ -21,6 +21,7 @@ const loginReducer = (
 ): LoginState => {
   switch (action.type) {
     case LoginActionType.LOGIN_REQUEST:
+    case LoginActionType.LOGOUT_REQUEST:
       return {
         ...state,
         loading: true,
@@ -40,6 +41,20 @@ const loginReducer = (
         loggedIn: false,
         loading: false,
         error: action.payload || "Wrong username or password.",
+      };
+    case LoginActionType.LOGOUT_SUCCESS:
+      return {
+        session: null,
+        loggedIn: false,
+        loading: false,
+        error: null,
+      };
+    case LoginActionType.LOGOUT_FAILURE:
+      return {
+        ...state,
+        loggedIn: true,
+        loading: false,
+        error: "Something went wrong",
       };
     default:
       return state;
