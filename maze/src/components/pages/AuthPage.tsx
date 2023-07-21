@@ -5,10 +5,12 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import LoginForm from "../sections/LoginForm";
 import RegisterForm from "../sections/RegisterForm";
+import { useNavigate } from "react-router";
 
-const LoginPage = () => {
+const AuthPage = () => {
   const login = useSelector((state: RootState) => state.login);
   const [signForm, setSignForm] = useState("login");
+  const navigate = useNavigate();
 
   const handleClick: React.MouseEventHandler<HTMLSpanElement> = (event) => {
     event.preventDefault();
@@ -20,7 +22,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (login.loggedIn) {
-      window.location.href = "/home";
+      navigate("/home");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login]);
@@ -103,4 +105,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default AuthPage;

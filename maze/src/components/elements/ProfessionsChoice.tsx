@@ -12,8 +12,9 @@ const ProfessionsChoice: React.FC<ProfessionsChoiceProps> = ({
   formValues,
   onChange,
 }) => {
-  const [selectedProfession, setSelectedProfession] =
-    useState<Profession | null>(null);
+  const [selectedProfession, setSelectedProfession] = useState<
+    Profession | undefined
+  >(undefined);
 
   const handleProfessionChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedProfessionName = e.target.value;
@@ -21,7 +22,7 @@ const ProfessionsChoice: React.FC<ProfessionsChoiceProps> = ({
       (key) =>
         Profession[key as keyof typeof Profession] === selectedProfessionName
     );
-    setSelectedProfession(selectedProfession as Profession | null);
+    setSelectedProfession(selectedProfession as Profession | undefined);
   };
 
   const handleAddProfession = () => {
@@ -38,7 +39,7 @@ const ProfessionsChoice: React.FC<ProfessionsChoiceProps> = ({
         professions: updatedProfessions,
       };
       onChange(updatedFormValues);
-      setSelectedProfession(null);
+      setSelectedProfession(undefined);
     }
   };
 
@@ -54,7 +55,7 @@ const ProfessionsChoice: React.FC<ProfessionsChoiceProps> = ({
   };
 
   useEffect(() => {
-    setSelectedProfession(null);
+    setSelectedProfession(undefined);
   }, [formValues.professions]);
 
   return (
@@ -68,24 +69,21 @@ const ProfessionsChoice: React.FC<ProfessionsChoiceProps> = ({
         >
           <option value="">Select a profession</option>
           {Object.keys(Profession).map((key) => (
-            <option
-              key={key}
-              value={Profession[key as keyof typeof Profession]}
-            >
+            <option key={key} value={selectedProfession}>
               {Profession[key as keyof typeof Profession]}
             </option>
           ))}
         </Form.Select>
       </Form.Group>
       {formValues.professions.length > 0 && (
-        <div>
+        <div className="text-start">
           <p>Selected professions:</p>
           <ul>
             {formValues.professions.map((profession: Profession) => (
               <li key={profession}>
                 {Profession[profession as keyof typeof Profession]}
                 <Button
-                  variant="link"
+                  className="ms-2 btnDarkM"
                   onClick={() => handleRemoveProfession(profession)}
                 >
                   Remove
@@ -96,7 +94,7 @@ const ProfessionsChoice: React.FC<ProfessionsChoiceProps> = ({
         </div>
       )}
       {formValues.professions.length < 3 && selectedProfession && (
-        <Button variant="primary" onClick={handleAddProfession}>
+        <Button className="btnWhiteM" onClick={handleAddProfession}>
           Add Profession
         </Button>
       )}

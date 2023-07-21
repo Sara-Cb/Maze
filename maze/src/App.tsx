@@ -1,7 +1,7 @@
 import "./style/style.scss";
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./components/pages/LoginPage";
+import AuthPage from "./components/pages/AuthPage";
 import HomePage from "./components/pages/HomePage";
 import MazeNavbar from "./components/elements/MazeNavbar";
 import { useSelector } from "react-redux";
@@ -28,7 +28,7 @@ function App() {
       <BrowserRouter>
         <MazeNavbar />
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<AuthPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/feed" element={<FeedPage />} />
           <Route path="/portfolio/:username" element={<PortfolioPage />} />
