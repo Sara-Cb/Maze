@@ -1,0 +1,125 @@
+.mirror {
+  background-color: $maze-mintgreen;
+  color: $maze-dark;
+  text-align: center;
+  padding: 0;
+}
+
+.feedCol {
+  width: 100%;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  .feedRow {
+    width: 100%;
+    margin: auto;
+    .sectionContainer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: auto;
+      padding: 0;
+    }
+  }
+  .dropdown {
+    text-align: end;
+    .dropdown-toggle::after {
+      display: none !important;
+    }
+    .postEditMenu {
+      background-color: $maze-dark !important;
+      text-align: end;
+      a {
+        color: $maze-mintgreen !important;
+      }
+      a:hover {
+        color: $maze-darkgreen !important;
+        background-color: $maze-light;
+      }
+      border: none;
+      font-size: 18px;
+    }
+  }
+}
+
+.postContainer {
+  width: 95%;
+  max-width: 600px;
+  background: rgb(4, 181, 151);
+  background: linear-gradient(
+    180deg,
+    $maze-darkgreen 0%,
+    darken($maze-darkgreen, 20) 90%
+  );
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.postProfile {
+  display: flex;
+  align-items: center;
+  .postProfileDetails {
+    margin-left: 1rem;
+    p {
+      margin: 0;
+      font-size: 10.5px;
+      color: $maze-dark;
+      font-weight: 400;
+    }
+    p.stagename {
+      font-weight: 700;
+      color: $maze-dark;
+      font-size: 21px;
+    }
+  }
+  .postProfileImage {
+    width: 100%;
+    aspect-ratio: 1/1;
+    max-width: 70px;
+    min-width: 60px;
+    border-radius: 1rem;
+  }
+}
+
+.postCollection {
+  font-size: 16px;
+  margin-top: 1rem !important;
+  color: $maze-dark;
+  font-weight: 500;
+
+  .expanded {
+    max-height: none;
+    -webkit-line-clamp: 10;
+  }
+  .collapsed {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .postCollectionImg {
+    margin: 0;
+    margin-right: 1rem;
+    padding: 0;
+    a {
+      width: 100%;
+    }
+    img {
+      max-width: 12rem;
+      width: inherit;
+      min-width: none;
+      border: 2px solid $maze-dark;
+    }
+  }
+}
+
+.postCollection > .col-sm-7 {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  button {
+    width: 7rem;
+  }
+}

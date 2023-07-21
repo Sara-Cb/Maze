@@ -1,6 +1,10 @@
 import { Collection } from "./collectionType";
+import { Creative } from "./creativeType";
 
 export enum FeedItemActionType {
+  GET_FEED_REQUEST = "GET_FEED_REQUEST",
+  GET_FEED_SUCCESS = "GET_FEED_SUCCESS",
+  GET_FEED_FAILURE = "GET_FEED_FAILURE",
   GET_FEEDITEM_REQUEST = "GET_FEEDITEM_REQUEST",
   GET_FEEDITEM_SUCCESS = "GET_FEEDITEM_SUCCESS",
   GET_FEEDITEM_FAILURE = "GET_FEEDITEM_FAILURE",
@@ -17,7 +21,7 @@ export enum FeedItemActionType {
 
 export interface FeedItem {
   id: number;
-  author: string;
+  author: Creative;
   createdAt: string;
   collection: Collection;
   type: string;
@@ -32,6 +36,7 @@ export interface FeedItemAction {
 }
 
 export interface FeedItemState {
+  feed: FeedItem[];
   feedItem: FeedItem;
   loading: boolean;
   error?: string | null;

@@ -26,32 +26,77 @@ const LoginPage = () => {
   }, [login]);
 
   return (
-    <Container fluid className="pageContainer">
+    <Container fluid className="pageContainer loginContainer">
       <Row>
-        <Col>
-          <Col className="col-6">
-            <h1>Welcome to maze</h1>
-            <h2>
-              Show your creative work, find other talents and start
-              collaborating!
-            </h2>
-          </Col>
+        <Col className="col-6">
+          <h3 className="mt-2">
+            <span>
+              <img
+                src={
+                  process.env.PUBLIC_URL +
+                  "/visual/png/Pittogramma_light-green.png"
+                }
+                alt="logo"
+                width={"15px"}
+                className="me-3 mb-1"
+              />
+            </span>
+            Show your creative work
+            <br />
+            <span>
+              <img
+                src={
+                  process.env.PUBLIC_URL +
+                  "/visual/png/Pittogramma_light-green.png"
+                }
+                alt="logo"
+                width={"15px"}
+                className="me-3"
+              />
+            </span>
+            Find other talents
+            <br />
+            <span>
+              <img
+                src={
+                  process.env.PUBLIC_URL +
+                  "/visual/png/Pittogramma_light-green.png"
+                }
+                alt="logo"
+                width={"15px"}
+                className="me-3"
+              />
+            </span>
+            Start collaborating
+          </h3>
         </Col>
-        <Col>
-          <Row>
-            <Col>
-              <h4>
-                <span onClick={handleClick} id="login" className="mazelink">
-                  Login
-                </span>
-                /
+        <div id="loginBackground" />
+        <Col className="authColumn">
+          {signForm === "login" ? (
+            <div className="w-100 text-center">
+              <h2>Login</h2>
+              <p>
+                or{" "}
                 <span onClick={handleClick} id="register" className="mazelink">
-                  Register
-                </span>
-              </h4>
-              {signForm === "login" ? <LoginForm /> : <RegisterForm />}
-            </Col>
-          </Row>
+                  register
+                </span>{" "}
+                to join Maze!
+              </p>
+              <LoginForm />
+            </div>
+          ) : (
+            <div className="w-100 text-center">
+              <h2>Register</h2>
+              <p>
+                or{" "}
+                <span onClick={handleClick} id="login" className="mazelink">
+                  login
+                </span>{" "}
+                with your account
+              </p>
+              <RegisterForm />
+            </div>
+          )}
         </Col>
       </Row>
     </Container>

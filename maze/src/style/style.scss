@@ -10,6 +10,7 @@
 @import "./partials/colors";
 @import "./partials/components/navbar";
 @import "./partials/components/login";
+@import "./partials/components/feed";
 
 html,
 body,
@@ -50,6 +51,15 @@ h4,
 h5,
 h6 {
   color: $maze-darkgreen !important;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+.centeringDiv {
+  @include fullDimensions;
+  @include centeringFlex;
 }
 
 .sectionContainer {

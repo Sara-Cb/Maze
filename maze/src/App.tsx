@@ -8,8 +8,9 @@ import { useSelector } from "react-redux";
 import { RootState, store } from "./redux/store/store";
 import { useEffect } from "react";
 import { getMe } from "./redux/actions/meAction";
-import PortfolioPage from "./components/pages/Portfolio";
+import PortfolioPage from "./components/pages/PortfolioPage";
 import FeedPage from "./components/pages/FeedPage";
+import PageNotFound from "./components/pages/PageNotFound";
 
 function App() {
   const login = useSelector((state: RootState) => state.login);
@@ -31,6 +32,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/feed" element={<FeedPage />} />
           <Route path="/portfolio/:username" element={<PortfolioPage />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
     </div>

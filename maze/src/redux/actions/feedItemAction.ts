@@ -6,6 +6,23 @@ import {
 import { Dispatch } from "redux";
 import { AnyAction } from "@reduxjs/toolkit";
 
+const getFeedRequest = (): FeedItemAction => ({
+  type: FeedItemActionType.GET_FEED_REQUEST,
+  loading: true,
+  error: null,
+});
+
+const getFeedSuccess = (feed: FeedItem[]): FeedItemAction => ({
+  type: FeedItemActionType.GET_FEED_SUCCESS,
+  loading: false,
+  payload: feed,
+});
+
+const getFeedFailure = (error: string): FeedItemAction => ({
+  type: FeedItemActionType.GET_FEED_FAILURE,
+  loading: false,
+  error: error,
+});
 const getFeedItemRequest = (): FeedItemAction => ({
   type: FeedItemActionType.GET_FEEDITEM_REQUEST,
   loading: true,
@@ -76,6 +93,36 @@ const deleteFeedItemFailure = (error: string): FeedItemAction => ({
   error: error,
 });
 
+export const getFeed = (token: string) => {
+  return async (dispatch: Dispatch<AnyAction>) => {
+    dispatch(getFeedRequest());
+    try {
+      const response = await fetch("http://localhost:8080/api/feed", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(getFeedSuccess(data));
+        console.log(data);
+        return data;
+      } else {
+        throw new Error("Failed to get feed");
+      }
+    } catch (error: unknown | Error) {
+      if (error instanceof Error) {
+        dispatch(getFeedFailure(error.message));
+      } else {
+        dispatch(
+          getFeedFailure("An unknown error occurred while getting the feed.")
+        );
+      }
+    }
+  };
+};
+
 export const getFeedItem = (id: number) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(getFeedItemRequest());
@@ -135,7 +182,7 @@ export const createFeedItem = (token: string, feedItem: FeedItem) => {
   };
 };
 
-export const editFeedItem = (token: string, id: string, feedItem: FeedItem) => {
+export const editFeedItem = (token: string, id: number, feedItem: FeedItem) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(editFeedItemRequest());
     try {
@@ -171,7 +218,7 @@ export const editFeedItem = (token: string, id: string, feedItem: FeedItem) => {
   };
 };
 
-export const deleteFeedItem = (id: string, token: string) => {
+export const deleteFeedItem = (id: number, token: string) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(deleteFeedItemRequest());
     try {

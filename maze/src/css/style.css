@@ -190,6 +190,127 @@
   z-index: 1000;
 }
 
+.mirror {
+  background-color: #8cf5c9;
+  color: #1c2627;
+  text-align: center;
+  padding: 0;
+}
+
+.feedCol {
+  width: 100%;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+.feedCol .feedRow {
+  width: 100%;
+  margin: auto;
+}
+.feedCol .feedRow .sectionContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  padding: 0;
+}
+.feedCol .dropdown {
+  text-align: end;
+}
+.feedCol .dropdown .dropdown-toggle::after {
+  display: none !important;
+}
+.feedCol .dropdown .postEditMenu {
+  background-color: #1c2627 !important;
+  text-align: end;
+  border: none;
+  font-size: 18px;
+}
+.feedCol .dropdown .postEditMenu a {
+  color: #8cf5c9 !important;
+}
+.feedCol .dropdown .postEditMenu a:hover {
+  color: #04b597 !important;
+  background-color: #faf0f0;
+}
+
+.postContainer {
+  width: 95%;
+  max-width: 600px;
+  background: rgb(4, 181, 151);
+  background: linear-gradient(180deg, #04b597 0%, #025144 90%);
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.postProfile {
+  display: flex;
+  align-items: center;
+}
+.postProfile .postProfileDetails {
+  margin-left: 1rem;
+}
+.postProfile .postProfileDetails p {
+  margin: 0;
+  font-size: 10.5px;
+  color: #1c2627;
+  font-weight: 400;
+}
+.postProfile .postProfileDetails p.stagename {
+  font-weight: 700;
+  color: #1c2627;
+  font-size: 21px;
+}
+.postProfile .postProfileImage {
+  width: 100%;
+  aspect-ratio: 1/1;
+  max-width: 70px;
+  min-width: 60px;
+  border-radius: 1rem;
+}
+
+.postCollection {
+  font-size: 16px;
+  margin-top: 1rem !important;
+  color: #1c2627;
+  font-weight: 500;
+}
+.postCollection .expanded {
+  max-height: none;
+  -webkit-line-clamp: 10;
+}
+.postCollection .collapsed {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.postCollection .postCollectionImg {
+  margin: 0;
+  margin-right: 1rem;
+  padding: 0;
+}
+.postCollection .postCollectionImg a {
+  width: 100%;
+}
+.postCollection .postCollectionImg img {
+  max-width: 12rem;
+  width: inherit;
+  min-width: none;
+  border: 2px solid #1c2627;
+}
+
+.postCollection > .col-sm-7 {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.postCollection > .col-sm-7 button {
+  width: 7rem;
+}
+
 html,
 body,
 #root,
@@ -233,6 +354,19 @@ h6 {
   color: #04b597 !important;
 }
 
+a {
+  text-decoration: none !important;
+}
+
+.centeringDiv {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .sectionContainer {
   padding: 10px 20px;
   border-bottom: solid 1px #04b597;
@@ -246,7 +380,6 @@ h6 {
 
 .mazelink {
   text-decoration: none;
-  color: #04b597;
   padding: 0;
 }
 
