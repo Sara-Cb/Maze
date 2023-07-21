@@ -38,10 +38,10 @@ public class ElaborateService {
         return repository.save(elaborate);
     }
 
-    public void updateElaborate(Elaborate elaborate) {
+    public Elaborate updateElaborate(Elaborate elaborate) {
         if (repository.existsById(elaborate.getId())) {
             elaborate.setUpdatedAt(now);
-            repository.save(elaborate);
+            return repository.save(elaborate);
         } else {
             throw new NoSuchElementException("Elaborate not found with ID: " + elaborate.getId());
         }

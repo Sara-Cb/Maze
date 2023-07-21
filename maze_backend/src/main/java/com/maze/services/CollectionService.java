@@ -34,6 +34,11 @@ public class CollectionService {
         } else {
             collection.setUpdatedAt(now);
         }
+        if (collection.getElaborates().size() < 2) {
+            collection.setSingleElement(true);
+        } else {
+            collection.setSingleElement(false);
+        }
         return repository.save(collection);
     }
 

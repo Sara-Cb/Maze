@@ -32,5 +32,4 @@ replay_pid*
 logs/
 
 .env
-
 maze/node_modules

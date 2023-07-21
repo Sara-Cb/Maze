@@ -1,6 +1,6 @@
 package com.maze.services;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,6 +41,8 @@ public class AuthService implements AuthServiceInterface {
     @Autowired
     private CreativeService creativeService;
 
+    Timestamp now = new Timestamp(System.currentTimeMillis());
+
     @Override
     public String login(LoginDto loginDto) {
 
@@ -80,7 +82,7 @@ public class AuthService implements AuthServiceInterface {
         creative.setFirstname(registerDto.getFirstname());
         creative.setLastname(registerDto.getLastname());
         creative.setStageName(registerDto.getStageName());
-        creative.setRegistrationDate(LocalDate.now());
+        creative.setRegistrationDate(now);
         creative.setProfessions(registerDto.getProfessions());
         creative.setRoles(roles);
         creative.setBio(registerDto.getBio());
@@ -102,6 +104,10 @@ public class AuthService implements AuthServiceInterface {
             return RoleType.ROLE_MODERATOR;
         else
             return RoleType.ROLE_USER;
+    }
+
+    public void logout() {
+        SecurityContextHolder.clearContext();
     }
 
 }

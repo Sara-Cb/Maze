@@ -1,6 +1,6 @@
 package com.maze.runners;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,6 +33,8 @@ public class AuthRunner implements ApplicationRunner {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+	Timestamp now = new Timestamp(System.currentTimeMillis());
 
 	private Set<Role> adminRole;
 
@@ -95,7 +97,7 @@ public class AuthRunner implements ApplicationRunner {
 			admin.setEmail("sara.cb@maze.com");
 			admin.setPassword(passwordEncoder.encode("amazing"));
 			admin.setRoles(adminRole);
-			admin.setRegistrationDate(LocalDate.now());
+			admin.setRegistrationDate(now);
 			admin.setStageName("Sara.cb");
 			admin.setFirstname("Sara");
 			admin.setLastname("Campobasso");
@@ -122,7 +124,7 @@ public class AuthRunner implements ApplicationRunner {
 			moderator.setEmail("vale.pg@maze.com");
 			moderator.setPassword(passwordEncoder.encode("amazing"));
 			moderator.setRoles(moderatorRole);
-			moderator.setRegistrationDate(LocalDate.now());
+			moderator.setRegistrationDate(now);
 			moderator.setStageName("Vale.pg");
 			moderator.setFirstname("Valentina");
 			moderator.setLastname("Poggi");
@@ -145,9 +147,9 @@ public class AuthRunner implements ApplicationRunner {
 
 			user.setUsername("mario.rossi");
 			user.setEmail("mario.rossi@example.com");
-			user.setPassword(passwordEncoder.encode("user"));
+			user.setPassword(passwordEncoder.encode("amazing"));
 			user.setRoles(userRole);
-			user.setRegistrationDate(LocalDate.now());
+			user.setRegistrationDate(now);
 			user.setStageName("MarioReds");
 			user.setFirstname("Mario");
 			user.setLastname("Rossi");

@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,15 +26,16 @@ import org.springframework.web.multipart.MultipartFile;
 import com.maze.enumerations.Category;
 import com.maze.models.Collection;
 import com.maze.models.Creative;
-import com.maze.models.Project;
+//import com.maze.models.Project;
 import com.maze.security.CloudinaryService;
 import com.maze.services.CollectionService;
 import com.maze.services.CreativeService;
-import com.maze.services.ProjectService;
+//import com.maze.services.ProjectService;
 
 import jakarta.transaction.Transactional;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/collections")
 public class CollectionController {
 
@@ -43,8 +45,8 @@ public class CollectionController {
     @Autowired
     private CreativeService creativeService;
 
-    @Autowired
-    private ProjectService projectService;
+    // @Autowired
+    // private ProjectService projectService;
 
     @Autowired
     private CloudinaryService cloudinaryService;
@@ -59,13 +61,13 @@ public class CollectionController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping
-    public ResponseEntity<Void> createCollection(
+    public ResponseEntity<Collection> createCollection(
             @RequestParam String title,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) Category category,
             @RequestParam(required = false) MultipartFile coverImage,
             @RequestParam(required = false) String keywords,
-            @RequestParam(required = false) Long projectId,
+            // @RequestParam(required = false) Long projectId,
             @AuthenticationPrincipal UserDetails userDetails) {
         Collection collection = new Collection();
         Creative author = creativeService.findCreativeByUsername(userDetails.getUsername());
@@ -85,28 +87,30 @@ public class CollectionController {
         if (keywords != null) {
             collection.setKeywords(new HashSet<>(Arrays.asList(keywords.split(","))));
         }
-        if (projectId != null) {
-            Project project = projectService.findProjectById(projectId);
-            collection.setProject(project);
-            collection.setSingleElement(false);
-        } else {
-            collection.setProject(null);
-            collection.setSingleElement(true);
-        }
-        collectionService.saveCollection(collection);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        /*
+         * if (projectId != null) {
+         * Project project = projectService.findProjectById(projectId);
+         * collection.setProject(project);
+         * collection.setSingleElement(false);
+         * } else {
+         * collection.setProject(null);
+         * collection.setSingleElement(true);
+         * }
+         */
+        Collection newCollection = collectionService.saveCollection(collection);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newCollection);
     }
 
     @Transactional
     @PutMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<Void> updateCollection(@PathVariable Long id,
+    public ResponseEntity<Collection> updateCollection(@PathVariable Long id,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String description,
             @RequestParam(required = false) Category category,
             @RequestParam(required = false) MultipartFile coverImage,
             @RequestParam(required = false) String keywords,
-            @RequestParam(required = false) Long projectId,
+            // @RequestParam(required = false) Long projectId,
             @AuthenticationPrincipal UserDetails userDetails) {
         if (collectionService.existsById(id)) {
             // Check if the authenticated user has the admin role or if the ID matches the
@@ -130,18 +134,20 @@ public class CollectionController {
                     collection.setCoverImage(cloudinaryService.uploadFile(coverImage));
                 }
                 if (keywords != null) {
-                    collection.setKeywords(new HashSet<>(Arrays.asList(keywords.split(", "))));
+                    collection.setKeywords(new HashSet<>(Arrays.asList(keywords.split(","))));
                 }
-                if (projectId != null) {
-                    Project project = projectService.findProjectById(projectId);
-                    collection.setProject(project);
-                    collection.setSingleElement(false);
-                } else {
-                    collection.setProject(null);
-                    collection.setSingleElement(true);
-                }
-                collectionService.updateCollection(collection);
-                return ResponseEntity.ok().build();
+                /*
+                 * if (projectId != null) {
+                 * Project project = projectService.findProjectById(projectId);
+                 * collection.setProject(project);
+                 * collection.setSingleElement(false);
+                 * } else {
+                 * collection.setProject(null);
+                 * collection.setSingleElement(true);
+                 * }
+                 */
+                Collection updatedCollection = collectionService.updateCollection(collection);
+                return ResponseEntity.ok(updatedCollection);
             } else {
                 // Return an error or unauthorized response
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
