@@ -45,7 +45,7 @@ const MazeNavbar = () => {
       <Container fluid>
         <Row>
           <Col className="col-4">
-            <Navbar.Brand as={Link} to={isNotLogged ? "/" : "/home"}>
+            <Navbar.Brand as={Link} to={isNotLogged ? "/" : "/feed"}>
               <img
                 className="navbarLogo"
                 src={process.env.PUBLIC_URL + "/visual/png/Logo_on_dark.png"}

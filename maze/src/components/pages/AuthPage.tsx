@@ -22,7 +22,7 @@ const AuthPage = () => {
 
   useEffect(() => {
     if (login.loggedIn) {
-      navigate("/home");
+      navigate("/feed");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login]);
