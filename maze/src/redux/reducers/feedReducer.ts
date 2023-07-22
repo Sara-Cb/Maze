@@ -1,10 +1,6 @@
-import {
-  FeedItemActionType,
-  FeedItemAction,
-  FeedItemState,
-} from "../../types/feedItemType";
+import { FeedActionType, FeedAction, FeedState } from "../../types/feedType";
 
-const initialState: FeedItemState = {
+const initialState: FeedState = {
   feed: [],
   feedItem: {
     id: 0,
@@ -47,49 +43,46 @@ const initialState: FeedItemState = {
   error: null,
 };
 
-const feedItemReducer = (
-  state = initialState,
-  action: FeedItemAction
-): FeedItemState => {
+const feedReducer = (state = initialState, action: FeedAction): FeedState => {
   switch (action.type) {
-    case FeedItemActionType.GET_FEED_REQUEST:
-    case FeedItemActionType.GET_FEEDITEM_REQUEST:
-    case FeedItemActionType.POST_FEEDITEM_REQUEST:
-    case FeedItemActionType.UPDATE_FEEDITEM_REQUEST:
-    case FeedItemActionType.DELETE_FEEDITEM_REQUEST:
+    case FeedActionType.GET_FEED_REQUEST:
+    case FeedActionType.GET_FEEDITEM_REQUEST:
+    case FeedActionType.POST_FEEDITEM_REQUEST:
+    case FeedActionType.UPDATE_FEEDITEM_REQUEST:
+    case FeedActionType.DELETE_FEEDITEM_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case FeedItemActionType.GET_FEED_SUCCESS:
+    case FeedActionType.GET_FEED_SUCCESS:
       return {
         ...state,
         feed: action.payload,
         loading: false,
         error: null,
       };
-    case FeedItemActionType.GET_FEEDITEM_SUCCESS:
-    case FeedItemActionType.POST_FEEDITEM_SUCCESS:
-    case FeedItemActionType.UPDATE_FEEDITEM_SUCCESS:
+    case FeedActionType.GET_FEEDITEM_SUCCESS:
+    case FeedActionType.POST_FEEDITEM_SUCCESS:
+    case FeedActionType.UPDATE_FEEDITEM_SUCCESS:
       return {
         ...state,
         feedItem: action.payload,
         loading: false,
         error: null,
       };
-    case FeedItemActionType.DELETE_FEEDITEM_SUCCESS:
+    case FeedActionType.DELETE_FEEDITEM_SUCCESS:
       return {
         ...state,
         feedItem: state.feedItem,
         loading: false,
         error: null,
       };
-    case FeedItemActionType.GET_FEED_FAILURE:
-    case FeedItemActionType.GET_FEEDITEM_FAILURE:
-    case FeedItemActionType.POST_FEEDITEM_FAILURE:
-    case FeedItemActionType.UPDATE_FEEDITEM_FAILURE:
-    case FeedItemActionType.DELETE_FEEDITEM_FAILURE:
+    case FeedActionType.GET_FEED_FAILURE:
+    case FeedActionType.GET_FEEDITEM_FAILURE:
+    case FeedActionType.POST_FEEDITEM_FAILURE:
+    case FeedActionType.UPDATE_FEEDITEM_FAILURE:
+    case FeedActionType.DELETE_FEEDITEM_FAILURE:
       return {
         ...state,
         loading: false,
@@ -101,4 +94,4 @@ const feedItemReducer = (
   }
 };
 
-export default feedItemReducer;
+export default feedReducer;

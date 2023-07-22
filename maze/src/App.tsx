@@ -6,7 +6,7 @@ import MazeNavbar from "./components/elements/MazeNavbar";
 import { useSelector } from "react-redux";
 import { RootState, store } from "./redux/store/store";
 import { useEffect } from "react";
-import { getMe } from "./redux/actions/meAction";
+import { getMe } from "./redux/actions/creativeAction";
 import PortfolioPage from "./components/pages/PortfolioPage";
 import FeedPage from "./components/pages/FeedPage";
 import PageNotFound from "./components/pages/PageNotFound";
@@ -15,9 +15,13 @@ function App() {
   const login = useSelector((state: RootState) => state.login);
   const dispatch = store.dispatch;
 
+  async function setMe() {
+    await dispatch(getMe(login.session!.username));
+  }
+
   useEffect(() => {
     if (login.loggedIn) {
-      dispatch(getMe(login.session!.username));
+      setMe();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [login]);

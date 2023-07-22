@@ -1,6 +1,6 @@
 import { LoginActionType, LoginAction, Session } from "../../types/loginType";
 import { RootState } from "../store/store";
-import { getMe } from "./meAction";
+import { getMe } from "./creativeAction";
 import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 
 const getLoginRequest = (): LoginAction => ({

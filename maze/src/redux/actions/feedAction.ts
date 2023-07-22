@@ -1,94 +1,90 @@
-import {
-  FeedItemActionType,
-  FeedItemAction,
-  FeedItem,
-} from "../../types/feedItemType";
+import { FeedActionType, FeedAction, FeedItem } from "../../types/feedType";
 import { Dispatch } from "redux";
 import { AnyAction } from "@reduxjs/toolkit";
 
-const getFeedRequest = (): FeedItemAction => ({
-  type: FeedItemActionType.GET_FEED_REQUEST,
+const getFeedRequest = (): FeedAction => ({
+  type: FeedActionType.GET_FEED_REQUEST,
   loading: true,
   error: null,
 });
 
-const getFeedSuccess = (feed: FeedItem[]): FeedItemAction => ({
-  type: FeedItemActionType.GET_FEED_SUCCESS,
+const getFeedSuccess = (feed: FeedItem[]): FeedAction => ({
+  type: FeedActionType.GET_FEED_SUCCESS,
   loading: false,
   payload: feed,
 });
 
-const getFeedFailure = (error: string): FeedItemAction => ({
-  type: FeedItemActionType.GET_FEED_FAILURE,
+const getFeedFailure = (error: string): FeedAction => ({
+  type: FeedActionType.GET_FEED_FAILURE,
   loading: false,
   error: error,
 });
-const getFeedItemRequest = (): FeedItemAction => ({
-  type: FeedItemActionType.GET_FEEDITEM_REQUEST,
+const getFeedItemRequest = (): FeedAction => ({
+  type: FeedActionType.GET_FEEDITEM_REQUEST,
   loading: true,
   error: null,
 });
 
-const getFeedItemSuccess = (feedItem: FeedItem): FeedItemAction => ({
-  type: FeedItemActionType.GET_FEEDITEM_SUCCESS,
+const getFeedItemSuccess = (feedItem: FeedItem): FeedAction => ({
+  type: FeedActionType.GET_FEEDITEM_SUCCESS,
   loading: false,
   payload: feedItem,
 });
 
-const getFeedItemFailure = (error: string): FeedItemAction => ({
-  type: FeedItemActionType.GET_FEEDITEM_FAILURE,
+const getFeedItemFailure = (error: string): FeedAction => ({
+  type: FeedActionType.GET_FEEDITEM_FAILURE,
   loading: false,
   error: error,
 });
 
-const postFeedItemRequest = (): FeedItemAction => ({
-  type: FeedItemActionType.POST_FEEDITEM_REQUEST,
+const postFeedItemRequest = (): FeedAction => ({
+  type: FeedActionType.POST_FEEDITEM_REQUEST,
   loading: true,
   error: null,
 });
 
-const postFeedItemSuccess = (feedItem: FeedItem): FeedItemAction => ({
-  type: FeedItemActionType.POST_FEEDITEM_SUCCESS,
+const postFeedItemSuccess = (feedItem: FeedItem): FeedAction => ({
+  type: FeedActionType.POST_FEEDITEM_SUCCESS,
   loading: false,
   payload: feedItem,
 });
 
-const postFeedItemFailure = (error: string): FeedItemAction => ({
-  type: FeedItemActionType.POST_FEEDITEM_FAILURE,
+const postFeedItemFailure = (error: string): FeedAction => ({
+  type: FeedActionType.POST_FEEDITEM_FAILURE,
   loading: false,
   error: error,
 });
 
-const editFeedItemRequest = (): FeedItemAction => ({
-  type: FeedItemActionType.UPDATE_FEEDITEM_REQUEST,
+const editFeedItemRequest = (): FeedAction => ({
+  type: FeedActionType.UPDATE_FEEDITEM_REQUEST,
   loading: true,
   error: null,
 });
 
-const editFeedItemSuccess = (feedItem: FeedItem): FeedItemAction => ({
-  type: FeedItemActionType.UPDATE_FEEDITEM_SUCCESS,
+const editFeedItemSuccess = (feedItem: FeedItem): FeedAction => ({
+  type: FeedActionType.UPDATE_FEEDITEM_SUCCESS,
   loading: false,
   payload: feedItem,
 });
 
-const editFeedItemFailure = (error: string): FeedItemAction => ({
-  type: FeedItemActionType.UPDATE_FEEDITEM_FAILURE,
+const editFeedItemFailure = (error: string): FeedAction => ({
+  type: FeedActionType.UPDATE_FEEDITEM_FAILURE,
   loading: false,
   error: error,
 });
 
-const deleteFeedItemRequest = (): FeedItemAction => ({
-  type: FeedItemActionType.DELETE_FEEDITEM_REQUEST,
+const deleteFeedItemRequest = (): FeedAction => ({
+  type: FeedActionType.DELETE_FEEDITEM_REQUEST,
   loading: true,
 });
 
-const deleteFeedItemSuccess = (): FeedItemAction => ({
-  type: FeedItemActionType.DELETE_FEEDITEM_SUCCESS,
+const deleteFeedItemSuccess = (): FeedAction => ({
+  type: FeedActionType.DELETE_FEEDITEM_SUCCESS,
   loading: false,
 });
 
-const deleteFeedItemFailure = (error: string): FeedItemAction => ({
-  type: FeedItemActionType.DELETE_FEEDITEM_FAILURE,
+const deleteFeedItemFailure = (error: string): FeedAction => ({
+  type: FeedActionType.DELETE_FEEDITEM_FAILURE,
   loading: false,
   error: error,
 });
@@ -123,11 +119,19 @@ export const getFeed = (token: string) => {
   };
 };
 
-export const getFeedItem = (id: number) => {
+export const getFeedItem = (token: string, id: number) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(getFeedItemRequest());
     try {
-      const response = await fetch(`http://localhost:8080/api/feedItems/${id}`);
+      const response = await fetch(
+        `http://localhost:8080/api/feed/items/${id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.ok) {
         const data = await response.json();
         dispatch(getFeedItemSuccess(data));
@@ -153,7 +157,7 @@ export const createFeedItem = (token: string, feedItem: FeedItem) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(postFeedItemRequest());
     try {
-      const response = await fetch("http://localhost:8080/api/feedItems", {
+      const response = await fetch("http://localhost:8080/api/feed/items", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -164,6 +168,7 @@ export const createFeedItem = (token: string, feedItem: FeedItem) => {
       if (response.ok) {
         const data = await response.json();
         dispatch(postFeedItemSuccess(data));
+        getFeed(token);
         return data;
       } else {
         throw new Error("Failed to post feedItem");
@@ -187,7 +192,7 @@ export const editFeedItem = (token: string, id: number, feedItem: FeedItem) => {
     dispatch(editFeedItemRequest());
     try {
       const response = await fetch(
-        `http://localhost:8080/api/feedItems/${id}`,
+        `http://localhost:8080/api/feed/items/${id}`,
         {
           method: "PUT",
           headers: {
@@ -200,6 +205,7 @@ export const editFeedItem = (token: string, id: number, feedItem: FeedItem) => {
       if (response.ok) {
         const data = await response.json();
         dispatch(editFeedItemSuccess(data));
+        getFeed(token);
         return data;
       } else {
         throw new Error("Failed to edit feedItem");
@@ -223,7 +229,7 @@ export const deleteFeedItem = (id: number, token: string) => {
     dispatch(deleteFeedItemRequest());
     try {
       const response = await fetch(
-        `http://localhost:8080/api/feedItems/${id}`,
+        `http://localhost:8080/api/feed/items/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -233,6 +239,7 @@ export const deleteFeedItem = (id: number, token: string) => {
       );
       if (response.ok) {
         dispatch(deleteFeedItemSuccess());
+        getFeed(token);
         return console.log("feedItem deleted successfully");
       } else {
         throw new Error("Failed reading feedItem");

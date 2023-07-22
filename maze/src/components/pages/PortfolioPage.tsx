@@ -10,43 +10,38 @@ import { getCreative } from "../../redux/actions/creativeAction";
 const PortfolioPage = () => {
   const dispatch = store.dispatch;
   const navigate = useNavigate();
-  const username = useParams().username;
+  const usernameUrl = useParams().username;
 
   const login = useSelector((state: RootState) => state.login);
-  const me = useSelector((state: RootState) => state.me.creative);
-  const creative = useSelector((state: RootState) => state.selectedCreative);
+  const me = useSelector((state: RootState) => state.creative.me.c);
+  const selectedCreative = useSelector(
+    (state: RootState) => state.creative.selected.c
+  );
+  const [creative, setCreative] = useState(me);
   const [collections, setCollections] = useState<Collection[]>([]);
   const [itsMe, setItsMe] = useState(false);
 
+  const loadData = async () => {
+    if (usernameUrl === "me") {
+      setItsMe(true);
+      setCreative(me);
+    } else {
+      setItsMe(false);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      await dispatch(getCreative(usernameUrl!));
+      setCreative(selectedCreative);
+    }
+  };
+
   useEffect(() => {
-    const loadData = async () => {
-      if (username === "me") {
-        setItsMe(true);
-        await dispatch(getCreative(me.username));
-      } else {
-        setItsMe(false);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        await dispatch(getCreative(username!));
-      }
-    };
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [username]);
+  }, [usernameUrl]);
 
   useEffect(() => {
     if (!login.loggedIn) {
       navigate("/");
     }
-    const loadData = async () => {
-      if (username === "me") {
-        setItsMe(true);
-        await dispatch(getCreative(me.username));
-      } else {
-        setItsMe(false);
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        await dispatch(getCreative(username!));
-      }
-    };
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

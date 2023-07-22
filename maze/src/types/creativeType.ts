@@ -4,9 +4,12 @@ export enum CreativeActionType {
   GET_CREATIVE_REQUEST = "GET_CREATIVE_REQUEST",
   GET_CREATIVE_SUCCESS = "GET_CREATIVE_SUCCESS",
   GET_CREATIVE_FAILURE = "GET_CREATIVE_FAILURE",
-  UPDATE_CREATIVE_REQUEST = "UPDATE_CREATIVE_REQUEST",
-  UPDATE_CREATIVE_SUCCESS = "UPDATE_CREATIVE_SUCCESS",
-  UPDATE_CREATIVE_FAILURE = "UPDATE_CREATIVE_FAILURE",
+  GET_ME_REQUEST = "GET_ME_REQUEST",
+  GET_ME_SUCCESS = "GET_ME_SUCCESS",
+  GET_ME_FAILURE = "GET_ME_FAILURE",
+  UPDATE_ME_REQUEST = "UPDATE_ME_REQUEST",
+  UPDATE_ME_SUCCESS = "UPDATE_ME_SUCCESS",
+  UPDATE_ME_FAILURE = "UPDATE_ME_FAILURE",
 }
 
 export interface Creative {
@@ -36,9 +39,16 @@ export interface CreativeAction {
 }
 
 export interface CreativeState {
-  creative: Creative;
-  loading: boolean;
-  error?: string | null;
+  me: {
+    c: Creative | undefined;
+    loading: boolean;
+    error?: string | null;
+  };
+  selected: {
+    c: Creative | undefined;
+    loading: boolean;
+    error?: string | null;
+  };
 }
 
 export enum Profession {

@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { RootState } from "../../redux/store/store";
+import { RootState, store } from "../../redux/store/store";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import LoginForm from "../sections/LoginForm";
 import RegisterForm from "../sections/RegisterForm";
 import { useNavigate } from "react-router";
+import { getMe } from "../../redux/actions/creativeAction";
 
 const AuthPage = () => {
   const login = useSelector((state: RootState) => state.login);
   const [signForm, setSignForm] = useState("login");
   const navigate = useNavigate();
+  const dispatch = store.dispatch;
 
   const handleClick: React.MouseEventHandler<HTMLSpanElement> = (event) => {
     event.preventDefault();
@@ -20,8 +22,13 @@ const AuthPage = () => {
     }
   };
 
+  async function welcome() {
+    await dispatch(getMe(login.session!.username));
+  }
+
   useEffect(() => {
     if (login.loggedIn) {
+      welcome();
       navigate("/feed");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

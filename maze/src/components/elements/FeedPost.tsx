@@ -6,11 +6,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { Modal } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import { store } from "../../redux/store/store";
-import {
-  editFeedItem,
-  deleteFeedItem,
-} from "../../redux/actions/feedItemAction";
-import { FeedItem } from "../../types/feedItemType";
+import { editFeedItem, deleteFeedItem } from "../../redux/actions/feedAction";
+import { FeedItem } from "../../types/feedType";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import { Profession } from "../../types/creativeType";
@@ -82,7 +79,7 @@ const FeedPost = ({
       setEditable(true);
     }
 
-    if (caption.length < 200) {
+    if (caption && caption.length < 200) {
       setExpanded(true);
     }
     convertProfessions();

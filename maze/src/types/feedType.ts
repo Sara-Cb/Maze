@@ -1,7 +1,7 @@
 import { Collection } from "./collectionType";
 import { Creative } from "./creativeType";
 
-export enum FeedItemActionType {
+export enum FeedActionType {
   GET_FEED_REQUEST = "GET_FEED_REQUEST",
   GET_FEED_SUCCESS = "GET_FEED_SUCCESS",
   GET_FEED_FAILURE = "GET_FEED_FAILURE",
@@ -28,14 +28,14 @@ export interface FeedItem {
   caption: string;
 }
 
-export interface FeedItemAction {
-  type: FeedItemActionType;
+export interface FeedAction {
+  type: FeedActionType;
   payload?: any;
   loading: boolean;
   error?: string | null;
 }
 
-export interface FeedItemState {
+export interface FeedState {
   feed: FeedItem[];
   feedItem: FeedItem;
   loading: boolean;

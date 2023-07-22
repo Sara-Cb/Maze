@@ -1,5 +1,7 @@
 .mirror {
   background-color: $maze-mintgreen;
+  border-radius: 0.5rem;
+
   color: $maze-dark;
   text-align: center;
   padding: 0;
@@ -44,12 +46,13 @@
 
 .postContainer {
   width: 95%;
+  border-radius: 0.5rem;
   max-width: 600px;
   background: rgb(4, 181, 151);
   background: linear-gradient(
     180deg,
-    $maze-darkgreen 0%,
-    darken($maze-darkgreen, 20) 90%
+    $maze-darkgreen 40%,
+    darken($maze-darkgreen, 15) 90%
   );
   margin-bottom: 1rem;
   padding: 1rem;
