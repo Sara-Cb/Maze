@@ -43,6 +43,8 @@ public class AuthService implements AuthServiceInterface {
 
     Timestamp now = new Timestamp(System.currentTimeMillis());
 
+    String avatar = "http://res.cloudinary.com/dupn6xl7q/image/upload/v1690028437/wiqzqbqkfwhvkstvlfvb.png";
+
     @Override
     public String login(LoginDto loginDto) {
 
@@ -84,6 +86,7 @@ public class AuthService implements AuthServiceInterface {
         creative.setStageName(registerDto.getStageName());
         creative.setRegistrationDate(now);
         creative.setProfessions(registerDto.getProfessions());
+        creative.setImage(avatar);
         creative.setRoles(roles);
         creative.setBio(registerDto.getBio());
         creative.setCity(registerDto.getCity());

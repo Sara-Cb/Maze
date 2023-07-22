@@ -1,14 +1,51 @@
 @mixin myLink {
-  text-decoration: none;
-  padding: 0;
+  text-decoration: none !important;
+  &:hover {
+    cursor: pointer !important;
+    text-decoration: underline !important;
+  }
 }
 
-@mixin myBtn {
-  border: 2px solid;
-  padding: 3px 10px;
-  margin: 5px;
-  font-weight: 600;
-  cursor: pointer;
+@mixin myBtn($variant) {
+  padding: 3px 10px !important;
+  margin: 5px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  @if ($variant == "light") {
+    color: $maze-darkgreen !important;
+    background-color: $maze-light !important;
+  }
+  @if ($variant == "dark") {
+    color: $maze-mintgreen !important;
+    background-color: $maze-dark !important;
+  }
+  @if ($variant == "mint") {
+    color: $maze-dark !important;
+    background-color: $maze-mintgreen !important;
+  }
+  @if ($variant == "green") {
+    color: $maze-light !important;
+    background-color: $maze-darkgreen !important;
+  }
+  &:hover {
+    cursor: pointer;
+    @if ($variant == "light") {
+      color: $maze-mintgreen !important;
+      background-color: $maze-dark !important;
+    }
+    @if ($variant == "dark") {
+      color: $maze-darkgreen !important;
+      background-color: $maze-light !important;
+    }
+    @if ($variant == "mint") {
+      color: $maze-light !important;
+      background-color: $maze-darkgreen !important;
+    }
+    @if ($variant == "green") {
+      color: $maze-dark !important;
+      background-color: $maze-mintgreen !important;
+    }
+  }
 }
 
 @mixin centeringFlex {

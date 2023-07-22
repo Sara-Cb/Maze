@@ -4,13 +4,13 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Modal } from "react-bootstrap";
-import InputGroup from "react-bootstrap/InputGroup";
 import { store } from "../../redux/store/store";
 import { editFeedItem, deleteFeedItem } from "../../redux/actions/feedAction";
 import { FeedItem } from "../../types/feedType";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import { Profession } from "../../types/creativeType";
+import { convertProfessions } from "../../helpers/helpers";
+import CollectionDisplayer from "./CollectionDisplayer";
 
 const FeedPost = ({
   id,
@@ -40,13 +40,14 @@ const FeedPost = ({
     setShowDelete(false);
   };
 
+  const maxCaptionLength = 2000;
   const [editFeedItemState, setEditFeedItemState] = useState({
-    id,
-    author,
-    createdAt,
-    caption,
-    type,
-    collection,
+    id: id,
+    author: author,
+    createdAt: createdAt,
+    caption: caption,
+    type: type,
+    collection: collection,
   });
 
   const handleSave = () => {
@@ -64,16 +65,6 @@ const FeedPost = ({
     setExpanded(!expanded);
   };
 
-  const convertProfessions = () => {
-    const professions = author.professions;
-    const profArray: string[] = [];
-    professions.map((profession: Profession) =>
-      profArray.push(Profession[profession as keyof typeof Profession])
-    );
-    const professionString = profArray.join(", ");
-    setProfs(professionString);
-  };
-
   useEffect(() => {
     if (session!.username === author.username) {
       setEditable(true);
@@ -81,8 +72,10 @@ const FeedPost = ({
 
     if (caption && caption.length < 200) {
       setExpanded(true);
+    } else {
+      setExpanded(false);
     }
-    convertProfessions();
+    setProfs(convertProfessions(author.professions));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -134,7 +127,7 @@ const FeedPost = ({
 
             <Modal show={showDelete} onHide={handleCloseDelete}>
               <Modal.Header closeButton>
-                <Modal.Title>Sei sicuro di eliminare questo Post?</Modal.Title>
+                <Modal.Title>Sure?</Modal.Title>
               </Modal.Header>
               <Modal.Footer>
                 <Button
@@ -160,11 +153,14 @@ const FeedPost = ({
                 <Modal.Title>Edit Post</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <InputGroup>
+                <Form.Group>
                   <Form.Control
                     as="textarea"
-                    rows={2}
-                    value={editFeedItemState.caption}
+                    rows={3}
+                    maxLength={maxCaptionLength}
+                    value={
+                      editFeedItemState.caption ? editFeedItemState.caption : ""
+                    }
                     onChange={(e) =>
                       setEditFeedItemState({
                         ...editFeedItemState,
@@ -173,7 +169,10 @@ const FeedPost = ({
                     }
                     placeholder="Your caption here..."
                   />
-                </InputGroup>
+                  <p className="small secondary text-end w-100">
+                    {editFeedItemState.caption.length + "/" + maxCaptionLength}
+                  </p>
+                </Form.Group>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleCloseEdit}>
@@ -190,35 +189,30 @@ const FeedPost = ({
             </Modal>
           </Col>
         </Row>
-        <Row className="postCollection">
-          <Col xs={12} sm={7}>
+        <Row className="my-2">
+          <Col xs={12} className="postCaption">
             <p className={expanded ? "expanded" : "collapsed"}>{caption}</p>
             {!expanded && (
-              <p className="mazeLink text-center w-100" onClick={toggleExpand}>
-                see more
-              </p>
+              <span
+                className="mazelink d-block w-100 text-end pe-1"
+                onClick={toggleExpand}
+              >
+                ...read more
+              </span>
             )}
-            <Button className="btnDarkM d-none d-sm-block">
+          </Col>
+        </Row>
+        {collection != null && (
+          <Row className="postCollection">
+            <CollectionDisplayer collection={collection} location={"post"} />
+          </Row>
+        )}
+        <Row>
+          <Col xs={12}>
+            <Button className="btnDarkM w-25">
               <i className="bi bi-send-fill"></i>
               <span> Share</span>
             </Button>
-          </Col>
-          <Col
-            xs={12}
-            sm={4}
-            className={
-              collection.coverImage === undefined
-                ? "d-none"
-                : "postCollectionImg mx-auto"
-            }
-          >
-            <Link to={`/collection/${collection.id}`}>
-              <img
-                className=""
-                src={collection.coverImage}
-                alt="Collection cover"
-              />
-            </Link>
           </Col>
         </Row>
       </Col>

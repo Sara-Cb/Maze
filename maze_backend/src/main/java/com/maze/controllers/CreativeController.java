@@ -2,16 +2,17 @@ package com.maze.controllers;
 
 import com.maze.enumerations.Profession;
 import com.maze.enumerations.Skill;
+import com.maze.models.Collection;
 import com.maze.models.Creative;
 import com.maze.models.Portfolio;
 import com.maze.security.CloudinaryService;
+import com.maze.services.CollectionService;
 import com.maze.services.CreativeService;
 import com.maze.services.FollowService;
 
 import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -49,6 +50,9 @@ public class CreativeController {
     @Autowired
     private FollowService followService;
 
+    @Autowired
+    private CollectionService collectionService;
+
     @GetMapping
     public ResponseEntity<List<Creative>> getAllCreatives() {
         List<Creative> creatives = creativeService.getAllCreatives();
@@ -69,22 +73,29 @@ public class CreativeController {
         return ResponseEntity.ok(creativePortfolio);
     }
 
+    @GetMapping("/{username}/collections")
+    public ResponseEntity<List<Collection>> getCreativeCollectionById(
+            @PathVariable String username) {
+        List<Collection> creativeCollections = collectionService.findCollectionsByAuthor(username);
+        return ResponseEntity.ok(creativeCollections);
+    }
+
     @Transactional
     @PutMapping("/{username}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Creative> updateCreative(
             @PathVariable Long id,
-            @RequestParam(required = false) String username,
-            @RequestParam(required = false) String password,
-            @RequestParam(required = false) String firstname,
-            @RequestParam(required = false) String lastname,
-            @RequestParam(required = false) String stageName,
-            @RequestParam(required = false) String bio,
-            @RequestParam(required = false) String city,
-            @RequestParam(required = false) String state,
-            @RequestParam(required = false) MultipartFile image,
-            @RequestParam(required = false) Set<Skill> skills,
-            @RequestParam(required = false) Set<Profession> professions) {
+            @RequestBody(required = false) String username,
+            @RequestBody(required = false) String password,
+            @RequestBody(required = false) String firstname,
+            @RequestBody(required = false) String lastname,
+            @RequestBody(required = false) String stageName,
+            @RequestBody(required = false) String bio,
+            @RequestBody(required = false) String city,
+            @RequestBody(required = false) String state,
+            @RequestBody(required = false) MultipartFile image,
+            @RequestBody(required = false) Set<Skill> skills,
+            @RequestBody(required = false) Set<Profession> professions) {
         Creative creative = creativeService.findCreativeByUsername(username);
         if (username != null) {
             creative.setUsername(username);
@@ -191,7 +202,7 @@ public class CreativeController {
                 // Mappa ogni risultato parziale al suo contenuto (una lista di creativi).
                 .map(Page::getContent)
                 // Appiattisci la lista di liste in una singola lista.
-                .flatMap(Collection::stream)
+                .flatMap(java.util.Collection::stream)
                 // Raggruppa i creativi nella lista per identità e conta le occorrenze di
                 // ciascun creativo.
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))

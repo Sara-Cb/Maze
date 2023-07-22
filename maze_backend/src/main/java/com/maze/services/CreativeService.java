@@ -32,6 +32,8 @@ public class CreativeService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    String avatar = "http://res.cloudinary.com/dupn6xl7q/image/upload/v1690028437/wiqzqbqkfwhvkstvlfvb.png";
+
     public boolean existsById(Long id) {
         return repository.existsById(id);
     }
@@ -64,6 +66,9 @@ public class CreativeService {
 
     public void saveCreative(Creative creative) {
         creative.setPassword(creative.getPassword());
+        if (creative.getImage() == null) {
+            creative.setImage(avatar);
+        }
         repository.save(creative);
     }
 

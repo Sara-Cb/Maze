@@ -2,6 +2,9 @@ import { Elaborate } from "./elaborateType";
 //import { Project } from "./projectType";
 
 export enum CollectionActionType {
+  GET_MYCOLLECTIONS_REQUEST = "GET_MYCOLLECTIONS_REQUEST",
+  GET_MYCOLLECTIONS_SUCCESS = "GET_MYCOLLECTIONS_SUCCESS",
+  GET_MYCOLLECTIONS_FAILURE = "GET_MYCOLLECTIONS_FAILURE",
   GET_COLLECTION_REQUEST = "GET_COLLECTION_REQUEST",
   GET_COLLECTION_SUCCESS = "GET_COLLECTION_SUCCESS",
   GET_COLLECTION_FAILURE = "GET_COLLECTION_FAILURE",
@@ -39,6 +42,7 @@ export interface CollectionAction {
 }
 
 export interface CollectionState {
+  myCollections: Collection[];
   collection: Collection;
   loading: boolean;
   error?: string | null;

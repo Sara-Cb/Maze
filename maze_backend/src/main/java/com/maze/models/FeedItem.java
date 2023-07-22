@@ -13,7 +13,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,7 +36,7 @@ public class FeedItem {
     @Column(nullable = false)
     private Timestamp createdAt;
 
-    @OneToOne(optional = true)
+    @ManyToOne(optional = true)
     private Collection collection;
     /*
      * @OneToOne(optional = true)
@@ -46,6 +45,7 @@ public class FeedItem {
     @Enumerated(EnumType.STRING)
     private FeedItemType type;
 
+    @Column(length = 2000)
     private String caption;
 
 }

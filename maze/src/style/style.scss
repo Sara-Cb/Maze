@@ -55,6 +55,7 @@ h6 {
 
 a {
   text-decoration: none !important;
+  color: inherit !important;
 }
 
 .centeringDiv {
@@ -75,63 +76,23 @@ a {
 
 .mazelink {
   @include myLink;
-}
-
-.mazelink:hover {
-  text-decoration: underline;
-  cursor: pointer;
+  color: inherit !important;
 }
 
 .btnWhiteM {
-  @include myBtn;
-  background-color: $maze-light !important;
-  border-color: $maze-darkgreen !important;
-  color: $maze-darkgreen !important;
-}
-.btnWhiteM:hover {
-  @include myBtn;
-  background-color: $maze-dark !important;
-  border-color: $maze-mintgreen !important;
-  color: $maze-mintgreen !important;
+  @include myBtn("light");
 }
 
 .btnGreenDark {
-  @include myBtn;
-  background-color: $maze-darkgreen !important;
-  border: none !important;
-  color: $maze-light !important;
-}
-.btnGreenDark:hover {
-  @include myBtn;
-  background-color: $maze-mintgreen !important;
-  border: none !important;
-  color: $maze-dark !important;
+  @include myBtn("green");
 }
 
 .btnGreenLight {
-  @include myBtn;
-  background-color: $maze-mintgreen !important;
-  border-color: $maze-dark !important;
-  color: $maze-dark !important;
-}
-.btnGreenLight:hover {
-  @include myBtn;
-  background-color: $maze-darkgreen !important;
-  border-color: $maze-light !important;
-  color: $maze-light !important;
+  @include myBtn("mint");
 }
 
 .btnDarkM {
-  @include myBtn;
-  background-color: $maze-dark !important;
-  border-color: $maze-mintgreen !important;
-  color: $maze-mintgreen !important;
-}
-.btnDarkM:hover {
-  @include myBtn;
-  background-color: $maze-darkgreen !important;
-  border-color: $maze-mintgreen !important;
-  color: $maze-mintgreen !important;
+  @include myBtn("dark");
 }
 
 .textCutter {

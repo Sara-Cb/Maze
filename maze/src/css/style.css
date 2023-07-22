@@ -191,10 +191,30 @@
 }
 
 .mirror {
-  background-color: #8cf5c9;
+  width: 100%;
+  background: linear-gradient(180deg, #5df1b3 0%, #8cf5c9 50%);
+  border-radius: 0.5rem;
   color: #1c2627;
   text-align: center;
+  padding: 1.5rem 0.5rem !important;
+}
+.mirror img {
   padding: 0;
+  aspect-ratio: 1/1;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 100px;
+  min-width: 90px;
+  border: 1px solid #1c2627;
+}
+.mirror h2 {
+  font-size: 40px;
+}
+.mirror .separator {
+  width: 80%;
+  height: 1px;
+  margin: auto;
+  background-color: #04b597;
 }
 
 .feedCol {
@@ -236,11 +256,14 @@
 
 .postContainer {
   width: 95%;
+  border-radius: 0.5rem;
   max-width: 600px;
   background: rgb(4, 181, 151);
-  background: linear-gradient(180deg, #04b597 0%, #025144 90%);
+  background: linear-gradient(180deg, #04b597 40%, #03836d 90%);
   margin-bottom: 1rem;
   padding: 1rem;
+  color: #1c2627;
+  overflow: hidden;
 }
 
 .postProfile {
@@ -262,53 +285,58 @@
   font-size: 21px;
 }
 .postProfile .postProfileImage {
-  width: 100%;
   aspect-ratio: 1/1;
+  border-radius: 1rem;
+  width: 100%;
   max-width: 70px;
   min-width: 60px;
-  border-radius: 1rem;
+}
+
+.postCaption {
+  overflow: hidden;
+  line-height: normal;
+  width: 100%;
+  font-weight: 400;
+  margin-top: 1rem !important;
+}
+.postCaption .expanded {
+  max-height: none;
+}
+.postCaption .collapsed {
+  width: 90%;
+  -webkit-line-clamp: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.postCaption span {
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .postCollection {
   font-size: 16px;
   margin-top: 1rem !important;
   color: #1c2627;
-  font-weight: 500;
 }
-.postCollection .expanded {
-  max-height: none;
-  -webkit-line-clamp: 10;
+.postCollection .collectionDisplayer h4 {
+  color: #1c2627 !important;
+  font-weight: 600;
+  font-size: 25px;
 }
-.postCollection .collapsed {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.postCollection .postCollectionImg {
+.postCollection .collectionDisplayer .postCollectionImg {
   margin: 0;
   margin-right: 1rem;
   padding: 0;
 }
-.postCollection .postCollectionImg a {
+.postCollection .collectionDisplayer .postCollectionImg a {
   width: 100%;
 }
-.postCollection .postCollectionImg img {
+.postCollection .collectionDisplayer .postCollectionImg img {
   max-width: 12rem;
   width: inherit;
   min-width: none;
   border: 2px solid #1c2627;
-}
-
-.postCollection > .col-sm-7 {
-  height: inherit;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.postCollection > .col-sm-7 button {
-  width: 7rem;
 }
 
 html,
@@ -356,6 +384,7 @@ h6 {
 
 a {
   text-decoration: none !important;
+  color: inherit !important;
 }
 
 .centeringDiv {
@@ -379,101 +408,68 @@ a {
 }
 
 .mazelink {
-  text-decoration: none;
-  padding: 0;
+  text-decoration: none !important;
+  color: inherit !important;
 }
-
 .mazelink:hover {
-  text-decoration: underline;
-  cursor: pointer;
+  cursor: pointer !important;
+  text-decoration: underline !important;
 }
 
 .btnWhiteM {
-  border: 2px solid;
-  padding: 3px 10px;
-  margin: 5px;
-  font-weight: 600;
-  cursor: pointer;
-  background-color: #faf0f0 !important;
-  border-color: #04b597 !important;
+  padding: 3px 10px !important;
+  margin: 5px !important;
+  font-weight: 600 !important;
+  border: none !important;
   color: #04b597 !important;
+  background-color: #faf0f0 !important;
 }
-
 .btnWhiteM:hover {
-  border: 2px solid;
-  padding: 3px 10px;
-  margin: 5px;
-  font-weight: 600;
   cursor: pointer;
-  background-color: #1c2627 !important;
-  border-color: #8cf5c9 !important;
   color: #8cf5c9 !important;
+  background-color: #1c2627 !important;
 }
 
 .btnGreenDark {
-  border: 2px solid;
-  padding: 3px 10px;
-  margin: 5px;
-  font-weight: 600;
-  cursor: pointer;
-  background-color: #04b597 !important;
+  padding: 3px 10px !important;
+  margin: 5px !important;
+  font-weight: 600 !important;
   border: none !important;
   color: #faf0f0 !important;
+  background-color: #04b597 !important;
 }
-
 .btnGreenDark:hover {
-  border: 2px solid;
-  padding: 3px 10px;
-  margin: 5px;
-  font-weight: 600;
   cursor: pointer;
-  background-color: #8cf5c9 !important;
-  border: none !important;
   color: #1c2627 !important;
+  background-color: #8cf5c9 !important;
 }
 
 .btnGreenLight {
-  border: 2px solid;
-  padding: 3px 10px;
-  margin: 5px;
-  font-weight: 600;
-  cursor: pointer;
-  background-color: #8cf5c9 !important;
-  border-color: #1c2627 !important;
+  padding: 3px 10px !important;
+  margin: 5px !important;
+  font-weight: 600 !important;
+  border: none !important;
   color: #1c2627 !important;
+  background-color: #8cf5c9 !important;
 }
-
 .btnGreenLight:hover {
-  border: 2px solid;
-  padding: 3px 10px;
-  margin: 5px;
-  font-weight: 600;
   cursor: pointer;
-  background-color: #04b597 !important;
-  border-color: #faf0f0 !important;
   color: #faf0f0 !important;
+  background-color: #04b597 !important;
 }
 
 .btnDarkM {
-  border: 2px solid;
-  padding: 3px 10px;
-  margin: 5px;
-  font-weight: 600;
-  cursor: pointer;
+  padding: 3px 10px !important;
+  margin: 5px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  color: #8cf5c9 !important;
   background-color: #1c2627 !important;
-  border-color: #8cf5c9 !important;
-  color: #8cf5c9 !important;
 }
-
 .btnDarkM:hover {
-  border: 2px solid;
-  padding: 3px 10px;
-  margin: 5px;
-  font-weight: 600;
   cursor: pointer;
-  background-color: #04b597 !important;
-  border-color: #8cf5c9 !important;
-  color: #8cf5c9 !important;
+  color: #04b597 !important;
+  background-color: #faf0f0 !important;
 }
 
 .textCutter {

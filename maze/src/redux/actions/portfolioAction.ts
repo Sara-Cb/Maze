@@ -25,12 +25,12 @@ const getPortfolioFailure = (error: string): PortfolioAction => ({
   error: error,
 });
 
-export const getPortfolio = (id: number) => {
+export const getPortfolio = (username: string) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(getPortfolioRequest());
     try {
       const response = await fetch(
-        `http://localhost:8080/api/portfolios/${id}`
+        `http://localhost:8080/api/creatives/${username}/portfolio`
       );
       if (response.ok) {
         const data = await response.json();

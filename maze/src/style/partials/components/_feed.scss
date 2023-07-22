@@ -1,10 +1,32 @@
 .mirror {
-  background-color: $maze-mintgreen;
+  width: 100%;
+  background: linear-gradient(
+    180deg,
+    darken($maze-mintgreen, 10) 0%,
+    $maze-mintgreen 50%
+  );
   border-radius: 0.5rem;
-
   color: $maze-dark;
   text-align: center;
-  padding: 0;
+  padding: 1.5rem 0.5rem !important;
+  img {
+    padding: 0;
+    aspect-ratio: 1/1;
+    border-radius: 1rem;
+    width: 100%;
+    max-width: 100px;
+    min-width: 90px;
+    border: 1px solid $maze-dark;
+  }
+  h2 {
+    font-size: 40px;
+  }
+  .separator {
+    width: 80%;
+    height: 1px;
+    margin: auto;
+    background-color: $maze-darkgreen;
+  }
 }
 
 .feedCol {
@@ -52,10 +74,12 @@
   background: linear-gradient(
     180deg,
     $maze-darkgreen 40%,
-    darken($maze-darkgreen, 15) 90%
+    darken($maze-darkgreen, 10) 90%
   );
   margin-bottom: 1rem;
   padding: 1rem;
+  color: $maze-dark;
+  overflow: hidden;
 }
 
 .postProfile {
@@ -76,11 +100,33 @@
     }
   }
   .postProfileImage {
-    width: 100%;
     aspect-ratio: 1/1;
+    border-radius: 1rem;
+    width: 100%;
     max-width: 70px;
     min-width: 60px;
-    border-radius: 1rem;
+  }
+}
+
+.postCaption {
+  overflow: hidden;
+  line-height: normal;
+  width: 100%;
+  font-weight: 400;
+  margin-top: 1rem !important;
+  .expanded {
+    max-height: none;
+  }
+  .collapsed {
+    width: 90%;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  span {
+    font-size: 12px;
+    font-weight: 600;
   }
 }
 
@@ -88,41 +134,25 @@
   font-size: 16px;
   margin-top: 1rem !important;
   color: $maze-dark;
-  font-weight: 500;
-
-  .expanded {
-    max-height: none;
-    -webkit-line-clamp: 10;
-  }
-  .collapsed {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .postCollectionImg {
-    margin: 0;
-    margin-right: 1rem;
-    padding: 0;
-    a {
-      width: 100%;
+  .collectionDisplayer {
+    h4 {
+      color: $maze-dark !important;
+      font-weight: 600;
+      font-size: 25px;
     }
-    img {
-      max-width: 12rem;
-      width: inherit;
-      min-width: none;
-      border: 2px solid $maze-dark;
+    .postCollectionImg {
+      margin: 0;
+      margin-right: 1rem;
+      padding: 0;
+      a {
+        width: 100%;
+      }
+      img {
+        max-width: 12rem;
+        width: inherit;
+        min-width: none;
+        border: 2px solid $maze-dark;
+      }
     }
-  }
-}
-
-.postCollection > .col-sm-7 {
-  height: inherit;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  button {
-    width: 7rem;
   }
 }

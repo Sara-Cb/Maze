@@ -6,6 +6,24 @@ import {
 import { Dispatch } from "redux";
 import { AnyAction } from "@reduxjs/toolkit";
 
+const getMyCollectionsRequest = (): CollectionAction => ({
+  type: CollectionActionType.GET_MYCOLLECTIONS_REQUEST,
+  loading: true,
+  error: null,
+});
+
+const getMyCollectionsSuccess = (collection: Collection): CollectionAction => ({
+  type: CollectionActionType.GET_MYCOLLECTIONS_SUCCESS,
+  loading: false,
+  payload: collection,
+});
+
+const getMyCollectionsFailure = (error: string): CollectionAction => ({
+  type: CollectionActionType.GET_MYCOLLECTIONS_FAILURE,
+  loading: false,
+  error: error,
+});
+
 const getCollectionRequest = (): CollectionAction => ({
   type: CollectionActionType.GET_COLLECTION_REQUEST,
   loading: true,
@@ -75,6 +93,37 @@ const deleteCollectionFailure = (error: string): CollectionAction => ({
   loading: false,
   error: error,
 });
+
+export const getMyCollections = (username: string) => {
+  return async (dispatch: Dispatch<AnyAction>) => {
+    dispatch(getMyCollectionsRequest());
+    console.log("coll dispatch");
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/creatives/${username}/collections`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(getMyCollectionsSuccess(data));
+        console.log("coll ok");
+
+        return data;
+      } else {
+        throw new Error("Failed to get collections");
+      }
+    } catch (error: unknown | Error) {
+      if (error instanceof Error) {
+        dispatch(getMyCollectionsFailure(error.message));
+      } else {
+        dispatch(
+          getCollectionFailure(
+            "An unknown error occurred while getting the collection."
+          )
+        );
+      }
+    }
+  };
+};
 
 export const getCollection = (id: number) => {
   return async (dispatch: Dispatch<AnyAction>) => {

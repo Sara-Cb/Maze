@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.maze.enumerations.FeedItemType;
 import com.maze.models.Creative;
 import com.maze.models.FeedItem;
-import com.maze.services.CollectionService;
 import com.maze.services.CreativeService;
 import com.maze.services.FeedItemService;
 
@@ -40,9 +39,6 @@ public class FeedController {
 
     @Autowired
     private CreativeService creativeService;
-
-    @Autowired
-    private CollectionService collectionService;
 
     Timestamp now = new Timestamp(System.currentTimeMillis());
 
@@ -64,13 +60,13 @@ public class FeedController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<FeedItem> createFeedItem(
             @AuthenticationPrincipal UserDetails userDetails,
-            @RequestParam(required = false) String caption,
-            @RequestParam(required = false) Long collectionId) {
+            @RequestBody(required = false) FeedItem fi) {
         FeedItem feedItem = new FeedItem();
         Creative author = creativeService.findCreativeByUsername(userDetails.getUsername());
-        feedItem.setCollection(collectionService.findCollectionById(collectionId));
+        feedItem.setCaption(fi.getCaption());
         feedItem.setCreatedAt(now);
-        if (feedItem.getCollection() != null) {
+        if (fi.getCollection() != null) {
+            feedItem.setCollection(fi.getCollection());
             if (feedItem.getCollection().getUpdatedAt() != null) {
                 feedItem.setType(FeedItemType.UPDATE);
             } else {
@@ -78,9 +74,6 @@ public class FeedController {
             }
         } else {
             feedItem.setType(FeedItemType.NEW);
-        }
-        if (caption != null) {
-            feedItem.setCaption(caption);
         }
         feedItem.setAuthor(author);
         FeedItem newFeedItem = feedItemService.saveFeedItem(feedItem);
@@ -92,8 +85,7 @@ public class FeedController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<FeedItem> updateFeedItem(
             @AuthenticationPrincipal UserDetails userDetails,
-            @RequestParam(required = false) String caption,
-            @RequestParam(required = false) Long collectionId,
+            @RequestBody FeedItem fi,
             @PathVariable Long id) {
         if (feedItemService.existsById(id)) {
             // Check if the authenticated user has the admin role or if the ID matches the
@@ -103,7 +95,8 @@ public class FeedController {
                     userDetails.getUsername().equals(
                             feedItemService.findFeedItemById(id).getAuthor().getUsername())) {
                 FeedItem feedItem = feedItemService.findFeedItemById(id);
-                feedItem.setCaption(caption);
+                feedItem.setCaption(fi.getCaption());
+                feedItem.setCollection(fi.getCollection());
                 FeedItem updatedFeedItem = feedItemService.updateFeedItem(feedItem);
                 return ResponseEntity.ok().body(updatedFeedItem);
             } else {

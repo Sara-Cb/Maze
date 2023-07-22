@@ -17,6 +17,9 @@ public class CollectionService {
     @Autowired
     private CollectionRepository repository;
 
+    @Autowired
+    private CreativeService creativeService;
+
     Timestamp now = new Timestamp(System.currentTimeMillis());
 
     public Collection findCollectionById(Long id) {
@@ -25,6 +28,14 @@ public class CollectionService {
             return collection.get();
         } else {
             throw new NoSuchElementException("Collection not found with ID: " + id);
+        }
+    }
+
+    public List<Collection> findCollectionsByAuthor(String username) {
+        if (creativeService.findCreativeByUsername(username) != null) {
+            return repository.findByAuthorUsername(username);
+        } else {
+            throw new NoSuchElementException("Creative not found");
         }
     }
 

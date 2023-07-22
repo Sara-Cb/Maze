@@ -10,6 +10,7 @@ import { getMe } from "./redux/actions/creativeAction";
 import PortfolioPage from "./components/pages/PortfolioPage";
 import FeedPage from "./components/pages/FeedPage";
 import PageNotFound from "./components/pages/PageNotFound";
+import { getMyCollections } from "./redux/actions/collectionAction";
 
 function App() {
   const login = useSelector((state: RootState) => state.login);
@@ -17,6 +18,7 @@ function App() {
 
   async function setMe() {
     await dispatch(getMe(login.session!.username));
+    await dispatch(getMyCollections(login.session!.username));
   }
 
   useEffect(() => {

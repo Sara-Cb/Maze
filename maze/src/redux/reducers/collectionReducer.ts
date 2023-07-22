@@ -5,6 +5,7 @@ import {
 } from "../../types/collectionType";
 
 const initialState: CollectionState = {
+  myCollections: [],
   collection: {
     id: 0,
     author: "",
@@ -27,6 +28,7 @@ const collectionReducer = (
   action: CollectionAction
 ): CollectionState => {
   switch (action.type) {
+    case CollectionActionType.GET_MYCOLLECTIONS_REQUEST:
     case CollectionActionType.GET_COLLECTION_REQUEST:
     case CollectionActionType.POST_COLLECTION_REQUEST:
     case CollectionActionType.UPDATE_COLLECTION_REQUEST:
@@ -45,13 +47,22 @@ const collectionReducer = (
         loading: false,
         error: null,
       };
+    case CollectionActionType.GET_MYCOLLECTIONS_SUCCESS:
+      return {
+        ...state,
+        myCollections: action.payload,
+        loading: false,
+        error: null,
+      };
     case CollectionActionType.DELETE_COLLECTION_SUCCESS:
       return {
+        ...state,
         collection: state.collection,
         loading: false,
         error: null,
       };
     case CollectionActionType.GET_COLLECTION_FAILURE:
+    case CollectionActionType.GET_MYCOLLECTIONS_FAILURE:
     case CollectionActionType.POST_COLLECTION_FAILURE:
     case CollectionActionType.UPDATE_COLLECTION_FAILURE:
     case CollectionActionType.DELETE_COLLECTION_FAILURE:
