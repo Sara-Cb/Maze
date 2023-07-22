@@ -27,6 +27,14 @@
     color: $maze-light !important;
     background-color: $maze-darkgreen !important;
   }
+  @if ($variant == "trans") {
+    color: $maze-mintgreen !important;
+    border: 1px solid $maze-mintgreen !important;
+  }
+  @if ($variant == "darktrans") {
+    color: $maze-dark !important;
+    border: 1px solid $maze-dark !important;
+  }
   &:hover {
     cursor: pointer;
     @if ($variant == "light") {
@@ -45,19 +53,27 @@
       color: $maze-dark !important;
       background-color: $maze-mintgreen !important;
     }
+    @if ($variant == "trans") {
+      color: $maze-light !important;
+      border: 1px solid $maze-light !important;
+    }
+    @if ($variant == "darktrans") {
+      color: $maze-darkgreen !important;
+      border: 1px solid $maze-darkgreen !important;
+    }
   }
 }
 
 @mixin centeringFlex {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 @mixin fullDimensions {
-  height: 100%;
-  width: 100%;
+  height: 100% !important;
+  width: 100% !important;
 }
 
 @mixin transition($transition) {

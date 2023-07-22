@@ -11,6 +11,7 @@ import PortfolioPage from "./components/pages/PortfolioPage";
 import FeedPage from "./components/pages/FeedPage";
 import PageNotFound from "./components/pages/PageNotFound";
 import { getMyCollections } from "./redux/actions/collectionAction";
+import CollectionPage from "./components/pages/CollectionPage";
 
 function App() {
   const login = useSelector((state: RootState) => state.login);
@@ -36,6 +37,10 @@ function App() {
           <Route path="/" element={<AuthPage />} />
           <Route path="/feed" element={<FeedPage />} />
           <Route path="/portfolio/:username" element={<PortfolioPage />} />
+          <Route
+            path="/portfolio/:author/collections/:id"
+            element={<CollectionPage />}
+          />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>

@@ -26,7 +26,7 @@ export interface Creative {
   city: string;
   state: string;
   image: string;
-  skills: string[];
+  skills: Skill[];
   professions: Profession[];
   portfolio: number;
 }
@@ -205,3 +205,4 @@ export enum Skill {
   INVENTION = "Invention",
   EVENT_PLANNING = "Event Planning",
 }
+export type SkillKeys = keyof typeof Skill;

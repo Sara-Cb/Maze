@@ -1,6 +1,7 @@
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { Collection } from "../../types/collectionType";
 import { Link } from "react-router-dom";
+import { formatCAPS, formatTime } from "../../helpers/helpers";
 
 interface CollectionDisplayerProps {
   collection: Collection;
@@ -58,6 +59,28 @@ const CollectionDisplayer = ({
             </Link>
           </Col>
         </Row>
+      )}
+      {location === "portfolio" && (
+        <Col className="collectionDisplayer collectionCard">
+          <Row>
+            <Link to={`/portfolio/${author}/collections/${id}`}>
+              <Container fluid className="cardImage">
+                <img src={collection.coverImage} alt="cover " />
+                <div className="cardText">
+                  {!collection.updatedAt ? (
+                    <p>created {formatTime(collection.createdAt)} ago</p>
+                  ) : (
+                    <p>last updated {formatTime(collection.updatedAt)} ago</p>
+                  )}
+                  <h4>{collection.title}</h4>
+                  <span className="emptyBtn small">
+                    {formatCAPS(collection.category)}
+                  </span>
+                </div>
+              </Container>
+            </Link>
+          </Row>
+        </Col>
       )}
     </>
   );
