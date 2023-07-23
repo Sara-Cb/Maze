@@ -1,5 +1,9 @@
 package com.maze.enumerations;
 
+import java.util.HashSet;
+
+import java.util.Set;
+
 public enum Skill {
     // Visual arts
     ACRYLIC_PAINTING("Acrylic Painting"),
@@ -115,5 +119,19 @@ public enum Skill {
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public static Set<Skill> fromDisplayNames(Set<String> displayNames) {
+        Set<Skill> skills = new HashSet<>();
+        for (String displayName : displayNames) {
+            for (Skill skill : Skill.values()) {
+                if (skill.getDisplayName().equals(displayName)) {
+                    skills.add(skill);
+                    break;
+                }
+            }
+        }
+        System.out.println(skills);
+        return skills;
     }
 }

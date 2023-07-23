@@ -57,15 +57,15 @@ public class FollowService {
         return followedCreatives;
     }
 
-    public boolean isCreativeFollowed(Long followerId, Long followedId) {
-        Creative follower = creativeService.findCreativeById(followerId);
-        Creative followed = creativeService.findCreativeById(followedId);
+    public boolean isCreativeFollowed(String followerId, String followedId) {
+        Creative follower = creativeService.findCreativeByUsername(followerId);
+        Creative followed = creativeService.findCreativeByUsername(followedId);
         return repository.existsByFollowerAndFollowed(follower, followed);
     }
 
-    public String toggleFollow(Long followerId, Long followedId) {
-        Creative follower = creativeService.findCreativeById(followerId);
-        Creative followed = creativeService.findCreativeById(followedId);
+    public String toggleFollow(String followerId, String followedId) {
+        Creative follower = creativeService.findCreativeByUsername(followerId);
+        Creative followed = creativeService.findCreativeByUsername(followedId);
         if (isCreativeFollowed(followerId, followedId)) {
             Follow follow = repository.findByFollowerAndFollowed(follower, followed);
             repository.deleteById(follow.getId());

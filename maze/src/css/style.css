@@ -319,6 +319,9 @@
   margin-top: 1rem !important;
   color: #1c2627;
 }
+.postCollection .collectionDisplayer {
+  margin: 0 1rem;
+}
 .postCollection .collectionDisplayer h4 {
   color: #1c2627 !important;
   font-weight: 600;
@@ -326,17 +329,17 @@
 }
 .postCollection .collectionDisplayer .postCollectionImg {
   margin: 0;
-  margin-right: 1rem;
   padding: 0;
 }
 .postCollection .collectionDisplayer .postCollectionImg a {
   width: 100%;
 }
 .postCollection .collectionDisplayer .postCollectionImg img {
-  max-width: 12rem;
+  max-width: 10rem;
   width: inherit;
-  min-width: none;
+  min-width: 8rem;
   border: 2px solid #1c2627;
+  margin-left: auto !important;
 }
 
 .profileContainer img.profilePic {
@@ -494,6 +497,20 @@ a {
   cursor: pointer;
   color: #faf0f0 !important;
   border: 1px solid #faf0f0 !important;
+}
+
+.emptyDarkBtn {
+  padding: 3px 10px !important;
+  margin: 5px !important;
+  font-weight: 600 !important;
+  border: none !important;
+  color: #1c2627 !important;
+  border: 1px solid #1c2627 !important;
+}
+.emptyDarkBtn:hover {
+  cursor: pointer;
+  color: #04b597 !important;
+  border: 1px solid #04b597 !important;
 }
 
 .textCutter {

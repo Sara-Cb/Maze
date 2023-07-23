@@ -15,9 +15,7 @@ const PortfolioPage = () => {
   const dispatch = store.dispatch;
   const usernameUrl = useParams().username;
 
-  const portfolio = useSelector(
-    (state: RootState) => state.portfolio.portfolio
-  );
+  const portfolio = useSelector((state: RootState) => state.portfolio);
   const me = useSelector((state: RootState) => state.creative.me);
   const myCollections = useSelector(
     (state: RootState) => state.collection!.myCollections
@@ -25,38 +23,57 @@ const PortfolioPage = () => {
   const selectedCreative = useSelector(
     (state: RootState) => state.creative.selected
   );
+
+  const [loading, setLoading] = useState(true);
   const [creative, setCreative] = useState(me.c);
   const [collections, setCollections] = useState(myCollections);
   const [itsMe, setItsMe] = useState(false);
 
   const loadData = async () => {
+    setLoading(true);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    await dispatch(getCreative(usernameUrl!));
+    await dispatch(getPortfolio(usernameUrl!));
+  };
+
+  const verifyIdentity = () => {
     if (usernameUrl === "me") {
       setItsMe(true);
       setCreative(me.c);
       setCollections(myCollections);
+      setLoading(false);
     } else {
       setItsMe(false);
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      await dispatch(getCreative(usernameUrl!));
-      await dispatch(getPortfolio(usernameUrl!));
-      setCreative(selectedCreative.c!);
-      setCollections(portfolio.collections);
+      loadData();
     }
   };
 
   useEffect(() => {
-    loadData();
+    verifyIdentity();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    verifyIdentity();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usernameUrl]);
 
   useEffect(() => {
-    loadData();
+    if (
+      !selectedCreative.loading &&
+      !portfolio.loading &&
+      usernameUrl !== "me"
+    ) {
+      setCreative(selectedCreative.c!);
+      setCollections(portfolio.portfolio.collections);
+      setLoading(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [selectedCreative, portfolio]);
 
   return (
     <Container className="pageContainer profileContainer">
-      {!selectedCreative.loading && !me.loading && creative ? (
+      {!loading && creative ? (
         <Row>
           <Col xs={12} className="sectionContainer profileHero">
             <div className="profileImgs">
@@ -74,7 +91,7 @@ const PortfolioPage = () => {
                 <p className="professions">
                   {convertProfessions(creative.professions)}
                 </p>
-                <p className="skills">{creative.skills}a</p>
+                <p className="skills">{creative.skills}</p>
                 <p>
                   {creative.firstname} {creative.lastname}
                 </p>

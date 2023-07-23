@@ -6,6 +6,7 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.maze.enumerations.Profession;
@@ -19,8 +20,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -40,11 +39,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Creative {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(nullable = false, unique = true)
     @NotBlank
     private String username;
@@ -63,7 +58,10 @@ public class Creative {
     private Timestamp registrationDate;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinTable(name = "creatives_roles", joinColumns = @JoinColumn(name = "creative_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role"))
+    @JoinTable(name = "creatives_roles", joinColumns = @JoinColumn(name = "creative_username", referencedColumnName = "username"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role"))
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "role")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("roles")
     private Set<Role> roles = new HashSet<>();
 
     @Column(nullable = false)
@@ -89,10 +87,9 @@ public class Creative {
     @Column
     private String image;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty("portfolioId")
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
 
     @ElementCollection

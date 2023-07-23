@@ -1,5 +1,6 @@
 package com.maze.controllers;
 
+import com.maze.controllers.Utilities.CreativeRequest;
 import com.maze.enumerations.Profession;
 import com.maze.enumerations.Skill;
 import com.maze.models.Collection;
@@ -11,6 +12,7 @@ import com.maze.services.CreativeService;
 import com.maze.services.FollowService;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,54 +86,87 @@ public class CreativeController {
     @PutMapping("/{username}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Creative> updateCreative(
-            @PathVariable Long id,
-            @RequestBody(required = false) String username,
-            @RequestBody(required = false) String password,
-            @RequestBody(required = false) String firstname,
-            @RequestBody(required = false) String lastname,
-            @RequestBody(required = false) String stageName,
-            @RequestBody(required = false) String bio,
-            @RequestBody(required = false) String city,
-            @RequestBody(required = false) String state,
+            @PathVariable String username,
+            @RequestBody CreativeRequest creativeRequest,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails.getAuthorities().contains(
+                new SimpleGrantedAuthority("ROLE_ADMIN")) ||
+                userDetails.getUsername().equals(
+                        username)) {
+            System.out.println("***************************START REQUEST************************");
+            Creative creative = creativeService.findCreativeByUsername(username);
+            if (creativeRequest.firstname != null) {
+                creative.setFirstname(creativeRequest.firstname);
+            }
+            if (creativeRequest.lastname != null) {
+                creative.setLastname(creativeRequest.lastname);
+            }
+            if (creativeRequest.professions != null) {
+                creative.setProfessions(creativeRequest.professions);
+            }
+            creative.setStageName(creativeRequest.stageName);
+            creative.setBio(creativeRequest.bio);
+            creative.setCity(creativeRequest.city);
+            creative.setState(creativeRequest.state);
+            if (creativeRequest.skills != null) {
+                creative.setSkills(creativeRequest.skills);
+            } else {
+                creative.setSkills(null);
+            }
+            System.out.println("***************************START update************************");
+            Creative updatedCreative = creativeService.updateCreative(creative);
+            return ResponseEntity.ok(updatedCreative);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @Transactional
+    @PutMapping("/{username}/image")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Creative> updateCreativeImage(
+            @PathVariable String username,
             @RequestBody(required = false) MultipartFile image,
-            @RequestBody(required = false) Set<Skill> skills,
-            @RequestBody(required = false) Set<Profession> professions) {
-        Creative creative = creativeService.findCreativeByUsername(username);
-        if (username != null) {
-            creative.setUsername(username);
+            @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails.getAuthorities().contains(
+                new SimpleGrantedAuthority("ROLE_ADMIN")) ||
+                userDetails.getUsername().equals(
+                        username)) {
+            System.out.println("***************************START REQUEST************************");
+            Creative creative = creativeService.findCreativeByUsername(username);
+            if (image != null) {
+                creative.setImage(cloudinaryService.uploadFile(image));
+            } else {
+                creative.setImage(null);
+            }
+            System.out.println("***************************START update************************");
+            Creative updatedCreative = creativeService.updateCreative(creative);
+            return ResponseEntity.ok(updatedCreative);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        if (password != null) {
+    }
+
+    @Transactional
+    @PutMapping("/{username}/password")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Creative> updateCreativePassword(
+            @PathVariable String username,
+            @RequestBody @Valid String password,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails.getAuthorities().contains(
+                new SimpleGrantedAuthority("ROLE_ADMIN")) ||
+                userDetails.getUsername().equals(
+                        username)) {
+            System.out.println("***************************START REQUEST************************");
+            Creative creative = creativeService.findCreativeByUsername(username);
             creative.setPassword(passwordEncoder.encode(password));
+            System.out.println("***************************START update************************");
+            Creative updatedCreative = creativeService.updateCreative(creative);
+            return ResponseEntity.ok(updatedCreative);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        if (firstname != null) {
-            creative.setFirstname(firstname);
-        }
-        if (lastname != null) {
-            creative.setLastname(lastname);
-        }
-        if (stageName != null) {
-            creative.setStageName(stageName);
-        }
-        if (bio != null) {
-            creative.setBio(bio);
-        }
-        if (city != null) {
-            creative.setCity(city);
-        }
-        if (state != null) {
-            creative.setState(state);
-        }
-        if (image != null) {
-            creative.setImage(cloudinaryService.uploadFile(image));
-        }
-        if (skills != null) {
-            creative.setSkills(skills);
-        }
-        if (professions != null) {
-            creative.setProfessions(professions);
-        }
-        Creative updatedCreative = creativeService.updateCreative(creative);
-        return ResponseEntity.ok(updatedCreative);
     }
 
     @DeleteMapping("/{username}")
@@ -147,8 +182,7 @@ public class CreativeController {
                 new SimpleGrantedAuthority("ROLE_ADMIN")) ||
                 userDetails.getUsername().equals(
                         username)) {
-            Long id = creativeService.findCreativeByUsername(username).getId();
-            creativeService.deleteCreativeById(id);
+            creativeService.deleteCreativeByUsername(username);
             return ResponseEntity.noContent().build();
         }
         // Return an error or unauthorized response
@@ -165,57 +199,37 @@ public class CreativeController {
             @RequestParam(required = false) String state,
             Pageable pageable) {
 
-        // Se nessun parametro di ricerca è fornito, restituisci una pagina di tutti i
-        // creativi.
         if (name == null && profession == null && skills == null && city == null && state == null) {
             return creativeService.getAllCreativesPage(pageable);
         }
 
-        // Questa lista conterrà i risultati parziali per ogni parametro di ricerca
-        // fornito.
         List<Page<Creative>> partialResults = new ArrayList<>();
 
-        // Se il parametro "name" è fornito, cerca creativi per nome.
         if (name != null) {
             partialResults.add(creativeService.searchCreativesByName(name, pageable));
         }
 
-        // Se il parametro "profession" è fornito, cerca creativi per professione.
         if (profession != null) {
             partialResults.add(creativeService.searchCreativesByProfession(profession, pageable));
         }
 
-        // Se il parametro "skills" è fornito, cerca creativi per skills.
         if (skills != null) {
             partialResults.add(creativeService.searchCreativesBySkills(skills, pageable));
         }
 
-        // Se i parametri "city" e "state" sono forniti, cerca creativi per città e
-        // stato.
         if (city != null && state != null) {
             partialResults.add(creativeService.searchCreativesByCityAndState(city, state, pageable));
         }
-
-        // Questa operazione di stream trova l'intersezione di tutti i risultati
-        // parziali.
         List<Creative> commonCreatives = partialResults.stream()
-                // Mappa ogni risultato parziale al suo contenuto (una lista di creativi).
                 .map(Page::getContent)
-                // Appiattisci la lista di liste in una singola lista.
                 .flatMap(java.util.Collection::stream)
-                // Raggruppa i creativi nella lista per identità e conta le occorrenze di
-                // ciascun creativo.
+
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
-                // Mantieni solo le voci la cui conta è uguale al numero di risultati parziali.
                 .entrySet().stream()
                 .filter(e -> e.getValue() == partialResults.size())
-                // Mappa le voci nuovamente ai relativi creativi.
                 .map(Map.Entry::getKey)
-                // Raccogli i creativi in una lista.
                 .collect(Collectors.toList());
 
-        // Questa sezione costruisce una pagina dei creativi comuni basata sul parametro
-        // "pageable".
         int pageSize = pageable.getPageSize();
         int pageNumber = pageable.getPageNumber();
         int startIndex = pageNumber * pageSize;
@@ -245,9 +259,9 @@ public class CreativeController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> toggleFollow(
             @AuthenticationPrincipal UserDetails userDetails,
-            @RequestParam Long followedId) {
+            @RequestParam String followedUsername) {
         Creative creative = creativeService.findCreativeByUsername(userDetails.getUsername());
-        String message = followService.toggleFollow(creative.getId(), followedId);
+        String message = followService.toggleFollow(creative.getUsername(), followedUsername);
         return ResponseEntity.ok(message);
     }
 

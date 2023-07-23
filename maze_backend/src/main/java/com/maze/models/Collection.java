@@ -41,7 +41,7 @@ public class Collection {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "creative_id", referencedColumnName = "username", nullable = false)
+	@JoinColumn(name = "author", referencedColumnName = "username", nullable = false)
 	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
 	@JsonIdentityReference(alwaysAsId = true)
 	@JsonProperty("author")

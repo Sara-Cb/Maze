@@ -45,14 +45,12 @@ const CollectionDisplayer = ({
               </blockquote>
             </div>
             <small>
-              Category: <span className="mazelink">{category}</span>
+              Category: <span className="emptyDarkBtn">{category}</span>
             </small>
           </Col>
           <Col
             xs={4}
-            className={
-              coverImage === null ? "d-none" : "postCollectionImg mx-auto"
-            }
+            className={coverImage === null ? "d-none" : "postCollectionImg"}
           >
             <Link to={`/portfolio/${author}/collections/${id}`}>
               <img className="" src={coverImage} alt="Collection cover" />

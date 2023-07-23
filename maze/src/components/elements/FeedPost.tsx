@@ -203,7 +203,7 @@ const FeedPost = ({
           </Col>
         </Row>
         {collection != null && (
-          <Row className="postCollection">
+          <Row className="postCollection mx-3">
             <CollectionDisplayer collection={collection} location={"post"} />
           </Row>
         )}

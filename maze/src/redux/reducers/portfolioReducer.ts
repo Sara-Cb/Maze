@@ -8,7 +8,6 @@ const initialState: PortfolioState = {
   portfolio: {
     id: 0,
     creative: {
-      id: 0,
       username: "",
       email: "",
       password: "",

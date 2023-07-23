@@ -13,7 +13,6 @@ export enum CreativeActionType {
 }
 
 export interface Creative {
-  id: number;
   username: string;
   email: string;
   password: string;

@@ -100,6 +100,10 @@ a {
   @include myBtn("trans");
 }
 
+.emptyDarkBtn {
+  @include myBtn("darktrans");
+}
+
 .textCutter {
   text-overflow: ellipsis;
   white-space: nowrap;

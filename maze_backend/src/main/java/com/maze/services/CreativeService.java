@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.maze.models.Role;
@@ -29,14 +28,7 @@ public class CreativeService {
     @Autowired
     private CreativePageRepository pageRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
     String avatar = "http://res.cloudinary.com/dupn6xl7q/image/upload/v1690028437/wiqzqbqkfwhvkstvlfvb.png";
-
-    public boolean existsById(Long id) {
-        return repository.existsById(id);
-    }
 
     public boolean existsByUsername(String username) {
         return repository.existsByUsername(username);
@@ -54,48 +46,44 @@ public class CreativeService {
         return repository.findAll();
     }
 
-    public Creative findCreativeById(Long id) {
-        Optional<Creative> creative = repository.findById(id);
+    public Creative findCreativeByUsername(String username) {
+        Optional<Creative> creative = repository.findByUsername(username);
         if (creative.isPresent()) {
             return creative.get();
         } else {
             throw new NoSuchElementException(
-                    "Creative not found with ID: " + id);
+                    "Creative not found with ID: " + username);
         }
     }
 
-    public void saveCreative(Creative creative) {
-        creative.setPassword(creative.getPassword());
+    public Creative saveCreative(Creative creative) {
         if (creative.getImage() == null) {
             creative.setImage(avatar);
         }
-        repository.save(creative);
+        return repository.save(creative);
     }
 
     public Creative updateCreative(Creative creative) {
-        if (repository.existsById(creative.getId())) {
+        if (repository.existsByUsername(creative.getUsername())) {
             return repository.save(creative);
         } else {
             throw new NoSuchElementException(
-                    "Creative not found with ID: " + creative.getId());
+                    "Creative not found with ID: " + creative.getUsername());
         }
     }
 
-    public void deleteCreativeById(Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
+    public void deleteCreativeByUsername(String username) {
+        if (repository.existsByUsername(username)) {
+            Creative creative = findCreativeByUsername(username);
+            repository.delete(creative);
         } else {
             throw new NoSuchElementException(
-                    "Creative not found with ID: " + id);
+                    "Creative not found with ID: " + username);
         }
     }
 
     public Creative findCreativeByEmail(String email) {
         return repository.findByEmail(email).get();
-    }
-
-    public Creative findCreativeByUsername(String username) {
-        return repository.findByUsername(username).get();
     }
 
     public Creative findCreativeByUsernameOrEmail(

@@ -5,7 +5,6 @@ const initialState: FeedState = {
   feedItem: {
     id: 0,
     author: {
-      id: 0,
       username: "",
       email: "",
       password: "",

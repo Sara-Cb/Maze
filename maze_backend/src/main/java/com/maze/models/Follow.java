@@ -23,11 +23,11 @@ public class Follow {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "follower_id", referencedColumnName = "id")
+    @JoinColumn(name = "follower", referencedColumnName = "username")
     private Creative follower;
 
     @ManyToOne
-    @JoinColumn(name = "followed_id", referencedColumnName = "id")
+    @JoinColumn(name = "followed", referencedColumnName = "username")
     private Creative followed;
 
     public Follow(Creative follower, Creative followed) {

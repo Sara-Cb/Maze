@@ -95,13 +95,13 @@ public class AuthRunner implements ApplicationRunner {
 
 			admin.setUsername("sara.cb");
 			admin.setEmail("sara.cb@maze.com");
-			admin.setPassword(passwordEncoder.encode("amazing"));
+			admin.setPassword(passwordEncoder.encode("#Amazing1"));
 			admin.setRoles(adminRole);
 			admin.setRegistrationDate(now);
 			admin.setStageName("Sara.cb");
 			admin.setFirstname("Sara");
 			admin.setLastname("Campobasso");
-			admin.setBio("Web Developer, creator of Maze");
+			admin.setBio("Creator of Maze, Co-founder of [A]maze studio, Web Developer");
 			admin.setCity("Modena");
 			admin.setState("Italy");
 			admin.setProfessions(professions);
@@ -122,7 +122,7 @@ public class AuthRunner implements ApplicationRunner {
 
 			moderator.setUsername("vale.pg");
 			moderator.setEmail("vale.pg@maze.com");
-			moderator.setPassword(passwordEncoder.encode("amazing"));
+			moderator.setPassword(passwordEncoder.encode("Amazing2!"));
 			moderator.setRoles(moderatorRole);
 			moderator.setRegistrationDate(now);
 			moderator.setStageName("Vale.pg");
@@ -147,7 +147,7 @@ public class AuthRunner implements ApplicationRunner {
 
 			user.setUsername("mario.rossi");
 			user.setEmail("mario.rossi@example.com");
-			user.setPassword(passwordEncoder.encode("amazing"));
+			user.setPassword(passwordEncoder.encode("Amazing3?"));
 			user.setRoles(userRole);
 			user.setRegistrationDate(now);
 			user.setStageName("MarioReds");

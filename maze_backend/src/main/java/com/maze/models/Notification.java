@@ -28,12 +28,12 @@ public class Notification {
     private LocalDateTime notificationDateTime;
 
     @ManyToOne
-    @JoinColumn(name = "sender_id", referencedColumnName = "username")
+    @JoinColumn(name = "sender", referencedColumnName = "username")
     private Creative sender;
 
     @ManyToOne
-    @JoinColumn(name = "recipient_id", referencedColumnName = "username")
-    private Creative recipient;
+    @JoinColumn(name = "receiver", referencedColumnName = "username")
+    private Creative receiver;
 
     @Column(nullable = false)
     private String message;

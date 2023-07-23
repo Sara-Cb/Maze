@@ -7,7 +7,6 @@ import {
 const initialState: CreativeState = {
   me: {
     c: {
-      id: 0,
       username: "",
       email: "",
       password: "",
@@ -29,7 +28,6 @@ const initialState: CreativeState = {
   },
   selected: {
     c: {
-      id: 0,
       username: "",
       email: "",
       password: "",
