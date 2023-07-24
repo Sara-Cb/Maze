@@ -238,30 +238,29 @@ public class CreativeController {
         return new PageImpl<>(pageContent, pageable, commonCreatives.size());
     }
 
-    @GetMapping("/{username}/followed")
+    @GetMapping("/follow")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<List<Creative>> getMyFollowed(@PathVariable String username,
+    public ResponseEntity<List<Creative>> getFollowedList(
             @AuthenticationPrincipal UserDetails userDetails) {
-        // Check if the authenticated user has the admin role or if the ID matches the
-        // authenticated user
-        if (userDetails.getAuthorities().contains(
-                new SimpleGrantedAuthority("ROLE_ADMIN")) ||
-                userDetails.getUsername().equals(
-                        username)) {
-            List<Creative> follows = followService.findFollowedCreatives(username);
-            return ResponseEntity.ok(follows);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        List<Creative> follows = followService.findFollowedCreatives(userDetails.getUsername());
+        return ResponseEntity.ok(follows);
     }
 
-    @PostMapping("/toggle-follow")
+    @GetMapping("/follow/{username}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<Boolean> isCreativeFollowed(
+            @PathVariable String username,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        Boolean follows = followService.isCreativeFollowed(userDetails.getUsername(), username);
+        return ResponseEntity.ok(follows);
+    }
+
+    @PostMapping("/toggle-follow/{username}")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> toggleFollow(
             @AuthenticationPrincipal UserDetails userDetails,
-            @RequestParam String followedUsername) {
-        Creative creative = creativeService.findCreativeByUsername(userDetails.getUsername());
-        String message = followService.toggleFollow(creative.getUsername(), followedUsername);
+            @PathVariable String username) {
+        String message = followService.toggleFollow(userDetails.getUsername(), username);
         return ResponseEntity.ok(message);
     }
 

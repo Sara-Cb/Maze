@@ -1,16 +1,20 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import { Skill } from "../../types/creativeType";
+import { EditedCreative, Skill } from "../../types/creativeType";
 import { RegisterFormValues } from "../sections/RegisterForm";
 
 interface SkillsChoiceProps {
-  formValues: RegisterFormValues;
-  onChange: (formValues: RegisterFormValues) => void;
+  formValues: RegisterFormValues | null;
+  creativeEdit: EditedCreative | null;
+  onChange: (formValues: RegisterFormValues) => void | null;
+  onSelect: (creativeEdit: EditedCreative) => void | null;
 }
 
 const SkillsChoice: React.FC<SkillsChoiceProps> = ({
   formValues,
+  creativeEdit,
   onChange,
+  onSelect,
 }) => {
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
 
@@ -23,23 +27,42 @@ const SkillsChoice: React.FC<SkillsChoiceProps> = ({
   };
 
   const handleAddSkill = () => {
-    if (selectedSkill && !formValues.skills.includes(selectedSkill)) {
-      const updatedSkills = [...formValues.skills, selectedSkill];
-      const updatedFormValues = { ...formValues, skills: updatedSkills };
-      onChange(updatedFormValues);
-      setSelectedSkill(null);
+    if (formValues) {
+      if (selectedSkill && !formValues.skills.includes(selectedSkill)) {
+        const updatedSkills = [...formValues.skills, selectedSkill];
+        const updatedFormValues = { ...formValues, skills: updatedSkills };
+        onChange(updatedFormValues);
+        setSelectedSkill(null);
+      }
+    }
+    if (creativeEdit) {
+      if (selectedSkill && !creativeEdit.skills.includes(selectedSkill)) {
+        const updatedSkills = [...creativeEdit.skills, selectedSkill];
+        const updatedCreative = { ...creativeEdit, skills: updatedSkills };
+        onSelect(updatedCreative);
+        setSelectedSkill(null);
+      }
     }
   };
 
   const handleRemoveSkill = (skill: Skill) => {
-    const updatedSkills = formValues.skills.filter((s: Skill) => s !== skill);
-    const updatedFormValues = { ...formValues, skills: updatedSkills };
-    onChange(updatedFormValues);
+    if (formValues) {
+      const updatedSkills = formValues.skills.filter((s: Skill) => s !== skill);
+      const updatedFormValues = { ...formValues, skills: updatedSkills };
+      onChange(updatedFormValues);
+    }
+    if (creativeEdit) {
+      const updatedSkills = creativeEdit.skills.filter(
+        (s: Skill) => s !== skill
+      );
+      const updatedCreativeEdit = { ...creativeEdit, skills: updatedSkills };
+      onSelect(updatedCreativeEdit);
+    }
   };
 
   useEffect(() => {
     setSelectedSkill(null);
-  }, [formValues.skills]);
+  }, [formValues?.skills, creativeEdit?.skills]);
 
   return (
     <>
@@ -58,7 +81,7 @@ const SkillsChoice: React.FC<SkillsChoiceProps> = ({
           ))}
         </Form.Select>
       </Form.Group>
-      {formValues.skills.length > 0 && (
+      {formValues && formValues.skills.length > 0 && (
         <div>
           <p>Selected skills:</p>
           <ul>
@@ -73,7 +96,30 @@ const SkillsChoice: React.FC<SkillsChoiceProps> = ({
           </ul>
         </div>
       )}
-      {formValues.skills.length < 3 && selectedSkill && (
+      {creativeEdit && creativeEdit.skills.length > 0 && (
+        <div>
+          <p>Selected skills:</p>
+          <ul>
+            {creativeEdit.skills.map((skill: Skill) => (
+              <li key={skill}>
+                {Skill[skill as unknown as keyof typeof Skill]}
+                <button
+                  className="emptyDarkBtn"
+                  onClick={() => handleRemoveSkill(skill)}
+                >
+                  Remove
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {formValues && formValues.skills.length < 10 && selectedSkill && (
+        <Button variant="primary" onClick={handleAddSkill}>
+          Add Skill
+        </Button>
+      )}
+      {creativeEdit && creativeEdit.skills.length < 10 && selectedSkill && (
         <Button variant="primary" onClick={handleAddSkill}>
           Add Skill
         </Button>

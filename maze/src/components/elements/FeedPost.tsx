@@ -5,11 +5,15 @@ import { Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Modal } from "react-bootstrap";
 import { store } from "../../redux/store/store";
-import { editFeedItem, deleteFeedItem } from "../../redux/actions/feedAction";
+import {
+  editFeedItem,
+  deleteFeedItem,
+  getFeed,
+} from "../../redux/actions/feedAction";
 import { FeedItem } from "../../types/feedType";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import { convertProfessions } from "../../helpers/helpers";
+import { convertProfessions, formatTime } from "../../helpers/helpers";
 import CollectionDisplayer from "./CollectionDisplayer";
 
 const FeedPost = ({
@@ -58,6 +62,13 @@ const FeedPost = ({
         editFeedItemState
       )
     );
+    dispatch(getFeed(session!.accessToken));
+    handleCloseEdit();
+  };
+
+  const handleDelete = () => {
+    deleteFeedItem(id!, session!.accessToken);
+    dispatch(getFeed(session!.accessToken));
     handleCloseEdit();
   };
 
@@ -101,7 +112,7 @@ const FeedPost = ({
               </Link>
               <p>{profs}</p>
               <p>
-                {createdAt?.slice(0, 10)} • {type}
+                {formatTime(createdAt)} • {type}
               </p>
             </div>
           </Col>
@@ -140,7 +151,7 @@ const FeedPost = ({
                   variant="danger"
                   onClick={() => {
                     handleCloseDelete();
-                    dispatch(deleteFeedItem(id!, session!.accessToken));
+                    dispatch(handleDelete);
                   }}
                 >
                   Delete

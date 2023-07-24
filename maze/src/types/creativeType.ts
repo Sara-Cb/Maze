@@ -30,6 +30,18 @@ export interface Creative {
   portfolio: number;
 }
 
+export interface EditedCreative {
+  username: string;
+  firstname: string;
+  lastname: string;
+  stageName: string;
+  bio: string | null;
+  city: string | null;
+  state: string | null;
+  skills: Skill[];
+  professions: Profession[];
+}
+
 export interface CreativeAction {
   type: CreativeActionType;
   payload?: any;
@@ -204,4 +216,3 @@ export enum Skill {
   INVENTION = "Invention",
   EVENT_PLANNING = "Event Planning",
 }
-export type SkillKeys = keyof typeof Skill;

@@ -34,11 +34,6 @@ function FeedPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    dispatch(getFeed(login.session!.accessToken));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
-
   return (
     <Container fluid className="pageContainer">
       {!loading ? (

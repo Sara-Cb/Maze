@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.maze.enumerations.Profession;
 import com.maze.enumerations.RoleType;
+import com.maze.enumerations.Skill;
 import com.maze.models.Portfolio;
 import com.maze.models.Role;
 import com.maze.models.Creative;
@@ -92,6 +93,11 @@ public class AuthRunner implements ApplicationRunner {
 			Set<Profession> professions = new HashSet<Profession>();
 			professions.add(Profession.WEB_DEVELOPER);
 			professions.add(Profession.WEB_DESIGNER);
+			Set<Skill> skills = new HashSet<Skill>();
+			skills.add(Skill.JAVA_PROGRAMMING);
+			skills.add(Skill.JAVASCRIPT_PROGRAMMING);
+			skills.add(Skill.GRAPHIC_DESIGN);
+			skills.add(Skill.BRANDING);
 
 			admin.setUsername("sara.cb");
 			admin.setEmail("sara.cb@maze.com");
@@ -104,6 +110,7 @@ public class AuthRunner implements ApplicationRunner {
 			admin.setBio("Creator of Maze, Co-founder of [A]maze studio, Web Developer");
 			admin.setCity("Modena");
 			admin.setState("Italy");
+			admin.setSkills(skills);
 			admin.setProfessions(professions);
 			admin.setPortfolio(new Portfolio());
 			creativeService.saveCreative(admin);
@@ -119,6 +126,11 @@ public class AuthRunner implements ApplicationRunner {
 			Set<Profession> professions = new HashSet<Profession>();
 			professions.add(Profession.ILLUSTRATOR);
 			professions.add(Profession.GRAPHIC_DESIGNER);
+			Set<Skill> skills = new HashSet<Skill>();
+			skills.add(Skill.ILLUSTRATION);
+			skills.add(Skill.ANIMATION);
+			skills.add(Skill.GRAPHIC_DESIGN);
+			skills.add(Skill.BRANDING);
 
 			moderator.setUsername("vale.pg");
 			moderator.setEmail("vale.pg@maze.com");
@@ -132,6 +144,7 @@ public class AuthRunner implements ApplicationRunner {
 			moderator.setCity("Modena");
 			moderator.setState("Italy");
 			moderator.setProfessions(professions);
+			moderator.setSkills(skills);
 			moderator.setPortfolio(new Portfolio());
 			creativeService.saveCreative(moderator);
 		}

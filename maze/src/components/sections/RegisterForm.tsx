@@ -9,7 +9,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import registerFetch from "../../redux/actions/registerAction";
 import { store, RootState, resetStoreAction } from "../../redux/store/store";
-import { Profession, Skill } from "../../types/creativeType";
+import { EditedCreative, Profession, Skill } from "../../types/creativeType";
 import ProfessionsChoice from "../elements/ProfessionsChoice";
 
 export interface RegisterFormValues {
@@ -161,7 +161,14 @@ const RegisterForm: React.FC = () => {
           />
         </Form.Group>
 
-        <ProfessionsChoice formValues={formValues} onChange={setFormValues} />
+        <ProfessionsChoice
+          formValues={formValues}
+          onChange={setFormValues}
+          creativeEdit={null}
+          onSelect={function (creativeEdit: EditedCreative): void | null {
+            throw new Error("Function not implemented.");
+          }}
+        />
 
         <Row>
           <Col>

@@ -76,7 +76,7 @@ export const creativeReducer = (
       return {
         ...state,
         selected: {
-          c: action.payload,
+          c: undefined,
           loading: false,
           error: action.payload,
         },

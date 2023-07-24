@@ -10,6 +10,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import elaborateReducer from "../reducers/elaborateReducer";
 import collectionReducer from "../reducers/collectionReducer";
 import thunk from "redux-thunk";
+import followReducer from "../reducers/followReducer";
 
 const rootReducer = combineReducers({
   login: loginReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   feed: feedReducer,
   elaborate: elaborateReducer,
   collection: collectionReducer,
+  follow: followReducer,
 });
 
 const RESET_STORE = "RESET_STORE";

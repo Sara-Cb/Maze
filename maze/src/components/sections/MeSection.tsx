@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { convertProfessions } from "../../helpers/helpers";
 import { useEffect, useState } from "react";
-import { createFeedItem } from "../../redux/actions/feedAction";
+import { createFeedItem, getFeed } from "../../redux/actions/feedAction";
 import { FeedItem } from "../../types/feedType";
 
 const MeSection = () => {
@@ -50,6 +50,7 @@ const MeSection = () => {
 
   const handleSave = () => {
     dispatch(createFeedItem(token, newFeedItem));
+    dispatch(getFeed(token));
     setNewFeedItem({ ...newFeedItem, caption: "", collection: null });
     handleClosePost();
   };

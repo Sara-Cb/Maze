@@ -1,8 +1,5 @@
 package com.maze.enumerations;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public enum Profession {
     // Visual arts
     PHOTOGRAPHER("Photographer"),
@@ -75,17 +72,4 @@ public enum Profession {
         return displayName;
     }
 
-    public static Set<Profession> fromDisplayNames(Set<String> displayNames) {
-        Set<Profession> professions = new HashSet<>();
-        for (String displayName : displayNames) {
-            for (Profession profession : Profession.values()) {
-                if (profession.getDisplayName().equals(displayName)) {
-                    professions.add(profession);
-                    break; // Se hai trovato la corrispondenza, passa al prossimo displayName
-                }
-            }
-        }
-        System.out.println(professions);
-        return professions;
-    }
 }

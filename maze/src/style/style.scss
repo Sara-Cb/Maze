@@ -80,6 +80,42 @@ a {
   color: inherit !important;
 }
 
+.dropdown {
+  text-align: end;
+  .dropdown-toggle::after {
+    display: none !important;
+  }
+}
+
+//colors
+.green {
+  color: $maze-darkgreen !important;
+}
+.mint {
+  color: $maze-mintgreen !important;
+}
+.light {
+  color: $maze-light !important;
+}
+.dark {
+  color: $maze-dark !important;
+}
+
+.greenBg {
+  background-color: $maze-darkgreen !important;
+}
+.mintBg {
+  background-color: $maze-mintgreen !important;
+}
+.lightBg {
+  background-color: $maze-light !important;
+}
+.darkBg {
+  background-color: $maze-dark !important;
+}
+
+//buttons
+
 .btnWhiteM {
   @include myBtn("light");
 }

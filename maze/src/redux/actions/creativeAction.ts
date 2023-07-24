@@ -3,6 +3,7 @@ import {
   CreativeActionType,
   CreativeAction,
   Creative,
+  EditedCreative,
 } from "../../types/creativeType";
 import { AnyAction } from "@reduxjs/toolkit";
 
@@ -112,54 +113,21 @@ export const getMe = (username: string) => {
 };
 
 export const editMe = (
-  id: number,
   token: string,
-  me: {
-    username: string | null;
-    password: string | null;
-    firstname: string | null;
-    lastname: string | null;
-    stageName: string | null;
-    bio: string | null;
-    city: string | null;
-    state: string | null;
-    image: File | null;
-    skills: string[] | null;
-    professions: string[] | null;
-  }
+  username: string,
+  creative: EditedCreative
 ) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(editMeRequest());
     try {
-      const formData = new FormData();
-      formData.append("username", me.username || "");
-      formData.append("password", me.password || "");
-      formData.append("firstname", me.firstname || "");
-      formData.append("lastname", me.lastname || "");
-      formData.append("stageName", me.stageName || "");
-      formData.append("bio", me.bio || "");
-      formData.append("city", me.city || "");
-      formData.append("state", me.state || "");
-      if (me.image) {
-        formData.append("image", me.image);
-      }
-      if (me.skills) {
-        me.skills.forEach((skill) => formData.append("skills", skill));
-      }
-      if (me.professions) {
-        me.professions.forEach((profession) =>
-          formData.append("professions", profession)
-        );
-      }
-
       const response = await fetch(
-        `http://localhost:8080/api/creatives/${id}`,
+        `http://localhost:8080/api/creatives/${username}`,
         {
           method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          body: formData,
+          body: JSON.stringify(creative),
         }
       );
 

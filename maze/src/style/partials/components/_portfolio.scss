@@ -1,11 +1,55 @@
 .profileContainer {
+  line-height: normal;
+  .profilehero {
+    max-width: 1000px;
+  }
+  .firstRow {
+    height: 8rem;
+    max-height: 9rem;
+    margin-bottom: 2rem;
+  }
   img.profilePic {
-    padding: 0;
-    aspect-ratio: 1/1;
-    border-radius: 1rem;
-    width: 100%;
-    max-width: 120px;
-    min-width: 100px;
-    border: 1px solid $maze-dark;
+    height: 8rem;
+    max-height: 9rem;
+    aspect-ratio: 1/1 !important;
+    border-radius: 0.2rem;
+    border: 1px solid $maze-darkgreen;
+  }
+  .firstRow > col {
+    height: 100%;
+    .head {
+      height: 100%;
+      padding-bottom: 0;
+    }
+    .stagename {
+      font-size: 36px;
+      font-weight: 700 !important;
+      margin-bottom: 0;
+    }
+    .username.mazelink {
+      color: $maze-mintgreen !important;
+    }
+    .professions {
+      margin-bottom: 0.2rem !important;
+    }
+  }
+  .followBtn {
+    display: inline;
+  }
+  .analogic {
+    line-height: normal;
+    font-size: 12px;
+
+    span {
+      width: fit-content;
+      margin: 0;
+    }
+    .mail {
+      margin-bottom: 0;
+    }
+  }
+
+  .skills {
+    font-size: 14px;
   }
 }

@@ -342,14 +342,59 @@
   margin-left: auto !important;
 }
 
+.profileContainer {
+  line-height: normal;
+}
+.profileContainer .profilehero {
+  max-width: 1000px;
+}
+.profileContainer .firstRow {
+  height: 8rem;
+  max-height: 9rem;
+  margin-bottom: 2rem;
+}
 .profileContainer img.profilePic {
-  padding: 0;
-  aspect-ratio: 1/1;
-  border-radius: 1rem;
-  width: 100%;
-  max-width: 120px;
-  min-width: 100px;
-  border: 1px solid #1c2627;
+  height: 8rem;
+  max-height: 9rem;
+  aspect-ratio: 1/1 !important;
+  border-radius: 0.2rem;
+  border: 1px solid #04b597;
+}
+.profileContainer .firstRow > col {
+  height: 100%;
+}
+.profileContainer .firstRow > col .head {
+  height: 100%;
+  padding-bottom: 0;
+}
+.profileContainer .firstRow > col .stagename {
+  font-size: 36px;
+  font-weight: 700 !important;
+  margin-bottom: 0;
+}
+.profileContainer .firstRow > col .username.mazelink {
+  color: #8cf5c9 !important;
+}
+.profileContainer .firstRow > col .professions {
+  margin-bottom: 0.2rem !important;
+}
+.profileContainer .followBtn {
+  display: inline;
+}
+.profileContainer .analogic {
+  line-height: normal;
+  font-size: 12px;
+}
+.profileContainer .analogic span {
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0;
+}
+.profileContainer .analogic .mail {
+  margin-bottom: 0;
+}
+.profileContainer .skills {
+  font-size: 14px;
 }
 
 html,
@@ -427,6 +472,45 @@ a {
 .mazelink:hover {
   cursor: pointer !important;
   text-decoration: underline !important;
+}
+
+.dropdown {
+  text-align: end;
+}
+.dropdown .dropdown-toggle::after {
+  display: none !important;
+}
+
+.green {
+  color: #04b597 !important;
+}
+
+.mint {
+  color: #8cf5c9 !important;
+}
+
+.light {
+  color: #faf0f0 !important;
+}
+
+.dark {
+  color: #1c2627 !important;
+}
+
+.greenBg {
+  background-color: #04b597 !important;
+}
+
+.mintBg {
+  background-color: #8cf5c9 !important;
+}
+
+.lightBg {
+  background-color: #faf0f0 !important;
+}
+
+.darkBg {
+  background-color: #1c2627 !important;
 }
 
 .btnWhiteM {

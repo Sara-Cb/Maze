@@ -9,9 +9,16 @@ export const convertProfessions = (professions: Profession[]) => {
   return professionString;
 };
 
-export function convertSkills(skills: Skill[]): string {
-  const formattedSkills = skills.map((skill) => skill.toUpperCase());
+function formatSkill(skill: string): string {
+  return skill
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
 
+export function convertSkills(skills: Skill[]): string {
+  const formattedSkills = skills.map(formatSkill);
   return formattedSkills.join(", ");
 }
 
