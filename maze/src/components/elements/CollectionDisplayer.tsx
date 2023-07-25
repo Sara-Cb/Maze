@@ -18,11 +18,8 @@ const CollectionDisplayer = ({
   let description = collection.description;
   let category = collection.category;
   let coverImage = collection.coverImage;
-  //let elaborates = collection.elaborates;
-  //let keywords = collection.keywords;
-  //let singleElement = collection.singleElement;
-  //let createdAt = collection.createdAt;
-  //let updatedAt = collection.updatedAt;
+  let createdAt = collection.createdAt;
+  let updatedAt = collection.updatedAt;
 
   return (
     <>
@@ -63,17 +60,15 @@ const CollectionDisplayer = ({
           <Row>
             <Link to={`/portfolio/${author}/collections/${id}`}>
               <Container fluid className="cardImage">
-                <img src={collection.coverImage} alt="cover " />
+                <img src={coverImage} alt="cover " />
                 <div className="cardText">
-                  {!collection.updatedAt ? (
-                    <p>created {formatTime(collection.createdAt)} ago</p>
+                  {!updatedAt ? (
+                    <p>created {formatTime(createdAt)} ago</p>
                   ) : (
-                    <p>last updated {formatTime(collection.updatedAt)} ago</p>
+                    <p>last updated {formatTime(updatedAt)} ago</p>
                   )}
-                  <h4>{collection.title}</h4>
-                  <span className="emptyBtn small">
-                    {formatCAPS(collection.category)}
-                  </span>
+                  <h4>{title}</h4>
+                  <span className="emptyBtn small">{formatCAPS(category)}</span>
                 </div>
               </Container>
             </Link>

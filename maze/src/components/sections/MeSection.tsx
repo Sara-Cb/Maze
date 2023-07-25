@@ -26,6 +26,7 @@ const MeSection = () => {
     collection: null,
     id: 0,
     createdAt: "",
+    updatedAt: "",
     type: undefined,
   });
 

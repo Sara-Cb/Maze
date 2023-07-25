@@ -48,9 +48,13 @@ class ElaborateDisplayer extends Component<ElaborateProps> {
           <Slider {...sliderSettings}>
             {elaborates.map((elaborate) => (
               <div key={elaborate.id} className="slideContainer">
-                <div className="row mb-4">
+                <div className="row mb-4 ms-sm-1">
                   <div className="col col-12 col-sm-5 col-md-6 d-flex justify-content-center justify-content-md-end">
-                    <img src={elaborate.file} alt={elaborate.title} />
+                    <img
+                      src={elaborate.file}
+                      alt={elaborate.title}
+                      className="mb-2"
+                    />
                   </div>
                   <div className="col col-12 col-sm-6 col-md-5 text-center text-sm-start d-flex flex-column justify-content-between">
                     <h4 className="mint">{elaborate.title}</h4>

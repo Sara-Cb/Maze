@@ -23,6 +23,7 @@ const FeedPost = ({
   type,
   author,
   createdAt,
+  updatedAt,
 }: FeedItem) => {
   const dispatch = store.dispatch;
 
@@ -49,6 +50,7 @@ const FeedPost = ({
     id: id,
     author: author,
     createdAt: createdAt,
+    updatedAt: updatedAt,
     caption: caption,
     type: type,
     collection: collection,

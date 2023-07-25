@@ -7,6 +7,7 @@ import MeSection from "../sections/MeSection";
 import { getFeed } from "../../redux/actions/feedAction";
 import FeedPost from "../elements/FeedPost";
 import { FeedItem } from "../../types/feedType";
+import MazeFooter from "../sections/MazeFooter";
 
 function FeedPage() {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ function FeedPage() {
                         type={feedItem.type}
                         collection={feedItem.collection}
                         createdAt={feedItem.createdAt}
+                        updatedAt={feedItem.updatedAt}
                       />
                     );
                   })}
@@ -73,7 +75,14 @@ function FeedPage() {
               )}
             </Row>
           </Col>
-          <Col xs={12} lg={3}></Col>
+          <Col
+            xs={12}
+            md={8}
+            lg={3}
+            className="offset-md-4 offset-lg-0 dxColumn"
+          >
+            <MazeFooter />
+          </Col>
         </Row>
       ) : (
         <div className="centeringDiv">

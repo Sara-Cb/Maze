@@ -36,6 +36,8 @@ public class FeedItem {
     @Column(nullable = false)
     private Timestamp createdAt;
 
+    private Timestamp updatedAt;
+
     @ManyToOne(optional = true)
     private Collection collection;
     /*

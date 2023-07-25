@@ -42,7 +42,7 @@ const CollectionPage = () => {
     <Container fluid className="pageContainer">
       {!loading && collection ? (
         <Container className="p-0 collectionHero">
-          <Row>
+          <Row className="mx-4">
             <Col xs={12} className="order-1 mb-4">
               <Row className="mx-0">
                 <Col xs={9}>
@@ -79,7 +79,7 @@ const CollectionPage = () => {
               </p>
             </Col>
             <Col xs={12} md={9} className="order-3 order-md-2">
-              <blockquote className="text-center text-md-start">
+              <blockquote className="text-center text-md-start ms-md-3">
                 <cite className="mb-0">"{collection.description}"</cite>
               </blockquote>
             </Col>

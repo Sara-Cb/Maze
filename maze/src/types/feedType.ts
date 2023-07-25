@@ -23,6 +23,7 @@ export interface FeedItem {
   id: number;
   author: Creative;
   createdAt: string;
+  updatedAt: string;
   collection: Collection | null;
   type: string | undefined;
   caption: string;

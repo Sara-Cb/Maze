@@ -68,7 +68,7 @@ const PortfolioPage = () => {
             {collections.length > 0 ? (
               <Col xs={12} className="sectionContainer mt-3 border-0">
                 <Row className="d-flex justify-content-center">
-                  <h3 className="w-100 text-center mb-4">Collections:</h3>
+                  <h3 className="w-100 text-center mb-4">Collections</h3>
                 </Row>
                 <Row
                   xs={1}
@@ -93,9 +93,6 @@ const PortfolioPage = () => {
                 <h3>Seems like you still have no collections!</h3>
               </div>
             )}
-            <button className="emptyBtn darkBg m-auto w-25">
-              Add Collection
-            </button>
           </Container>
         </Row>
       ) : (

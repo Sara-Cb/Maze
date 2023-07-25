@@ -37,6 +37,7 @@ const initialState: FeedState = {
     },
     type: "",
     caption: "",
+    updatedAt: "",
   },
   loading: false,
   error: null,

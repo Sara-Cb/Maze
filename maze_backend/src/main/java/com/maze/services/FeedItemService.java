@@ -64,11 +64,21 @@ public class FeedItemService {
             }
         }
 
+        allItems.sort((item1, item2) -> {
+            Timestamp date1 = item1.getUpdatedAt() != null ? item1.getUpdatedAt() : item1.getCreatedAt();
+            Timestamp date2 = item2.getUpdatedAt() != null ? item2.getUpdatedAt() : item2.getCreatedAt();
+            return date2.compareTo(date1);
+        });
+
         return allItems;
     }
 
     public FeedItem saveFeedItem(FeedItem feedItem) {
-        feedItem.setCreatedAt(now);
+        if (feedItem.getId() == null) {
+            feedItem.setCreatedAt(now);
+        } else {
+            feedItem.setUpdatedAt(now);
+        }
         return repository.save(feedItem);
     }
 
