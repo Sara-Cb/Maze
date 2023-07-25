@@ -1,13 +1,14 @@
 # Maze
 
-Maze is a creative-oriented social network, focused on content insted than on appearance
+Maze is a social networking platform designed to cater to creative professionals from all industries, providing them with an opportunity to showcase their work in a structured and personalized portfolio. Our primary goal is to foster networking and collaboration among creatives, enabling them to "follow" other profiles and stay updated with fresh content through a personalized feed.
 
 ## Features
 
-- Creative profiles
-- Collections of elaborates
-- Feed Item (post) creation, editing, deleting
+- Creative portfolio, profile
+- Showcase of creative's work with collections of elaborates
+- Feed, to share new activities or updates on existent collections
 - Follow system
+- Search creatives based on their professions, skill, locality
 
 ## Tech stack
 
@@ -20,8 +21,9 @@ Maze is a creative-oriented social network, focused on content insted than on ap
 ### Frontend:
 
 - [TypeScript](https://www.typescriptlang.org/)
-- [React](https://react.dev/)
-- [Bootstrap 9.5.1](https://getbootstrap.com/)
+- [ReactJS](https://react.dev/)
+- [Redux](https://redux.js.org/)
+- [Bootstrap](https://getbootstrap.com/)
 - [Sass](https://sass-lang.com/)
 
 ### Thank you!
