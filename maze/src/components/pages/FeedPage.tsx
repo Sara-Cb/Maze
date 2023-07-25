@@ -14,17 +14,17 @@ function FeedPage() {
   const dispatch = store.dispatch;
   const login = useSelector((state: RootState) => state.login);
   const me = useSelector((state: RootState) => state.creative.me);
-  const feed = useSelector((state: RootState) => state.feed.feed);
+  const feed = useSelector((state: RootState) => state.feed);
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!me.loading) {
+    if (!me.loading && !feed.loading) {
       setLoading(false);
     } else {
       setLoading(true);
     }
-  }, [me.loading]);
+  }, [me.loading, feed.loading]);
 
   useEffect(() => {
     if (!login.loggedIn) {
@@ -38,7 +38,7 @@ function FeedPage() {
   return (
     <Container fluid className="pageContainer">
       {!loading ? (
-        <Row className="d-flex justify-content-between w-100">
+        <Row className="d-flex justify-content-between feedContainer">
           <Col xs={12} md={4} lg={3} className="mb-5 sxColumn">
             <Row>
               <Col className="d-flex justify-content-center">
@@ -48,16 +48,16 @@ function FeedPage() {
           </Col>
           <Col xs={12} md={8} lg={6} className="feedCol">
             <Row className="feedRow">
-              {feed === undefined ? (
+              {feed.feed === undefined ? (
                 <Spinner className="mx-auto mt-5" />
-              ) : feed?.length === 0 ? (
+              ) : feed.feed.length === 0 ? (
                 <h3>
                   Seems like you haven't any updates. Follow more creatives or
                   come back later!
                 </h3>
               ) : (
                 <div className="sectionContainer">
-                  {feed.map((feedItem: FeedItem) => {
+                  {feed.feed.map((feedItem: FeedItem) => {
                     return (
                       <FeedPost
                         key={feedItem.id}

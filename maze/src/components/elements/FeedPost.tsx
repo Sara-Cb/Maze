@@ -114,7 +114,8 @@ const FeedPost = ({
               </Link>
               <p>{profs}</p>
               <p>
-                {formatTime(createdAt)} • {type}
+                {updatedAt ? formatTime(updatedAt) : formatTime(createdAt)} •{" "}
+                {type}
               </p>
             </div>
           </Col>

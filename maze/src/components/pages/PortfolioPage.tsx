@@ -66,7 +66,10 @@ const PortfolioPage = () => {
           </Col>
           <Container>
             {collections.length > 0 ? (
-              <Col xs={12} className="sectionContainer mt-3 border-0">
+              <Col
+                xs={12}
+                className="sectionContainer collectionsContainer mt-3 border-0"
+              >
                 <Row className="d-flex justify-content-center">
                   <h3 className="w-100 text-center mb-4">Collections</h3>
                 </Row>

@@ -61,14 +61,30 @@ const CollectionDisplayer = ({
             <Link to={`/portfolio/${author}/collections/${id}`}>
               <Container fluid className="cardImage">
                 <img src={coverImage} alt="cover " />
-                <div className="cardText">
-                  {!updatedAt ? (
-                    <p>created {formatTime(createdAt)} ago</p>
-                  ) : (
-                    <p>last updated {formatTime(updatedAt)} ago</p>
-                  )}
-                  <h4>{title}</h4>
-                  <span className="emptyBtn small">{formatCAPS(category)}</span>
+                <div className="cardText d-flex flex-column justify-content-between">
+                  <Row className="px-2 py-1">
+                    <Col xs={12} className="text-end pt-1">
+                      {!updatedAt ? (
+                        <span className="small">
+                          created {formatTime(createdAt)} ago
+                        </span>
+                      ) : (
+                        <span className="small">
+                          last updated {formatTime(updatedAt)} ago
+                        </span>
+                      )}
+                    </Col>
+                    <Col xs={12}>
+                      <h4 className="fs-1">{title}</h4>
+                    </Col>
+                  </Row>
+                  <Row className="mb-3">
+                    <Col xs={12} className="text-end pe-3">
+                      <span className="emptyBtn small">
+                        {formatCAPS(category)}
+                      </span>
+                    </Col>
+                  </Row>
                 </div>
               </Container>
             </Link>

@@ -8,7 +8,7 @@ import java.util.Set;
 import com.maze.models.Creative;
 import com.maze.models.Role;
 
-public interface CreativeRepository extends JpaRepository<Creative, Long> {
+public interface CreativeRepository extends JpaRepository<Creative, String> {
     Optional<Creative> findByEmail(String email);
 
     Optional<Creative> findByUsername(String username);

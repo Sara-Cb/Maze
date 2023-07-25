@@ -102,7 +102,20 @@ export const getFeed = (token: string) => {
       if (response.ok) {
         const data = await response.json();
         dispatch(getFeedSuccess(data));
-        return data;
+        const unsortedFeedItems = data;
+
+        const sortedFeedItems = unsortedFeedItems.sort(
+          (item1: FeedItem, item2: FeedItem) => {
+            const date1 = new Date(
+              item1.updatedAt !== "" ? item1.updatedAt : item1.createdAt
+            );
+            const date2 = new Date(
+              item2.updatedAt !== "" ? item2.updatedAt : item2.createdAt
+            );
+            return date2.getTime() - date1.getTime();
+          }
+        );
+        return sortedFeedItems;
       } else {
         throw new Error("Failed to get feed");
       }

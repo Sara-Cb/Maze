@@ -77,6 +77,9 @@ const ProfileSection = () => {
   }, [isFollowed]);
 
   useEffect(() => {
+    if (me.loading || selectedCreative.loading) {
+      setLoading(true);
+    }
     if (
       loggedIn &&
       !me.loading &&
@@ -90,7 +93,7 @@ const ProfileSection = () => {
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCreative, me]);
+  }, [selectedCreative.loading, me.loading]);
 
   return (
     <>

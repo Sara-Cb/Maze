@@ -2,6 +2,7 @@ package com.maze.services;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -64,13 +65,11 @@ public class FeedItemService {
             }
         }
 
-        allItems.sort((item1, item2) -> {
-            Timestamp date1 = item1.getUpdatedAt() != null ? item1.getUpdatedAt() : item1.getCreatedAt();
-            Timestamp date2 = item2.getUpdatedAt() != null ? item2.getUpdatedAt() : item2.getCreatedAt();
-            return date2.compareTo(date1);
-        });
+        allItems.sort(Comparator.comparing(FeedItem::getUpdatedAt, Comparator.nullsLast(Comparator.reverseOrder()))
+                .thenComparing(FeedItem::getCreatedAt, Comparator.reverseOrder()));
 
         return allItems;
+
     }
 
     public FeedItem saveFeedItem(FeedItem feedItem) {
@@ -84,6 +83,7 @@ public class FeedItemService {
 
     public FeedItem updateFeedItem(FeedItem feedItem) {
         if (repository.existsById(feedItem.getId())) {
+            feedItem.setUpdatedAt(now);
             return repository.save(feedItem);
         } else {
             throw new NoSuchElementException("FeedItem not found with ID: " + feedItem.getId());

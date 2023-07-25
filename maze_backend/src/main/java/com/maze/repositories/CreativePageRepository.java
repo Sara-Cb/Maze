@@ -12,7 +12,7 @@ import com.maze.models.Creative;
 
 import java.util.Set;
 
-public interface CreativePageRepository extends PagingAndSortingRepository<Creative, Long> {
+public interface CreativePageRepository extends PagingAndSortingRepository<Creative, String> {
 
         Page<Creative> findByUsernameContainingOrFirstnameContainingOrLastnameContainingOrStageNameContaining(
                         String username, String firstname, String lastname, String stagename, Pageable pageable);

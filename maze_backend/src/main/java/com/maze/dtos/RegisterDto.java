@@ -53,6 +53,7 @@ public class RegisterDto {
 
     // Altri attributi facoltativi
     private String bio;
+    private String image;
     private String city;
     private String state;
     private Set<Skill> skills;
