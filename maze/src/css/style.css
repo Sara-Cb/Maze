@@ -2,45 +2,49 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;900&display=swap");
 /*------- end of fonts -------*/
-.mazeGreen {
+.green {
   color: #04b597 !important;
 }
 
-.mazeMint {
+.mint {
   color: #8cf5c9 !important;
 }
 
-.mazeDark {
+.dark {
   color: #1c2627 !important;
 }
 
-.mazeLight {
+.light {
   color: #faf0f0 !important;
 }
 
-.mazeGreenBg {
+.greenBg {
   background-color: #04b597 !important;
 }
 
-.mazeMintBg {
+.mintBg {
   background-color: #8cf5c9 !important;
 }
 
-.mazeDarkBg {
+.darkBg {
   background-color: #1c2627 !important;
 }
 
-.mazeLightBg {
+.lightBg {
   background-color: #faf0f0 !important;
 }
 
-.mazeGreenBgTransp {
+.greenBgTransp {
   background-color: rgba(4, 181, 152, 0.4352941176) !important;
 }
 
 .mazeNavbar {
   width: 100%;
   height: 4rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   padding: 0;
   padding-top: 1rem;
   z-index: 1000;
@@ -50,6 +54,7 @@
 .mazeNavbar .container-fluid {
   height: 100% !important;
   width: 100% !important;
+  max-width: 1460px;
 }
 .mazeNavbar .container-fluid .row {
   height: 100% !important;
@@ -90,7 +95,8 @@
 }
 
 .navUnderline {
-  width: 80%;
+  width: 75%;
+  max-width: 1000px;
   height: 0.7px;
   position: absolute;
   top: 4.2rem;
@@ -142,14 +148,26 @@
   margin-right: 10px;
 }
 
+.pageContainer.authContainer {
+  padding-top: 2rem !important;
+}
+.pageContainer.authContainer .mazelink {
+  color: #04b597 !important;
+}
+
+.authContainer > .row > .col-6 {
+  height: 14rem !important;
+}
+
 .authColumn {
-  height: 100%;
   color: #1c2627;
+  z-index: 1;
 }
 
 .authForm {
   width: 90%;
   margin: auto;
+  text-align: start;
 }
 .authForm input,
 .authForm select,
@@ -169,27 +187,46 @@
   background-color: #04b597 !important;
   border: none;
 }
+.authForm label {
+  font-weight: 400;
+  margin-bottom: 0.2rem;
+  margin-top: 1rem;
+}
 
-.authColumn,
-.emptyCol,
 #loginBackground {
+  position: fixed;
+  top: 4.2rem;
+  right: 0;
+  bottom: 0;
   background-color: #8cf5c9;
 }
 
-.authColumn {
-  z-index: 1001;
+@media screen and (min-width: 768px) {
+  #loginBackground {
+    width: 50%;
+  }
+}
+.sxColumn {
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
-#loginBackground {
-  position: absolute;
-  padding: 0;
-  width: 50%;
-  height: 100vh;
-  right: 0;
-  top: 0;
-  z-index: 1000;
+@media screen and (min-width: 768px) {
+  .sxColumn {
+    position: sticky;
+    top: 0;
+    left: 0;
+  }
 }
-
+@media screen and (min-width: 990px) {
+  .dxColumn {
+    height: -moz-fit-content;
+    height: fit-content;
+    position: sticky;
+    top: 0;
+    left: 0;
+  }
+}
 .mirror {
   width: 100%;
   background: linear-gradient(180deg, #5df1b3 0%, #8cf5c9 50%);
@@ -360,6 +397,9 @@
   border-radius: 0.2rem;
   border: 1px solid #04b597;
 }
+.profileContainer img.profilePic:hover {
+  cursor: pointer;
+}
 .profileContainer .firstRow > col {
   height: 100%;
 }
@@ -397,6 +437,15 @@
   font-size: 14px;
 }
 
+.slideContainer,
+.collectionHero {
+  max-width: 60rem !important;
+}
+.slideContainer .row,
+.collectionHero .row {
+  max-width: 100%;
+}
+
 html,
 body,
 #root,
@@ -412,13 +461,23 @@ body,
   font-weight: lighter;
   background-color: #1c2627;
   color: #faf0f0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: hidden;
 }
 
 .pageContainer {
-  height: 100% !important;
-  width: 100% !important;
-  margin-top: 2rem;
-  padding: 0;
+  position: absolute !important;
+  top: 4.2rem !important;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  padding-top: 1rem !important;
+  padding-bottom: 2rem;
 }
 
 .pageContainer > .row {
@@ -456,6 +515,7 @@ a {
 
 .sectionContainer {
   padding: 10px 20px;
+  max-width: 1460px;
   border-bottom: solid 1px #04b597;
 }
 
@@ -481,39 +541,7 @@ a {
   display: none !important;
 }
 
-.green {
-  color: #04b597 !important;
-}
-
-.mint {
-  color: #8cf5c9 !important;
-}
-
-.light {
-  color: #faf0f0 !important;
-}
-
-.dark {
-  color: #1c2627 !important;
-}
-
-.greenBg {
-  background-color: #04b597 !important;
-}
-
-.mintBg {
-  background-color: #8cf5c9 !important;
-}
-
-.lightBg {
-  background-color: #faf0f0 !important;
-}
-
-.darkBg {
-  background-color: #1c2627 !important;
-}
-
-.btnWhiteM {
+.btnLight {
   padding: 3px 10px !important;
   margin: 5px !important;
   font-weight: 600 !important;
@@ -521,13 +549,13 @@ a {
   color: #04b597 !important;
   background-color: #faf0f0 !important;
 }
-.btnWhiteM:hover {
+.btnLight:hover {
   cursor: pointer;
   color: #8cf5c9 !important;
   background-color: #1c2627 !important;
 }
 
-.btnGreenDark {
+.btnGreen {
   padding: 3px 10px !important;
   margin: 5px !important;
   font-weight: 600 !important;
@@ -535,13 +563,13 @@ a {
   color: #faf0f0 !important;
   background-color: #04b597 !important;
 }
-.btnGreenDark:hover {
+.btnGreen:hover {
   cursor: pointer;
   color: #1c2627 !important;
   background-color: #8cf5c9 !important;
 }
 
-.btnGreenLight {
+.btnMint {
   padding: 3px 10px !important;
   margin: 5px !important;
   font-weight: 600 !important;
@@ -549,13 +577,13 @@ a {
   color: #1c2627 !important;
   background-color: #8cf5c9 !important;
 }
-.btnGreenLight:hover {
+.btnMint:hover {
   cursor: pointer;
   color: #faf0f0 !important;
   background-color: #04b597 !important;
 }
 
-.btnDarkM {
+.btnDark {
   padding: 3px 10px !important;
   margin: 5px !important;
   font-weight: 600 !important;
@@ -563,7 +591,7 @@ a {
   color: #8cf5c9 !important;
   background-color: #1c2627 !important;
 }
-.btnDarkM:hover {
+.btnDark:hover {
   cursor: pointer;
   color: #04b597 !important;
   background-color: #faf0f0 !important;

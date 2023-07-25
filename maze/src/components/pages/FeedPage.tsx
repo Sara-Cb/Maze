@@ -38,7 +38,7 @@ function FeedPage() {
     <Container fluid className="pageContainer">
       {!loading ? (
         <Row className="d-flex justify-content-between w-100">
-          <Col xs={12} md={4} lg={3} className="mb-5">
+          <Col xs={12} md={4} lg={3} className="mb-5 sxColumn">
             <Row>
               <Col className="d-flex justify-content-center">
                 <MeSection />

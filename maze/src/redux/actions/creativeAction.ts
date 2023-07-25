@@ -64,7 +64,7 @@ const editMeFailure = (error: string): CreativeAction => ({
   error: error,
 });
 
-export const getCreative = (username: string) => {
+export const getSelectedCreative = (username: string) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(getCreativeRequest());
     try {
@@ -126,6 +126,7 @@ export const editMe = (
           method: "PUT",
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(creative),
         }

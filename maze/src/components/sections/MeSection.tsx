@@ -85,7 +85,7 @@ const MeSection = () => {
           <Button
             type="button"
             onClick={handleClick}
-            className="btnGreenDark w-50 mx-auto"
+            className="btnGreen w-50 mx-auto"
           >
             Portfolio
           </Button>
@@ -94,7 +94,7 @@ const MeSection = () => {
           <Button
             type="button"
             onClick={handleShowPost}
-            className="btnWhiteM w-50 mx-auto"
+            className="btnLight w-50 mx-auto"
           >
             New Post
           </Button>

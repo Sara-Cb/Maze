@@ -116,7 +116,7 @@ const ProfessionsChoice: React.FC<ProfessionsChoiceProps> = ({
               <li key={profession}>
                 {Profession[profession as keyof typeof Profession]}
                 <Button
-                  className="ms-2 btnDarkM"
+                  className="ms-2 btnDark"
                   onClick={() => handleRemoveProfession(profession)}
                 >
                   Remove
@@ -147,14 +147,14 @@ const ProfessionsChoice: React.FC<ProfessionsChoiceProps> = ({
       {formValues &&
         formValues.professions.length < 3 &&
         selectedProfession && (
-          <Button className="btnWhiteM" onClick={handleAddProfession}>
+          <Button className="btnLight" onClick={handleAddProfession}>
             Add Profession
           </Button>
         )}
       {creativeEdit &&
         creativeEdit.professions.length < 3 &&
         selectedProfession && (
-          <Button className="btnWhiteM" onClick={handleAddProfession}>
+          <Button className="btnLight" onClick={handleAddProfession}>
             Add Profession
           </Button>
         )}

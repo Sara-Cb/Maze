@@ -72,7 +72,6 @@ export const getFollowedList = (token: string) => {
       if (response.ok) {
         const data = await response.json();
         dispatch(getMyFollowsSuccess(data));
-        console.log(data);
         return data;
       } else {
         throw new Error("Failed to get follow");

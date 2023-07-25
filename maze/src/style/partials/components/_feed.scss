@@ -1,3 +1,24 @@
+.sxColumn {
+  height: fit-content;
+}
+
+@media screen and (min-width: 768px) {
+  .sxColumn {
+    position: sticky;
+    top: 0;
+    left: 0;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .dxColumn {
+    height: fit-content;
+    position: sticky;
+    top: 0;
+    left: 0;
+  }
+}
+
 .mirror {
   width: 100%;
   background: linear-gradient(

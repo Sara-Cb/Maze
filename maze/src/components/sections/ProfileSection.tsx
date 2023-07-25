@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { RootState, store } from "../../redux/store/store";
 import { useSelector } from "react-redux";
 import { convertProfessions, convertSkills } from "../../helpers/helpers";
-import { getCreative } from "../../redux/actions/creativeAction";
+import { getSelectedCreative } from "../../redux/actions/creativeAction";
 import {
   isCreativeFollowed,
   toggleFollowCreative,
 } from "../../redux/actions/followAction";
 import EditProfileMenu from "./EditProfileMenu";
+import ImageChanger from "../elements/ImageChanger";
 
 const ProfileSection = () => {
   const dispatch = store.dispatch;
@@ -31,6 +32,7 @@ const ProfileSection = () => {
   const [follow, setFollow] = useState(false);
   const [creative, setCreative] = useState(me!.c);
   const [itsMe, setItsMe] = useState(false);
+  const [showPicModal, setShowPicModal] = useState(false);
 
   const toggleFollow = async () => {
     await dispatch(toggleFollowCreative(token!, usernameUrl!));
@@ -40,14 +42,14 @@ const ProfileSection = () => {
   const loadData = async () => {
     setLoading(true);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    await dispatch(getCreative(usernameUrl!));
+    await dispatch(getSelectedCreative(usernameUrl!));
     if (loggedIn) {
       await dispatch(isCreativeFollowed(token!, usernameUrl!));
     }
   };
 
   const verifyIdentity = () => {
-    if (loggedIn && usernameUrl === "me") {
+    if (loggedIn && (usernameUrl === "me" || usernameUrl === me.c?.username)) {
       setItsMe(true);
       setCreative(me!.c);
       setLoading(false);
@@ -65,7 +67,7 @@ const ProfileSection = () => {
   useEffect(() => {
     verifyIdentity();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usernameUrl]);
+  }, [usernameUrl, me.loading]);
 
   useEffect(() => {
     if (loggedIn) {
@@ -75,12 +77,16 @@ const ProfileSection = () => {
   }, [isFollowed]);
 
   useEffect(() => {
-    if (!selectedCreative.loading && usernameUrl !== "me") {
-      setCreative(selectedCreative.c);
-      setLoading(false);
-    } else if (loggedIn && !me.loading && usernameUrl === "me") {
+    if (
+      loggedIn &&
+      !me.loading &&
+      (usernameUrl === "me" || usernameUrl === me.c?.username)
+    ) {
       setCreative(me.c);
       setItsMe(true);
+      setLoading(false);
+    } else if (!selectedCreative.loading && usernameUrl !== "me") {
+      setCreative(selectedCreative.c);
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,15 +97,27 @@ const ProfileSection = () => {
       {!loading && creative ? (
         <Container className="sectionContainer">
           <Row className="firstRow">
-            <Col xs={3} className="col-3 text-end pe-5 d-none d-md-block">
+            <Col xs={3} className="col-3 text-end pe-5 d-none d-sm-block">
               <img
                 src={creative.image}
                 alt="profile"
                 className="profilePic"
+                onClick={() => {
+                  if (itsMe) {
+                    return setShowPicModal(true);
+                  } else {
+                    return;
+                  }
+                }}
               ></img>
             </Col>
 
-            <Col xs={10} md={7} className="head">
+            <ImageChanger
+              show={showPicModal}
+              onHide={() => setShowPicModal(false)}
+            />
+
+            <Col xs={10} sm={7} className="head">
               <div className="d-flex flex-column justify-content-between h-100">
                 <div>
                   <h2 className="stagename">{creative.stageName}</h2>

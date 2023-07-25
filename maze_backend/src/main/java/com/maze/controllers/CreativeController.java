@@ -122,29 +122,19 @@ public class CreativeController {
     }
 
     @Transactional
-    @PutMapping("/{username}/image")
+    @PutMapping("/image")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Creative> updateCreativeImage(
-            @PathVariable String username,
             @RequestBody(required = false) MultipartFile image,
             @AuthenticationPrincipal UserDetails userDetails) {
-        if (userDetails.getAuthorities().contains(
-                new SimpleGrantedAuthority("ROLE_ADMIN")) ||
-                userDetails.getUsername().equals(
-                        username)) {
-            System.out.println("***************************START REQUEST************************");
-            Creative creative = creativeService.findCreativeByUsername(username);
-            if (image != null) {
-                creative.setImage(cloudinaryService.uploadFile(image));
-            } else {
-                creative.setImage(null);
-            }
-            System.out.println("***************************START update************************");
-            Creative updatedCreative = creativeService.updateCreative(creative);
-            return ResponseEntity.ok(updatedCreative);
+        Creative creative = creativeService.findCreativeByUsername(userDetails.getUsername());
+        if (image != null) {
+            creative.setImage(cloudinaryService.uploadFile(image));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            creative.setImage(null);
         }
+        Creative updatedCreative = creativeService.updateCreative(creative);
+        return ResponseEntity.ok(updatedCreative);
     }
 
     @Transactional
@@ -158,10 +148,8 @@ public class CreativeController {
                 new SimpleGrantedAuthority("ROLE_ADMIN")) ||
                 userDetails.getUsername().equals(
                         username)) {
-            System.out.println("***************************START REQUEST************************");
             Creative creative = creativeService.findCreativeByUsername(username);
             creative.setPassword(passwordEncoder.encode(password));
-            System.out.println("***************************START update************************");
             Creative updatedCreative = creativeService.updateCreative(creative);
             return ResponseEntity.ok(updatedCreative);
         } else {

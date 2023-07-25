@@ -197,10 +197,10 @@ const RegisterForm: React.FC = () => {
           </Col>
         </Row>
         <Row className="d-flex flex-row justify-content-end mt-3">
-          <Button className="btnGreenDark w-25" type="submit">
+          <Button className="btnGreen w-25" type="submit">
             Register
           </Button>
-          <Button className="btnWhiteM w-25" type="reset">
+          <Button className="btnLight w-25" type="reset">
             Reset
           </Button>
           {register.error && <p className="text-danger">{register.error}</p>}

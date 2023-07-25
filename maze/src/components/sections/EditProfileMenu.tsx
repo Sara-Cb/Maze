@@ -1,20 +1,26 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button, Col, Dropdown, Form, Modal, Row } from "react-bootstrap";
 import { ThreeDotsVertical } from "react-bootstrap-icons";
-import { EditedCreative } from "../../types/creativeType";
+import { Creative, EditedCreative } from "../../types/creativeType";
 import ProfessionsChoice from "../elements/ProfessionsChoice";
 import { RegisterFormValues } from "./RegisterForm";
 import { RootState, store } from "../../redux/store/store";
-import { editMe } from "../../redux/actions/creativeAction";
+import { editMe, getMe } from "../../redux/actions/creativeAction";
 import { useSelector } from "react-redux";
 import SkillsChoice from "../elements/SkillsChoice";
+import { getFollowedList } from "../../redux/actions/followAction";
+import FollowListItem from "../elements/FollowListItem";
 
 const EditProfileMenu = (c: EditedCreative, pw: string) => {
   const dispatch = store.dispatch;
   const maxBioLength = 2000;
   const session = useSelector((state: RootState) => state.login.session);
+  const followedList = useSelector(
+    (state: RootState) => state.follow.myFollowList
+  );
   const [showCredentials, setShowCredentials] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showFollowed, setShowFollowed] = useState(false);
   const [password, setPassword] = useState("");
   const [creative, setCreative] = useState({
     username: c.username,
@@ -27,7 +33,6 @@ const EditProfileMenu = (c: EditedCreative, pw: string) => {
     professions: c.professions,
     skills: c.skills,
   });
-
   const handleReset = () => {
     setCreative({
       username: c.username,
@@ -57,6 +62,7 @@ const EditProfileMenu = (c: EditedCreative, pw: string) => {
   const handleEditCreative = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(editMe(session!.accessToken, session!.username, creative));
+    dispatch(getMe(session!.username));
   };
 
   const handleShowCredentials = () => setShowCredentials(true);
@@ -69,11 +75,21 @@ const EditProfileMenu = (c: EditedCreative, pw: string) => {
     setShowProfile(false);
   };
 
+  const handleShowFollowed = () => setShowFollowed(true);
+  const handleCloseFollowed = () => {
+    setShowFollowed(false);
+  };
+
+  useEffect(() => {
+    dispatch(getFollowedList(session!.accessToken));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <Dropdown>
-        <Dropdown.Toggle className="mazelink fs-2 green darkBg border-0 pe-0">
-          <ThreeDotsVertical />
+        <Dropdown.Toggle className="mazelink fs-2 darkBg border-0 pe-0">
+          <ThreeDotsVertical className="green" />
         </Dropdown.Toggle>
 
         <Dropdown.Menu className="postEditMenu text-end mintBg">
@@ -85,9 +101,9 @@ const EditProfileMenu = (c: EditedCreative, pw: string) => {
             <span>Edit profile </span>
             <i className="bi bi-pencil"></i>
           </Dropdown.Item>
-          <Dropdown.Item onClick={handleShowProfile}>
+          <Dropdown.Item onClick={handleShowFollowed}>
             <span>Followed Creatives </span>
-            <i className="bi bi-list-ul"></i>
+            <i className="bi bi-people"></i>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
@@ -257,18 +273,36 @@ const EditProfileMenu = (c: EditedCreative, pw: string) => {
                 />
               </Row>
               <Row className="d-flex flex-row justify-content-between mt-3">
-                <Button className="btnWhiteM w-25" onClick={handleCloseProfile}>
+                <Button className="btnLight w-25" onClick={handleCloseProfile}>
                   Close
                 </Button>
-                <Button className="btnDarkM w-25" type="reset">
+                <Button className="btnDark w-25" type="reset">
                   Reset
                 </Button>
-                <Button className="btnGreenDark w-25" type="submit">
+                <Button className="btnGreen w-25" type="submit">
                   Save Edit
                 </Button>
               </Row>
             </Col>
           </Form>
+        </Modal.Body>
+      </Modal>
+
+      {/* FOLLOWS */}
+      <Modal show={showFollowed} onHide={handleCloseFollowed}>
+        <Modal.Header closeButton>
+          <Modal.Title>Followed Creatives</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {followedList && followedList.length > 0 && (
+            <Col xs={12}>
+              {followedList.map((creative: Creative) => {
+                return (
+                  <FollowListItem key={creative.username} creative={creative} />
+                );
+              })}
+            </Col>
+          )}
         </Modal.Body>
       </Modal>
     </>

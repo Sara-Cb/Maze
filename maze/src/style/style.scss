@@ -12,6 +12,7 @@
 @import "./partials/components/auth";
 @import "./partials/components/feed";
 @import "./partials/components/portfolio";
+@import "./partials/components/collections";
 
 html,
 body,
@@ -27,12 +28,23 @@ body,
   font-weight: lighter;
   background-color: $maze-dark;
   color: $maze-light;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: hidden;
 }
 
 .pageContainer {
-  @include fullDimensions;
-  margin-top: 2rem;
-  padding: 0;
+  position: absolute !important;
+  top: 4.2rem !important;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  padding-top: 1rem !important;
+  padding-bottom: 2rem;
 }
 
 .pageContainer > .row {
@@ -66,6 +78,7 @@ a {
 
 .sectionContainer {
   padding: 10px 20px;
+  max-width: 1460px;
   border-bottom: solid 1px $maze-darkgreen;
 }
 
@@ -87,48 +100,20 @@ a {
   }
 }
 
-//colors
-.green {
-  color: $maze-darkgreen !important;
-}
-.mint {
-  color: $maze-mintgreen !important;
-}
-.light {
-  color: $maze-light !important;
-}
-.dark {
-  color: $maze-dark !important;
-}
-
-.greenBg {
-  background-color: $maze-darkgreen !important;
-}
-.mintBg {
-  background-color: $maze-mintgreen !important;
-}
-.lightBg {
-  background-color: $maze-light !important;
-}
-.darkBg {
-  background-color: $maze-dark !important;
-}
-
 //buttons
-
-.btnWhiteM {
+.btnLight {
   @include myBtn("light");
 }
 
-.btnGreenDark {
+.btnGreen {
   @include myBtn("green");
 }
 
-.btnGreenLight {
+.btnMint {
   @include myBtn("mint");
 }
 
-.btnDarkM {
+.btnDark {
   @include myBtn("dark");
 }
 

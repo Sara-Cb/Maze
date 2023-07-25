@@ -12,6 +12,7 @@ const PortfolioPage = () => {
   const dispatch = store.dispatch;
   const usernameUrl = useParams().username;
 
+  const session = useSelector((state: RootState) => state.login.session);
   const portfolio = useSelector((state: RootState) => state.portfolio);
   const myCollections = useSelector(
     (state: RootState) => state.collection!.myCollections
@@ -27,7 +28,7 @@ const PortfolioPage = () => {
   };
 
   const verifyIdentity = () => {
-    if (usernameUrl === "me") {
+    if (usernameUrl === "me" || usernameUrl === session!.username) {
       setCollections(myCollections);
       setLoading(false);
     } else {
@@ -46,35 +47,35 @@ const PortfolioPage = () => {
   }, [usernameUrl]);
 
   useEffect(() => {
-    if (!portfolio.loading && usernameUrl !== "me") {
-      setCollections(portfolio.portfolio.collections);
-      setLoading(false);
-    } else if (myCollections && usernameUrl === "me") {
+    if ((usernameUrl === "me" || session!.username) && myCollections) {
       setCollections(myCollections);
+      setLoading(false);
+    } else if (!portfolio.loading && usernameUrl !== "me") {
+      setCollections(portfolio.portfolio.collections);
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [portfolio, myCollections]);
 
   return (
-    <Container className="pageContainer profileContainer">
+    <Container fluid className="pageContainer profileContainer">
       {!loading ? (
         <Row>
           <Col xs={12} className="profileHero">
             <ProfileSection />
           </Col>
-          <Col xs={12} className="sectionContainer mt-3">
+          <Container>
             {collections.length > 0 ? (
-              <>
+              <Col xs={12} className="sectionContainer mt-3 border-0">
                 <Row className="d-flex justify-content-center">
-                  <h3 className="w-100 text-center">Collections:</h3>
+                  <h3 className="w-100 text-center mb-4">Collections:</h3>
                 </Row>
                 <Row
                   xs={1}
                   sm={2}
                   md={3}
                   lg={4}
-                  className="d-flex justify-content-around"
+                  className="d-flex justify-content-around mx-auto"
                 >
                   {collections.map((collection: Collection) => {
                     return (
@@ -86,18 +87,20 @@ const PortfolioPage = () => {
                     );
                   })}
                 </Row>
-              </>
+              </Col>
             ) : (
               <div className="w-100 text-center">
                 <h3>Seems like you still have no collections!</h3>
-                <p className="mazelink">Add a collection</p>
               </div>
             )}
-          </Col>
+            <button className="emptyBtn darkBg m-auto w-25">
+              Add Collection
+            </button>
+          </Container>
         </Row>
       ) : (
         <div className="centeringDiv">
-          <Spinner className="w-50 h-50" />
+          <Spinner className="m-auto" />
         </div>
       )}
     </Container>

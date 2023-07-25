@@ -26,7 +26,7 @@ const LogoutButton = () => {
 
   return (
     <>
-      <p className="btnGreenDark" onClick={handleShowModal}>
+      <p className="btnGreen" onClick={handleShowModal}>
         Logout
       </p>
 

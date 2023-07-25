@@ -102,7 +102,6 @@ export const getFeed = (token: string) => {
       if (response.ok) {
         const data = await response.json();
         dispatch(getFeedSuccess(data));
-        console.log(data);
         return data;
       } else {
         throw new Error("Failed to get feed");

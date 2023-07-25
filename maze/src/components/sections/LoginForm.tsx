@@ -56,7 +56,7 @@ const LoginForm = () => {
       </Form.Group>
       {login.error && <p className="text-danger text-center">{login.error}</p>}
       <div className="d-grid gap-2">
-        <Button className="btnGreenDark w-25 ms-auto mx-0" type="submit">
+        <Button className="btnGreen w-25 ms-auto mx-0" type="submit">
           Login
         </Button>
       </div>

@@ -1,11 +1,23 @@
+.pageContainer.authContainer {
+  padding-top: 2rem !important;
+  .mazelink {
+    color: $maze-darkgreen !important;
+  }
+}
+
+.authContainer > .row > .col-6 {
+  height: 14rem !important;
+}
+
 .authColumn {
-  height: 100%;
   color: $maze-dark;
+  z-index: 1;
 }
 
 .authForm {
   width: 90%;
   margin: auto;
+  text-align: start;
   input,
   select,
   textarea {
@@ -21,25 +33,23 @@
     background-color: $maze-darkgreen !important;
     border: none;
   }
+  label {
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+    margin-top: 1rem;
+  }
 }
 
-//this is called: "having a mental breakdown"
-.authColumn,
-.emptyCol,
 #loginBackground {
+  position: fixed;
+  top: 4.2rem;
+  right: 0;
+  bottom: 0;
   background-color: $maze-mintgreen;
 }
 
-.authColumn {
-  z-index: 1001;
-}
-
-#loginBackground {
-  position: absolute;
-  padding: 0;
-  width: 50%;
-  height: 100vh;
-  right: 0;
-  top: 0;
-  z-index: 1000;
+@media screen and (min-width: 768px) {
+  #loginBackground {
+    width: 50%;
+  }
 }

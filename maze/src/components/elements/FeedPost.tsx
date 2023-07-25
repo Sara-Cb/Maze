@@ -119,7 +119,7 @@ const FeedPost = ({
           <Col xs={2} className="ms-0">
             {editable && (
               <Dropdown>
-                <Dropdown.Toggle className="btnDarkM">
+                <Dropdown.Toggle className="btnDark">
                   <i className="bi bi-three-dots"></i>
                 </Dropdown.Toggle>
 
@@ -220,7 +220,7 @@ const FeedPost = ({
         )}
         <Row>
           <Col xs={12}>
-            <Button className="btnDarkM w-25">
+            <Button className="btnDark w-25">
               <i className="bi bi-send-fill"></i>
               <span> Share</span>
             </Button>

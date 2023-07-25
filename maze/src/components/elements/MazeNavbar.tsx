@@ -41,10 +41,10 @@ const MazeNavbar = () => {
   };
 
   return (
-    <Navbar className="mazeNavbar" expand="md">
-      <Container fluid>
-        <Row>
-          <Col className="col-4">
+    <Navbar className="mazeNavbar fixed-top darkBg" expand="md">
+      <Container fluid className="h-100">
+        <Row className="h-100">
+          <Col className="col-4 h-100">
             <Navbar.Brand as={Link} to={isNotLogged ? "/" : "/feed"}>
               <img
                 className="navbarLogo"
@@ -59,7 +59,6 @@ const MazeNavbar = () => {
               <Col className="col-2 d-flex align-items-center justify-content-end">
                 <ResearchBar />
               </Col>
-              <Col className="col-6"></Col>
             </>
           ) : isLgScreen ? (
             <Col className="col-8">

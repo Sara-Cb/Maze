@@ -60,7 +60,6 @@ export const loginFetch = (username: string, password: string): any => {
       .then((data) => {
         dispatch(getLoginSuccess(data));
         getMe(data.username);
-        //console.log(data);
       })
       .catch((error) => {
         dispatch(getLoginFailure(error.message));

@@ -97,7 +97,6 @@ const deleteCollectionFailure = (error: string): CollectionAction => ({
 export const getMyCollections = (username: string) => {
   return async (dispatch: Dispatch<AnyAction>) => {
     dispatch(getMyCollectionsRequest());
-    console.log("coll dispatch");
     try {
       const response = await fetch(
         `http://localhost:8080/api/creatives/${username}/collections`
@@ -105,8 +104,6 @@ export const getMyCollections = (username: string) => {
       if (response.ok) {
         const data = await response.json();
         dispatch(getMyCollectionsSuccess(data));
-        console.log("coll ok");
-
         return data;
       } else {
         throw new Error("Failed to get collections");
