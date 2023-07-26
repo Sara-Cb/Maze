@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navbar, Nav, Container, Row, Col } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
-import ResearchBar from "./ResearchBar";
+// import ResearchBar from "./ResearchBar";
 import LogoutButton from "./LogoutButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
@@ -33,6 +33,8 @@ const MazeNavbar = () => {
       setActiveLink("p");
     } else if (location.pathname === "/feed") {
       setActiveLink("f");
+    } else if (location.pathname === "/search") {
+      setActiveLink("s");
     }
   }, [location]);
 
@@ -57,15 +59,34 @@ const MazeNavbar = () => {
           {isNotLogged ? (
             <>
               <Col className="col-2 d-flex align-items-center justify-content-end">
-                <ResearchBar />
+                {isLgScreen ? (
+                  <Nav.Link
+                    as={Link}
+                    to="/search"
+                    className={
+                      activeLink === "s" ? "searchForm active" : "searchForm"
+                    }
+                  >
+                    <span>Search Creatives</span>
+                    <span className="bi bi-search"></span>
+                  </Nav.Link>
+                ) : (
+                  <Nav.Link
+                    as={Link}
+                    to="/search"
+                    className={
+                      activeLink === "s" ? "searchForm active" : "searchForm"
+                    }
+                  >
+                    <span className="bi bi-search"></span>
+                  </Nav.Link>
+                )}
               </Col>
             </>
           ) : isLgScreen ? (
             <Col className="col-8">
               <Row className="align-items-center">
-                <Col>
-                  <ResearchBar />
-                </Col>
+                <Col></Col>
                 <Col>
                   <Nav className="m-auto justify-content-end">
                     <Nav.Item>
@@ -84,6 +105,19 @@ const MazeNavbar = () => {
                         className={activeLink === "f" ? "active" : ""}
                       >
                         Feed
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link
+                        as={Link}
+                        to="/search"
+                        className={
+                          activeLink === "s"
+                            ? "searchForm active"
+                            : "searchForm"
+                        }
+                      >
+                        <span>Search Creatives</span>
                       </Nav.Link>
                     </Nav.Item>
                     <LogoutButton />
@@ -112,14 +146,18 @@ const MazeNavbar = () => {
                     Feed
                   </Nav.Link>
                 </Nav.Item>
-                <ResearchBar />
+                <Link to="/search" className="searchForm">
+                  <span className="bi bi-search"></span>
+                </Link>
                 <LogoutButton />
               </Nav>
             </Col>
           ) : (
             <>
               <Col className="d-flex flex-row justify-content-end align-items-center">
-                <ResearchBar />
+                <Link to="/search" className="searchForm">
+                  <span>Search Creatives</span>
+                </Link>
                 <span
                   className="bi bi-list d-block fs-5"
                   onClick={handleToggle}

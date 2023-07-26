@@ -1,6 +1,9 @@
 import Role from "./roleType";
 
 export enum CreativeActionType {
+  GET_ALL_CREATIVES_REQUEST = "GET_ALL_CREATIVES_REQUEST",
+  GET_ALL_CREATIVES_SUCCESS = "GET_ALL_CREATIVES_SUCCESS",
+  GET_ALL_CREATIVES_FAILURE = "GET_ALL_CREATIVES_FAILURE",
   GET_CREATIVE_REQUEST = "GET_CREATIVE_REQUEST",
   GET_CREATIVE_SUCCESS = "GET_CREATIVE_SUCCESS",
   GET_CREATIVE_FAILURE = "GET_CREATIVE_FAILURE",
@@ -60,6 +63,11 @@ export interface CreativeState {
     loading: boolean;
     error?: string | null;
   };
+}
+export interface AllCreativesState {
+  c: Creative[];
+  loading: boolean;
+  error?: string | null;
 }
 
 export enum Profession {

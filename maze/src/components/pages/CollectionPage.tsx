@@ -48,7 +48,7 @@ const CollectionPage = () => {
   return (
     <Container fluid className="pageContainer">
       {!loading && collection ? (
-        <Container className="p-0 collectionHero">
+        <Container className="p-0 collectionHero pt-5">
           <Row className="mx-4">
             <Col xs={12}>
               <Row className="mx-0">

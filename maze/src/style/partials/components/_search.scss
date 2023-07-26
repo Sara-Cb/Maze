@@ -1,0 +1,24 @@
+.searchContainer {
+  background-image: url(./../../../../public/maze.svg);
+
+  .filters {
+    background-color: $maze-mintgreen;
+    border-radius: 0.2rem;
+    height: fit-content;
+    padding: 15px;
+    input.form-control,
+    select {
+      background-color: $maze-darkgreen-bg;
+      border: $maze-dark 1px solid;
+      margin-bottom: 10px;
+    }
+  }
+
+  .searchResult {
+    max-width: 768px;
+    &,
+    img {
+      border-radius: 0.2rem;
+    }
+  }
+}

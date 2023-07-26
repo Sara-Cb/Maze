@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import loginReducer from "../reducers/loginReducer";
 import registerReducer from "../reducers/registerReducer";
 import creativeReducer from "../reducers/creativeReducer";
+import allCreativesReducer from "../reducers/allCreativesReducer";
 import portfolioReducer from "../reducers/portfolioReducer";
 import feedReducer from "../reducers/feedReducer";
 import { persistStore, persistReducer } from "redux-persist";
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   login: loginReducer,
   register: registerReducer,
   creative: creativeReducer,
+  allCreatives: allCreativesReducer,
   portfolio: portfolioReducer,
   feed: feedReducer,
   elaborate: elaborateReducer,

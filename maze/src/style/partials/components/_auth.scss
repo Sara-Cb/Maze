@@ -1,5 +1,6 @@
 .pageContainer.authContainer {
   padding-top: 2rem !important;
+  background-image: url(./../../../../public/maze.svg);
   .mazelink {
     color: $maze-darkgreen !important;
   }
@@ -7,6 +8,24 @@
 
 .authContainer > .row > .col-6 {
   height: 14rem !important;
+  text-align: center;
+  .welcome {
+    position: absolute;
+    background-color: $maze-dark;
+    min-height: 15rem;
+    max-height: 25rem;
+    padding: 2rem;
+    top: 20%;
+    right: 60%;
+    left: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    h3 {
+      margin: 2rem 0;
+      border-bottom: 1px solid $maze-darkgreen;
+    }
+  }
 }
 
 .authColumn {

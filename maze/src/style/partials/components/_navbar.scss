@@ -1,6 +1,6 @@
 .mazeNavbar {
   width: 100%;
-  height: 4rem;
+  height: 5rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -26,7 +26,7 @@
     width: min-content !important;
     position: absolute;
     right: 0;
-    top: 4rem;
+    top: 5rem;
     display: flex;
     flex-direction: column;
     align-items: end;
@@ -57,7 +57,7 @@
   max-width: 1000px;
   height: 0.7px;
   position: absolute;
-  top: 4.2rem;
+  top: 5rem;
   right: 0;
   background-color: $maze-mintgreen;
 }

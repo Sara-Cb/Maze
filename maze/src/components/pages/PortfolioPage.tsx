@@ -47,7 +47,10 @@ const PortfolioPage = () => {
   }, [usernameUrl]);
 
   useEffect(() => {
-    if ((usernameUrl === "me" || session!.username) && myCollections) {
+    if (
+      (usernameUrl === "me" || usernameUrl === session!.username) &&
+      myCollections
+    ) {
       setCollections(myCollections);
       setLoading(false);
     } else if (!portfolio.loading && usernameUrl !== "me") {
@@ -55,7 +58,7 @@ const PortfolioPage = () => {
       setLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [portfolio, myCollections]);
+  }, [portfolio.loading, myCollections]);
 
   return (
     <Container fluid className="pageContainer profileContainer">

@@ -13,6 +13,7 @@
 @import "./partials/components/feed";
 @import "./partials/components/portfolio";
 @import "./partials/components/collections";
+@import "./partials/components/search";
 
 html,
 body,
@@ -38,7 +39,7 @@ body,
 
 .pageContainer {
   position: absolute !important;
-  top: 4.2rem !important;
+  top: 5rem !important;
   right: 0;
   left: 0;
   bottom: 0;

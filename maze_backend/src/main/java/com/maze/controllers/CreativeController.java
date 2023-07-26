@@ -226,6 +226,40 @@ public class CreativeController {
         return new PageImpl<>(pageContent, pageable, commonCreatives.size());
     }
 
+    @GetMapping("/search/{name}")
+    @ResponseBody
+    public Page<Creative> searchCreativesByName(
+            @RequestParam(required = false) String name,
+            Pageable pageable) {
+
+        if (name == null) {
+            return creativeService.getAllCreativesPage(pageable);
+        }
+
+        List<Page<Creative>> partialResults = new ArrayList<>();
+
+        if (name != null) {
+            partialResults.add(creativeService.searchCreativesByName(name, pageable));
+        }
+
+        List<Creative> commonCreatives = partialResults.stream()
+                .map(Page::getContent)
+                .flatMap(java.util.Collection::stream)
+
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet().stream()
+                .filter(e -> e.getValue() == partialResults.size())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+        int pageSize = pageable.getPageSize();
+        int pageNumber = pageable.getPageNumber();
+        int startIndex = pageNumber * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, commonCreatives.size());
+        List<Creative> pageContent = commonCreatives.subList(startIndex, endIndex);
+        return new PageImpl<>(pageContent, pageable, commonCreatives.size());
+    }
+
     @GetMapping("/follow")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<Creative>> getFollowedList(
