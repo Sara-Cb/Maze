@@ -18,6 +18,7 @@ const PortfolioPage = () => {
     (state: RootState) => state.collection!.myCollections
   );
 
+  const [itsMe, setItsMe] = useState(false);
   const [loading, setLoading] = useState(true);
   const [collections, setCollections] = useState(myCollections);
 
@@ -53,9 +54,11 @@ const PortfolioPage = () => {
     ) {
       setCollections(myCollections);
       setLoading(false);
+      setItsMe(true);
     } else if (!portfolio.loading && usernameUrl !== "me") {
       setCollections(portfolio.portfolio.collections);
       setLoading(false);
+      setItsMe(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [portfolio.loading, myCollections]);
@@ -92,11 +95,15 @@ const PortfolioPage = () => {
                       />
                     );
                   })}
+                  {itsMe && (
+                    <span className="emptyBtn text-center">Add Collection</span>
+                  )}
                 </Row>
               </Col>
             ) : (
               <div className="w-100 text-center">
                 <h3>Seems like you still have no collections!</h3>
+                {itsMe && <span className="emptyBtn">Add Collection</span>}
               </div>
             )}
           </Container>

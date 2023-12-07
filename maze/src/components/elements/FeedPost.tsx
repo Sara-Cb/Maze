@@ -56,22 +56,22 @@ const FeedPost = ({
     collection: collection,
   });
 
-  const handleSave = () => {
-    dispatch(
+  const handleSave = async () => {
+    handleCloseEdit();
+    await dispatch(
       editFeedItem(
         session!.accessToken,
         editFeedItemState.id,
         editFeedItemState
       )
     );
-    dispatch(getFeed(session!.accessToken));
-    handleCloseEdit();
+    await dispatch(getFeed(session!.accessToken));
   };
 
-  const handleDelete = () => {
-    deleteFeedItem(id!, session!.accessToken);
-    dispatch(getFeed(session!.accessToken));
+  const handleDelete = async () => {
     handleCloseEdit();
+    await deleteFeedItem(id!, session!.accessToken);
+    await dispatch(getFeed(session!.accessToken));
   };
 
   const toggleExpand = () => {
@@ -114,8 +114,7 @@ const FeedPost = ({
               </Link>
               <p>{profs}</p>
               <p>
-                {updatedAt ? formatTime(updatedAt) : formatTime(createdAt)} •{" "}
-                {type}
+                {formatTime(createdAt)} • {type}
               </p>
             </div>
           </Col>
@@ -154,7 +153,7 @@ const FeedPost = ({
                   variant="danger"
                   onClick={() => {
                     handleCloseDelete();
-                    dispatch(handleDelete);
+                    handleDelete();
                   }}
                 >
                   Delete
@@ -204,17 +203,19 @@ const FeedPost = ({
           </Col>
         </Row>
         <Row className="my-2">
-          <Col xs={12} className="postCaption">
-            <p className={expanded ? "expanded" : "collapsed"}>{caption}</p>
-            {!expanded && (
-              <span
-                className="mazelink d-block w-100 text-end pe-1"
-                onClick={toggleExpand}
-              >
-                ...read more
-              </span>
-            )}
-          </Col>
+          {caption && (
+            <Col xs={12} className="postCaption">
+              <p className={expanded ? "expanded" : "collapsed"}>{caption}</p>
+              {!expanded && (
+                <span
+                  className="mazelink d-block w-100 text-end pe-1"
+                  onClick={toggleExpand}
+                >
+                  ...read more
+                </span>
+              )}
+            </Col>
+          )}
         </Row>
         {collection != null && (
           <Row className="postCollection mx-3">

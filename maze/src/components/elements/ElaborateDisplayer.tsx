@@ -54,9 +54,13 @@ class ElaborateDisplayer extends Component<ElaborateProps> {
                       src={elaborate.file}
                       alt={elaborate.title}
                       className="mb-2"
+                      style={{ maxWidth: 400 }}
                     />
                   </div>
-                  <div className="col col-12 col-sm-6 col-md-5 text-center text-sm-start d-flex flex-column justify-content-between">
+                  <div
+                    className="col col-12 col-sm-6 col-md-5 text-center text-sm-start d-flex flex-column justify-content-between"
+                    style={{ maxHeight: 200 }}
+                  >
                     <h4 className="mint">{elaborate.title}</h4>
                     <blockquote>
                       <cite>"{elaborate.description}"</cite>

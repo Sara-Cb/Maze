@@ -1,6 +1,7 @@
 import { FeedActionType, FeedAction, FeedItem } from "../../types/feedType";
 import { Dispatch } from "redux";
 import { AnyAction } from "@reduxjs/toolkit";
+import { parseISO } from "date-fns";
 
 const getFeedRequest = (): FeedAction => ({
   type: FeedActionType.GET_FEED_REQUEST,
@@ -106,15 +107,12 @@ export const getFeed = (token: string) => {
 
         const sortedFeedItems = unsortedFeedItems.sort(
           (item1: FeedItem, item2: FeedItem) => {
-            const date1 = new Date(
-              item1.updatedAt !== "" ? item1.updatedAt : item1.createdAt
-            );
-            const date2 = new Date(
-              item2.updatedAt !== "" ? item2.updatedAt : item2.createdAt
-            );
+            const date1 = parseISO(item1.updatedAt || item1.createdAt);
+            const date2 = parseISO(item2.updatedAt || item2.createdAt);
             return date2.getTime() - date1.getTime();
           }
         );
+
         return sortedFeedItems;
       } else {
         throw new Error("Failed to get feed");

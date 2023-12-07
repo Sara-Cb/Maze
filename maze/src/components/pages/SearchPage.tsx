@@ -49,13 +49,14 @@ const SearchPage = () => {
 
     if (filters.city) {
       filteredCreatives = filteredCreatives.filter(
-        (creative) => creative.city === filters.city
+        (creative) => creative.city.toLowerCase() === filters.city.toLowerCase()
       );
     }
 
     if (filters.state) {
       filteredCreatives = filteredCreatives.filter(
-        (creative) => creative.state === filters.state
+        (creative) =>
+          creative.state.toLowerCase() === filters.state.toLowerCase()
       );
     }
 
